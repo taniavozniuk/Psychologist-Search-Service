@@ -1,0 +1,17 @@
+.input__find{
+  height: 54px;
+  width: 416px;
+  background: url('../../image/search.svg') no-repeat;
+  background-position: 16px 16px;
+  padding-left: 48px;
+  border: 1px #F1EFE9 solid;
+  border-radius: 10px;
+  color: #E8E0D2;
+}
+
+.conteiner__input{
+  padding: 16px 0 0 0;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+}
