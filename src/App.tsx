@@ -3,6 +3,7 @@ import { Header } from "./components/Header/Header";
 import { TopBar } from "./components/TopBar/TopBar";
 import {OurServices} from './components/OurServices/OurServices'
 import { WhyUs } from "./components/WhyUs/WhyUs";
+import { FeelHeard } from "./components/FeelHeard/FeelHeard";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         </div>
 
         <div className="conteiner__section">
-
+          <FeelHeard />
         </div>
       </div>
     </>
