@@ -1,8 +1,8 @@
 name: Github Page Deploy Workflow
-on:
-  push:
-    branches: [master]
-  workflow_dispatch:
+# on:
+#   push:
+#     branches: [master]
+#   workflow_dispatch:
 permissions:
   contents: read
   pages: write
