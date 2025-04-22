@@ -1,0 +1,56 @@
+@import '../../utils/mixins.scss';
+
+.whyUs__card{
+  display: flex;
+  @include pageGrid;
+
+  @include onTablet{
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  
+  }
+
+}
+
+.whyUs__content{
+  padding: 40px;
+  border: 1px solid #D6CDC0;
+  border-radius: 8px;
+
+}
+
+.whyUs__number{
+  background-color: #9B6A00;
+  border-radius: 100%;
+  width: 56px;
+  height: 56px;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  color: #F1EFE9;
+  font-family: 'Aileron', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 30px;
+  margin-bottom: 32px;
+}
+
+.whyUs__title{
+  font-family: 'Aileron', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 48px;
+  margin: 0 0 16px 0;
+  color: #0C0B09;
+  align-items: center;
+}
+
+.whyUs__description{
+  font-family: 'Aileron', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #7C746A;
+  align-items: center;
+  margin: 0;
+}

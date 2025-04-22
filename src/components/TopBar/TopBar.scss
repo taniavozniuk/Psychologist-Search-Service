@@ -12,9 +12,8 @@
 
 .wraper__top_bar {
   display: flex;
-  gap: 123px;
+  justify-content: space-between;
   margin: 0 40px;
-
 }
 
 .wraper__inputFilter {
@@ -35,7 +34,7 @@
 }
 
 .navigation {
-  padding: 19px 40px 19px 0;
+  padding: 19px 0 19px 0;
   display: flex;
   gap: 20px;
 }
@@ -50,13 +49,19 @@
 
 .about {
   color: #f1efe9;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Aileron', sans-serif;
 }
 
 .blog {
   color: #f1efe9;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Aileron', sans-serif;
 }
 
-.user__button{
+.user__button {
   background: transparent;
   border: none;
   cursor: pointer;

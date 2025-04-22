@@ -1,0 +1,34 @@
+
+
+.card__services {
+  display: flex;
+  // padding-top: 56px;
+}
+
+.services__text {
+  padding-left: 32px;
+  
+}
+
+.servides__title{
+  margin: 0 0 24px 0;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 48px;
+}
+
+.services__description{
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #4B463E;
+}
+
+.services__line {
+  display: block;
+  width: 100%;
+  border: 1px solid black;
+  margin: 56px 0;
+}

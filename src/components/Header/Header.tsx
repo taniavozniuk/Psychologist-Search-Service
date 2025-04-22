@@ -5,7 +5,8 @@ export const Header = () => {
     <div className="header">
       {/* <div className="header__wrapper"> */}
       <div className="header__bottom">
-        <div className="header__titleWrapper">
+        <div className="header__wrapper">
+          <div className="header__titleWrapper">
           <h3 className="header__title">Your Mental Health Matters</h3>
         </div>
 
@@ -27,6 +28,8 @@ export const Header = () => {
             </div>
           </div>
         </div>
+        </div>
+        
       </div>
     </div>
 
