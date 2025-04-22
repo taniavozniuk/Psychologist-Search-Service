@@ -1,0 +1,48 @@
+.feel__content{
+  display: flex;
+}
+
+.feel__title {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 100%;
+  letter-spacing: 3%;
+  color: #4b463e;
+  margin: 0;
+}
+
+.feel__line {
+  display: block;
+  width: 100%;
+  border: 1px solid #d6cdc0;
+  margin: 32px 0;
+}
+
+.feel__description {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #615b52;
+  margin: 0;
+  width: 100%;
+}
+
+.feel__Img{
+  padding: 0 0 0 32px;
+}
+
+.feel__findButton{
+  width: 200px;
+  height: 51px;
+  background-color: #393126;
+  border: 1px #393126 solid;
+  color: #f1efe9;
+  border-radius: 8px;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+  text-align: center;
+}

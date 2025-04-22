@@ -1,4 +1,4 @@
-@import '../../utils/mixins.scss';
+@use '../../utils/mixins.scss' as *;
 
 .whyUs__card{
   display: flex;
