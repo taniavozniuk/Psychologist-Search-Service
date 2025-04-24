@@ -3,13 +3,16 @@
   width: 416px;
   background: url('../../image/search.svg') no-repeat;
   background-position: 16px 16px;
-  padding-left: 48px;
+  padding: 0 0 0 48px;
   border: 1px #F1EFE9 solid;
   border-radius: 10px;
-  color: #F1EFE9;
   font-size: 18px;
   font-weight: 400;
   font-family: 'Aileron', sans-serif;
+
+  &::placeholder {
+    color: #E8E0D2;
+  }
 }
 
 .conteiner__input{

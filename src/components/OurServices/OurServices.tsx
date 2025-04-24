@@ -4,9 +4,11 @@ import "./OurServices.scss";
 export const OurServices = () => {
   return (
     <div className="ourServices">
-      {/* <div className="line"></div> */}
-      <h3 className="section__title">Our services</h3>
-      {/* <div className="line"></div> */}
+      <div className="section__wrapper">
+        <div className="line"></div>
+        <h3 className="section__title">Our services</h3>
+        <div className="line"></div>
+      </div>
 
       <div className="services__card">
         {services.map((service, index) => (

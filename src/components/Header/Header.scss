@@ -15,22 +15,9 @@
 
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-// .header__wrapper{
-//   display: flex;
-//   gap: 80px;
-// }
-
-.header__bottom {
-  margin: 227px 40px 0 40px;
-
-  // @include pageGrid;
-}
-
-// .header__titleWrapper {
-//   grid-column: 1 / -1;
-// }
 
 .header__titleWrapper {
   padding-bottom: 80px;

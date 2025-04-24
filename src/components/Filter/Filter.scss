@@ -1,21 +1,38 @@
-.filter__find{
+.filter__find {
+  cursor: pointer;
   height: 54px;
   width: 216px;
-  background: url('../../image/filter.svg') no-repeat;
-  background-position: 16px 19px;
+  background: url("../../image/filter.svg") no-repeat;
+  background-position: 16px 16px;
   padding-left: 48px;
-  border: 1px #F1EFE9 solid;
+  border: 1px #f1efe9 solid;
   border-radius: 10px;
-  color: #F1EFE9;
+  color: #f1efe9;
   font-size: 18px;
   font-weight: 400;
-  font-family: 'Aileron', sans-serif;
+  font-family: "Aileron", sans-serif;
+  background-color: transparent;
+  text-align: left;
+  display: flex;
+  align-items: center;
 }
 
-.conteiner__filter{
+.conteiner__filter {
   padding: 16px 0 0 0;
   align-items: center;
   justify-content: space-between;
   display: flex;
+}
 
+.filter__modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #060401e5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }

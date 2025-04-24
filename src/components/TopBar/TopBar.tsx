@@ -4,7 +4,11 @@ import UserIcon from "../../image/UserIconButton.svg";
 import { Input } from "../Input/Input";
 import { Filetr } from "../Filter/Filter";
 
-export const TopBar = () => {
+interface TopBarProps {
+  onOpenFilter: () => void;
+}
+
+export const TopBar: React.FC<TopBarProps> = ({ onOpenFilter }) => {
   return (
     <div className="top_bar">
       <div className="wraper__top_bar">
@@ -18,7 +22,7 @@ export const TopBar = () => {
           </div>
 
           <div className="filter">
-            <Filetr />
+            <Filetr onOpen={onOpenFilter} />
           </div>
         </div>
         <div className="navigation">
@@ -30,7 +34,7 @@ export const TopBar = () => {
 
           <div className="user">
             <button className="user__button">
-              <img src={UserIcon} alt="userIcon" className="button__icon"/>
+              <img src={UserIcon} alt="userIcon" className="button__icon" />
             </button>
           </div>
         </div>

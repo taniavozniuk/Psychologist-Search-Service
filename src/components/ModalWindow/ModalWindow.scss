@@ -1,0 +1,164 @@
+.modal__content {
+  background-color: #f9f0e2;
+  border: none;
+  // border-radius: 10%
+  border-radius: 16px;
+  padding: 40px 0 0 0;
+  position: relative;
+  flex-direction: column;
+  max-height: 90vh; // не виходить за межі екрану
+  overflow: hidden;
+  width: 554px;
+}
+
+.modal__Wrapper{
+  padding: 0 40px 40px 40px;
+
+}
+
+.modal__scrollableContent {
+  overflow-y: auto;
+  padding-right: 1px;
+  // flex-grow: 1;
+  max-height: calc(90vh - 200px); 
+  scrollbar-color: #393126 #F9F0E2;
+  scrollbar-width: thin;
+}
+
+.modal__WrappeTitleBt {
+  display: flex;
+  margin: 0;
+  align-items: center;
+}
+
+.title__conteiner {
+  padding-left: 40px;
+  display: flex;
+  // width: 100%;
+  flex: 1 1 0%;
+  justify-content: center;
+}
+
+.title__modal {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 50px;
+  align-items: center;
+  margin: 0;
+}
+
+.close__btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid #b8aea0;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  margin-right: 40px;
+}
+
+.modal__lineTtle {
+  display: block;
+  border: 1px solid #d6cdc0;
+  margin: 16px 0;
+}
+
+.modal__TitleName {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #0c0b09;
+  margin: 0 0 16px 0;
+}
+
+.modal__button {
+  display: flex;
+  gap: 32px;
+}
+
+.button__name {
+  width: 136.67px;
+  height: 48px;
+  text-align: center;
+  background: transparent;
+  border: 1px solid #b8aea0;
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #4b463e;
+  padding: 12px 16px;
+  border-radius: 8px;
+}
+
+.button__SpecName{
+  width: 100%;
+  height: 48px;
+  text-align: center;
+  background: transparent;
+  border: 1px solid #b8aea0;
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #4b463e;
+  padding: 12px 16px;
+  border-radius: 1000px;
+}
+
+.modal__line{
+  display: block;
+  border: 1px solid #d6cdc0;
+  margin: 24px 0;
+}
+
+.modal__TitlePrice {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #0c0b09;
+  margin: 0 0 62px 0;
+}
+
+.modal__WrapperTitle{
+  display: flex;
+  justify-content: space-between;
+}
+
+.model__concernsBt{
+  background: transparent;
+  border: none;
+  width: 24px;
+  height: 24px;
+}
+
+.modal__checkbox{
+  display: flex;
+  gap: 83px;
+}
+
+.model__concernsDrop {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: #0C0B09;
+  line-height: 30px;
+}
+
+.model__concernsItem {
+  display: block;
+}

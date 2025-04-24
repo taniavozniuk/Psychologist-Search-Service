@@ -1,5 +1,9 @@
 @use '../../utils/mixins.scss' as *;
 
+.whyUs{
+  margin: 112px 40px;
+}
+
 .whyUs__card{
   display: flex;
   @include pageGrid;

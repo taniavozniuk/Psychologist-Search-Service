@@ -4,7 +4,11 @@ import feelImg from "../../image/feelImg.svg";
 export const FeelHeard = () => {
   return (
     <div className="feel">
-      <h3 className="section__title">Feel Heard</h3>
+      <div className="section__wrapper">
+        <div className="line"></div>
+        <h3 className="section__title">Feel Heard</h3>
+        <div className="line"></div>
+      </div>
 
       <div className="feel__content">
         <div className="feel__wrappe">

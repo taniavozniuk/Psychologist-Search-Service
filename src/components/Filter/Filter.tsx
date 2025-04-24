@@ -1,14 +1,28 @@
-import './Filter.scss'
+import React from "react";
+import "./Filter.scss";
 
-export const Filetr = () => {
+interface FilterProps {
+  onOpen: () => void;
+}
+
+export const Filetr: React.FC<FilterProps> = ({ onOpen }) => {
+  // const [isModalFilterOpen, setIsModalFilteOpen] = useState(false);
+
+  // const handleFilter = () => {
+  //   setIsModalFilteOpen(true);
+  // };
+
   return (
     <div className="conteiner__filter">
-      <input
-        name="name"
-        type="text"
-        className="filter__find"
-        placeholder="Filters"
-      ></input>
+      <div className="filter__find" onClick={onOpen}>
+        Filters
+      </div>
+
+      {/* {isModalFilterOpen && (
+        <div className="filter__modal">
+          <p>тут модальне вікно</p>
+        </div>
+      )} */}
     </div>
   );
 };
