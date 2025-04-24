@@ -1,10 +1,10 @@
 import "./App.css";
 import { Header } from "./components/Header/Header";
 import { TopBar } from "./components/TopBar/TopBar";
-import { OurServices } from "./components/OurServices/OurServices";
-import { WhyUs } from "./components/WhyUs/WhyUs";
-import { FeelHeard } from "./components/FeelHeard/FeelHeard";
-import { Footer } from "./components/Footer/Footer";
+// import { OurServices } from "./components/OurServices/OurServices";
+// import { WhyUs } from "./components/WhyUs/WhyUs";
+// import { FeelHeard } from "./components/FeelHeard/FeelHeard";
+// import { Footer } from "./components/Footer/Footer";
 import { useState } from "react";
 import { ModalWindow } from "./components/ModalWindow/ModalWindow";
 
@@ -21,7 +21,7 @@ function App() {
         <>
           <TopBar onOpenFilter={() => setIsModalOpen(true)} />
 
-          <div className="main">
+          {/* <div className="main">
             <div className="conteiner__section">
               <OurServices />
             </div>
@@ -37,7 +37,7 @@ function App() {
             <div className="conteiner__section">
               <Footer />
             </div>
-          </div>
+          </div> */}
         </>
       )}
 
@@ -46,6 +46,8 @@ function App() {
           <ModalWindow onClose={() => setIsModalOpen(false)} />
         </div>
       )}
+
+
     </>
   );
 }

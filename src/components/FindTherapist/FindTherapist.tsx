@@ -1,0 +1,1 @@
+export const FindTherapist = () => <h2>Find Therapist</h2>

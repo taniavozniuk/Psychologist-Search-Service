@@ -3,6 +3,7 @@ import logo from "../../image/MindBloom.svg";
 import UserIcon from "../../image/UserIconButton.svg";
 import { Input } from "../Input/Input";
 import { Filetr } from "../Filter/Filter";
+import { NavLink } from "react-router-dom";
 
 interface TopBarProps {
   onOpenFilter: () => void;
@@ -27,9 +28,9 @@ export const TopBar: React.FC<TopBarProps> = ({ onOpenFilter }) => {
         </div>
         <div className="navigation">
           <div className="menu">
-            <a className="about">About</a>
+            <NavLink to="/about"className="about">About</NavLink>
 
-            <a className="blog">Blog</a>
+            <NavLink to='/blog' className="blog">Blog</NavLink>
           </div>
 
           <div className="user">

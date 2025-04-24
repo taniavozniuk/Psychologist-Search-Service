@@ -36,9 +36,14 @@ const APPROACHES_LIST = [
 
 export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenApproaches, setIsOpenApproaches] = useState(false);
 
-  const handleToggleList = () => {
+  const handleConcernsList = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const handleApproachesList = () => {
+    setIsOpenApproaches((prev) => !prev);
   };
 
   return (
@@ -87,7 +92,10 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
             <div className="modal__WrapperTitle">
               <h2 className="modal__TitleName">Concerns</h2>
 
-              <button className="model__concernsBt" onClick={handleToggleList}>
+              <button
+                className="model__concernsBt"
+                onClick={handleConcernsList}
+              >
                 <img
                   src={isOpen ? ConcernsBtOpen : ConcernsBtClose}
                   alt="Toggle concerns"
@@ -102,7 +110,20 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                     {CONCERNS_LIST1.map((label, index) => (
                       <li key={index} className="model__concernsItem">
                         <FormControlLabel
-                          control={<Checkbox className="model__concernsList" />}
+                          control={
+                            <Checkbox
+                              className="model__concernsList"
+                              sx={{
+                                color: "#0C0B09",
+                                "&.Mui-checked": {
+                                  color: "#9B6A00",
+                                },
+                                "&:hover": {
+                                  color: "#7C746A",
+                                },
+                              }}
+                            />
+                          }
                           label={label}
                         />
                       </li>
@@ -114,7 +135,15 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                     {CONCERNS_LIST2.map((label, index) => (
                       <li key={index} className="model__concernsItem">
                         <FormControlLabel
-                          control={<Checkbox className="model__concernsList" />}
+                          control={<Checkbox className="model__concernsList" sx={{
+                            color: "#0C0B09",
+                            "&.Mui-checked": {
+                              color: "#9B6A00",
+                            },
+                            "&:hover": {
+                              color: "#7C746A",
+                            },
+                          }}/>}
                           label={label}
                         />
                       </li>
@@ -131,7 +160,10 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
             <div className="modal__WrapperTitle">
               <h2 className="modal__TitleName">Approaches</h2>
 
-              <button className="model__concernsBt" onClick={handleToggleList}>
+              <button
+                className="model__concernsBt"
+                onClick={handleApproachesList}
+              >
                 <img
                   src={isOpen ? ConcernsBtOpen : ConcernsBtClose}
                   alt="Toggle concerns"
@@ -139,14 +171,22 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
               </button>
             </div>
 
-            {isOpen && (
+            {isOpenApproaches && (
               <div className="modal__checkbox">
                 <div className="model__concernsDropWrapper1">
                   <ul className="model__concernsDrop">
                     {APPROACHES_LIST.map((label, index) => (
                       <li key={index} className="model__concernsItem">
                         <FormControlLabel
-                          control={<Checkbox className="model__concernsList" />}
+                          control={<Checkbox className="model__concernsList" sx={{
+                            color: "#0C0B09",
+                            "&.Mui-checked": {
+                              color: "#9B6A00",
+                            },
+                            "&:hover": {
+                              color: "#7C746A",
+                            },
+                          }}/>}
                           label={label}
                         />
                       </li>
@@ -156,6 +196,14 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
               </div>
             )}
           </div>
+        </div>
+      </div>
+      <div className="Wrapper__Bt">
+        <span className="modal__lineBt"></span>
+
+        <div className="Wrapper__button">
+          <button className="Bt__Reset">Reset</button>
+          <button className="Bt__Apply">Apply</button>
         </div>
       </div>
     </div>

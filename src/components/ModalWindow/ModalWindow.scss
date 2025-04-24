@@ -162,3 +162,39 @@
 .model__concernsItem {
   display: block;
 }
+
+.modal__lineBt{
+  display: block;
+  border: 1px solid #d6cdc0;
+  margin: 0 0 32px 0;
+}
+
+.Wrapper__button{
+  padding: 0 40px 40px 40px;
+  display: flex;
+  gap: 16px;
+}
+
+.Bt__Reset{
+  width: 221px;
+  height: 51px;
+  background-color: #F9F0E2;
+  border: 1px #393126 solid;
+  color: #0C0B09;
+  border-radius: 8px;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.Bt__Apply{
+  width: 221px;
+  height: 51px;
+  background-color: #393126;
+  border: 1px #393126 solid;
+  color: #f1efe9;
+  border-radius: 8px;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+}
