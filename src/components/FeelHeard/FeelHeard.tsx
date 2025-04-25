@@ -1,5 +1,6 @@
 import "./FeelHeard.scss";
 import feelImg from "../../image/feelImg.svg";
+import { NavLink } from "react-router-dom";
 
 export const FeelHeard = () => {
   return (
@@ -25,7 +26,7 @@ export const FeelHeard = () => {
               support.
             </p>
           </div>
-          <button className="feel__findButton">Find therapist</button>
+          <NavLink to='/find'className="feel__findButton">Find therapist</NavLink>
         </div>
 
         <img src={feelImg} alt="feelImg" className="feel__Img" />

@@ -70,6 +70,7 @@
 }
 
 .button__test {
+  text-decoration: none;
   width: 200px;
   height: 51px;
   background-color: #393126;
@@ -79,4 +80,8 @@
   font-family: "Aileron", sans-serif;
   font-weight: 700;
   font-size: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

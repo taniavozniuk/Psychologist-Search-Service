@@ -1,5 +1,5 @@
 import "./App.css";
-import { Header } from "./components/Header/Header";
+// import { Header } from "./components/Header/Header";
 import { TopBar } from "./components/TopBar/TopBar";
 // import { OurServices } from "./components/OurServices/OurServices";
 // import { WhyUs } from "./components/WhyUs/WhyUs";
@@ -7,37 +7,17 @@ import { TopBar } from "./components/TopBar/TopBar";
 // import { Footer } from "./components/Footer/Footer";
 import { useState } from "react";
 import { ModalWindow } from "./components/ModalWindow/ModalWindow";
+import { Outlet } from "react-router-dom";
+import { Footer } from "./components/Footer/Footer";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
-      <div className="conteiner__header">
-        <Header />
-      </div>
-
       {!isModalOpen && (
         <>
           <TopBar onOpenFilter={() => setIsModalOpen(true)} />
-
-          {/* <div className="main">
-            <div className="conteiner__section">
-              <OurServices />
-            </div>
-
-            <div className="conteiner__section">
-              <WhyUs />
-            </div>
-
-            <div className="conteiner__section">
-              <FeelHeard />
-            </div>
-
-            <div className="conteiner__section">
-              <Footer />
-            </div>
-          </div> */}
         </>
       )}
 
@@ -47,7 +27,13 @@ function App() {
         </div>
       )}
 
+      <Outlet context={{ isModalOpen }} />
 
+      {!isModalOpen && (
+        <div className="footer__container">
+          <Footer />
+        </div>
+      )}
     </>
   );
 }

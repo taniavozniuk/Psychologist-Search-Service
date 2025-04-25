@@ -11,17 +11,16 @@
   width: 554px;
 }
 
-.modal__Wrapper{
+.modal__Wrapper {
   padding: 0 40px 40px 40px;
-
 }
 
 .modal__scrollableContent {
   overflow-y: auto;
   padding-right: 1px;
   // flex-grow: 1;
-  max-height: calc(90vh - 200px); 
-  scrollbar-color: #393126 #F9F0E2;
+  max-height: calc(90vh - 200px);
+  scrollbar-color: #393126 #f9f0e2;
   scrollbar-width: thin;
 }
 
@@ -84,6 +83,7 @@
 }
 
 .button__name {
+  cursor: pointer;
   width: 136.67px;
   height: 48px;
   text-align: center;
@@ -96,9 +96,14 @@
   color: #4b463e;
   padding: 12px 16px;
   border-radius: 8px;
+
+  &:active {
+    background-color: #9B6A00;
+    color: white;
+  }
 }
 
-.button__SpecName{
+.button__SpecName {
   width: 100%;
   height: 48px;
   text-align: center;
@@ -113,7 +118,7 @@
   border-radius: 1000px;
 }
 
-.modal__line{
+.modal__line {
   display: block;
   border: 1px solid #d6cdc0;
   margin: 24px 0;
@@ -128,19 +133,19 @@
   margin: 0 0 62px 0;
 }
 
-.modal__WrapperTitle{
+.modal__WrapperTitle {
   display: flex;
   justify-content: space-between;
 }
 
-.model__concernsBt{
+.model__concernsBt {
   background: transparent;
   border: none;
   width: 24px;
   height: 24px;
 }
 
-.modal__checkbox{
+.modal__checkbox {
   display: flex;
   gap: 83px;
 }
@@ -155,7 +160,7 @@
   font-family: "Aileron", sans-serif;
   font-weight: 400;
   font-size: 18px;
-  color: #0C0B09;
+  color: #0c0b09;
   line-height: 30px;
 }
 
@@ -163,31 +168,31 @@
   display: block;
 }
 
-.modal__lineBt{
+.modal__lineBt {
   display: block;
   border: 1px solid #d6cdc0;
   margin: 0 0 32px 0;
 }
 
-.Wrapper__button{
+.Wrapper__button {
   padding: 0 40px 40px 40px;
   display: flex;
   gap: 16px;
 }
 
-.Bt__Reset{
+.Bt__Reset {
   width: 221px;
   height: 51px;
-  background-color: #F9F0E2;
+  background-color: #f9f0e2;
   border: 1px #393126 solid;
-  color: #0C0B09;
+  color: #0c0b09;
   border-radius: 8px;
   font-family: "Aileron", sans-serif;
   font-weight: 700;
   font-size: 18px;
 }
 
-.Bt__Apply{
+.Bt__Apply {
   width: 221px;
   height: 51px;
   background-color: #393126;

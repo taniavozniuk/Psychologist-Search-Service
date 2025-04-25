@@ -1,23 +1,74 @@
-.input__find{
+@use "../../utils/mixins.scss" as *;
+
+.input__find {
   height: 54px;
   width: 416px;
-  background: url('../../image/search.svg') no-repeat;
+  background: url("../../image/search.svg") no-repeat;
   background-position: 16px 16px;
   padding: 0 0 0 48px;
-  border: 1px #F1EFE9 solid;
+  border: 1px #f1efe9 solid;
   border-radius: 10px;
   font-size: 18px;
   font-weight: 400;
-  font-family: 'Aileron', sans-serif;
+  font-family: "Aileron", sans-serif;
+  color: #e8e0d2;
 
   &::placeholder {
-    color: #E8E0D2;
+    color: #e8e0d2;
+  }
+
+  :hover {
+    border: 1px #f1efe9 solid;
+    color: #f1efe9;
+  }
+
+  :focus {
+    color: #000000;
+    border: 1px #f1efe9 solid;
+  }
+
+  @include onTablet{
+    height: 51px;
+    width: 236px;
+  }
+
+  @include onDesktop{
+    height: 54px;
+    width: 416px;
   }
 }
 
-.conteiner__input{
+.conteiner__input {
   padding: 16px 0 0 0;
   align-items: center;
   justify-content: space-between;
   display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.search__result {
+  list-style: none;
+  height: 54px;
+  width: 416px;
+  background-color: rgba(46, 40, 31, 0.7019607843);
+  box-shadow: 0px 0px 68px 0px #ffffff0d inset;
+
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: "Aileron", sans-serif;
+  color: #e8e0d2;
+  position: absolute;
+  padding: 0 40px 0 16px;
+
+  &:hover {
+    background-color: #ffffff08;
+  }
+}
+
+.search__item {
+  padding: 16px 0 0 0;
+  align-items: center;
+  text-align: left;
 }

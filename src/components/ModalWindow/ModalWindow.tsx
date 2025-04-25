@@ -1,42 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ModalWindow.scss";
 import ModalCloce from "../../image/modalClose.svg";
 import ConcernsBtClose from "../../image/ConcernsBtClose.svg";
 import ConcernsBtOpen from "../../image/ConcernsBtOpen.svg";
 import { PriceSlider } from "./PriceSlider/PriceSlider";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import {
+  APPROACHES_LIST,
+  CheckboxList,
+  CONCERNS_LIST1,
+  CONCERNS_LIST2,
+  sexOptions,
+  specOptions,
+} from "./useHookModal";
 
 interface ModalProps {
   onClose: () => void;
 }
 
-const CONCERNS_LIST1 = [
-  "Anxiety",
-  "Grief and loss",
-  "Panic attacks",
-  "Family issues",
-  "Burnout",
-];
-
-const CONCERNS_LIST2 = [
-  "Depression",
-  "Loneliness",
-  "Mood swings",
-  "Social anxiety",
-  "Stress",
-];
-
-const APPROACHES_LIST = [
-  "Psychodynamic Therapy",
-  "Cognitive Behavioral Therapy",
-  "Humanistic Therapy",
-  "Integrative Therapy",
-  "Narrative Therapy",
-];
-
 export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenApproaches, setIsOpenApproaches] = useState(false);
+  const [selectedSex, setSelectedSex] = useState<string | null>(
+    localStorage.getItem("selectedSex")
+  );
+  const [selectedSpec, setSelectedSpec] = useState<string | null>(
+    localStorage.getItem("selectedSpec")
+  );
 
   const handleConcernsList = () => {
     setIsOpen((prev) => !prev);
@@ -45,6 +34,30 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
   const handleApproachesList = () => {
     setIsOpenApproaches((prev) => !prev);
   };
+
+  const handleSexSelection = (sex: string) => {
+    setSelectedSex(sex);
+    localStorage.setItem("selectedSex", sex);
+  };
+
+  const handleSpexSelection = (spec: string) => {
+    setSelectedSpec(spec);
+    localStorage.setItem("selectedSex", spec);
+  };
+
+  useEffect(() => {
+    const storedSex = localStorage.getItem("selectedSex");
+
+    if (storedSex) {
+      setSelectedSex(storedSex);
+    }
+
+    const storedSpec = localStorage.getItem("selectedSpec");
+
+    if (storedSpec) {
+      setSelectedSpec(storedSpec);
+    }
+  });
 
   return (
     <div className="modal__content">
@@ -65,9 +78,20 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
             <h2 className="modal__TitleName">Sex</h2>
 
             <div className="modal__button">
-              <button className="button__name">Male</button>
-              <button className="button__name">Female</button>
-              <button className="button__name">Non-binary</button>
+              {sexOptions.map((sex) => (
+                <button
+                  key={sex}
+                  className={`button__name ${
+                    selectedSex === sex ? "selected" : ""
+                  }`}
+                  onClick={() => handleSexSelection(sex)}
+                  style={{
+                    backgroundColor: selectedSex === sex ? "#9B6A00" : "",
+                  }}
+                >
+                  {sex}
+                </button>
+              ))}
             </div>
           </div>
           <span className="modal__line"></span>
@@ -76,8 +100,20 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
             <h2 className="modal__TitleName">Specialization</h2>
 
             <div className="modal__button">
-              <button className="button__SpecName">Individual</button>
-              <button className="button__SpecName">Couple therapy</button>
+              {specOptions.map((spec) => (
+                <button
+                  key={spec}
+                  className={`button__SpecName ${
+                    selectedSpec === spec ? "selected" : ""
+                  }`}
+                  onClick={() => handleSpexSelection(spec)}
+                  style={{
+                    backgroundColor: selectedSpec === spec ? "#9B6A00" : "",
+                  }}
+                >
+                  {spec}
+                </button>
+              ))}
             </div>
           </div>
           <span className="modal__line"></span>
@@ -105,50 +141,11 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
 
             {isOpen && (
               <div className="modal__checkbox">
-                <div className="model__concernsDropWrapper1">
-                  <ul className="model__concernsDrop">
-                    {CONCERNS_LIST1.map((label, index) => (
-                      <li key={index} className="model__concernsItem">
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              className="model__concernsList"
-                              sx={{
-                                color: "#0C0B09",
-                                "&.Mui-checked": {
-                                  color: "#9B6A00",
-                                },
-                                "&:hover": {
-                                  color: "#7C746A",
-                                },
-                              }}
-                            />
-                          }
-                          label={label}
-                        />
-                      </li>
-                    ))}
-                  </ul>
+                <div className="model__concernsDropWrapper">
+                  <CheckboxList items={CONCERNS_LIST1} />
                 </div>
-                <div className="model__concernsDropWrapper2">
-                  <ul className="model__concernsDrop">
-                    {CONCERNS_LIST2.map((label, index) => (
-                      <li key={index} className="model__concernsItem">
-                        <FormControlLabel
-                          control={<Checkbox className="model__concernsList" sx={{
-                            color: "#0C0B09",
-                            "&.Mui-checked": {
-                              color: "#9B6A00",
-                            },
-                            "&:hover": {
-                              color: "#7C746A",
-                            },
-                          }}/>}
-                          label={label}
-                        />
-                      </li>
-                    ))}
-                  </ul>
+                <div className="model__concernsDropWrapper">
+                  <CheckboxList items={CONCERNS_LIST2} />
                 </div>
               </div>
             )}
@@ -165,7 +162,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                 onClick={handleApproachesList}
               >
                 <img
-                  src={isOpen ? ConcernsBtOpen : ConcernsBtClose}
+                  src={isOpenApproaches ? ConcernsBtOpen : ConcernsBtClose}
                   alt="Toggle concerns"
                 />
               </button>
@@ -173,26 +170,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
 
             {isOpenApproaches && (
               <div className="modal__checkbox">
-                <div className="model__concernsDropWrapper1">
-                  <ul className="model__concernsDrop">
-                    {APPROACHES_LIST.map((label, index) => (
-                      <li key={index} className="model__concernsItem">
-                        <FormControlLabel
-                          control={<Checkbox className="model__concernsList" sx={{
-                            color: "#0C0B09",
-                            "&.Mui-checked": {
-                              color: "#9B6A00",
-                            },
-                            "&:hover": {
-                              color: "#7C746A",
-                            },
-                          }}/>}
-                          label={label}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <CheckboxList items={APPROACHES_LIST} />
               </div>
             )}
           </div>

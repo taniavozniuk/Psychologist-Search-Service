@@ -13,9 +13,9 @@ export const TopBar: React.FC<TopBarProps> = ({ onOpenFilter }) => {
   return (
     <div className="top_bar">
       <div className="wraper__top_bar">
-        <a className="logo">
+        <NavLink to='/'className="logo">
           <img src={logo} alt="Logo" className="logo__img" />
-        </a>
+        </NavLink>
 
         <div className="wraper__inputFilter">
           <div className="input">
@@ -28,9 +28,13 @@ export const TopBar: React.FC<TopBarProps> = ({ onOpenFilter }) => {
         </div>
         <div className="navigation">
           <div className="menu">
-            <NavLink to="/about"className="about">About</NavLink>
+            <NavLink to="/about" className="about">
+              About
+            </NavLink>
 
-            <NavLink to='/blog' className="blog">Blog</NavLink>
+            <NavLink to="/blog" className="blog">
+              Blog
+            </NavLink>
           </div>
 
           <div className="user">

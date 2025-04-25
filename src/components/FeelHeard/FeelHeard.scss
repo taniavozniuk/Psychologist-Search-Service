@@ -38,6 +38,7 @@
 }
 
 .feel__findButton{
+  text-decoration: none;
   width: 200px;
   height: 51px;
   background-color: #393126;
@@ -47,7 +48,9 @@
   font-family: "Aileron", sans-serif;
   font-weight: 700;
   font-size: 18px;
-  line-height: 27px;
-  text-align: center;
   margin-top: 64px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

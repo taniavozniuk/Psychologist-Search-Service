@@ -1,5 +1,6 @@
 import { services } from "./services";
 import "./OurServices.scss";
+import React from "react";
 
 export const OurServices = () => {
   return (
@@ -12,8 +13,8 @@ export const OurServices = () => {
 
       <div className="services__card">
         {services.map((service, index) => (
-          <>
-            <div className="card__services" key={index}>
+          <React.Fragment key={index}>
+            <div className="card__services">
               <img
                 src={service.image}
                 alt={service.title}
@@ -27,7 +28,7 @@ export const OurServices = () => {
             {index !== services.length - 1 && (
               <span className="services__line"></span>
             )}
-          </>
+          </React.Fragment>
         ))}
       </div>
     </div>

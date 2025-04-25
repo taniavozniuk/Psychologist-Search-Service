@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import "./Header.scss";
 
 export const Header = () => {
@@ -24,7 +25,7 @@ export const Header = () => {
             </h2>
 
             <div className="button__testWrapper">
-              <button className="button__test">Start the Test</button>
+              <NavLink to='/test'className="button__test">Start the Test</NavLink>
             </div>
           </div>
         </div>
