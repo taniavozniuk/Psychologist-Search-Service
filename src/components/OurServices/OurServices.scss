@@ -2,6 +2,10 @@
 
 .ourServices {
   margin: 112px 40px;
+
+  @include onTablet {
+    margin: 112px 24px 0 24px;
+  }
 }
 
 .card__services {
@@ -11,8 +15,11 @@
   // @include onTablet{
   //   display: block;
   // }
+  @include onTablet {
+    display: flex;
+  }
 
-  @include onDesktop{
+  @include onDesktop {
     display: flex;
   }
 }
@@ -20,13 +27,24 @@
 .services__text {
   padding-left: 32px;
 
-  @include onTablet{
-    padding: 0;
+  @include onTablet {
+    padding-left: 16px;
   }
 
-  @include onDesktop{
+  @include onDesktop {
     padding-left: 32px;
+  }
+}
 
+.services__image {
+  width: 100%;
+
+  @include onTablet {
+    width: 288px;
+  }
+
+  @include onDesktop {
+    width: 100%;
   }
 }
 
@@ -36,6 +54,12 @@
   font-weight: 700;
   font-size: 32px;
   line-height: 48px;
+
+  @include onTablet {
+    margin: 0 0 16px 0;
+    font-size: 30px;
+    line-height: 38px;
+  }
 }
 
 .services__description {
@@ -44,6 +68,12 @@
   font-size: 18px;
   line-height: 30px;
   color: #4b463e;
+  margin: 0;
+
+  @include onTablet{
+    font-size: 14px;
+    line-height: 21px;
+  }
 }
 
 .services__line {

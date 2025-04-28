@@ -46,20 +46,20 @@ export const Footer = () => {
 
       <div className="footer__upWrapper">
         <nav className="footer__upNav">
-          <ul className="footer__list">
-            <li className="footer__item">
+          <ul className="footer__list2">
+            <li className="footer__item2">
               <a className="footer__link" href="#">
                 Terms & Conditions
               </a>
             </li>
 
-            <li className="footer__item">
+            <li className="footer__item2">
               <a className="footer__link" href="#">
                 Privacy Policy
               </a>
             </li>
 
-            <li className="footer__item">
+            <li className="footer__item2">
               <a className="footer__link" href="#">
                 Privacy Policy
               </a>

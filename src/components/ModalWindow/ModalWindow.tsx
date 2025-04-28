@@ -33,6 +33,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
     handleConSelection,
     handleAprrSelection,
     handleReset,
+    handleApply,
   } = useModalLogicHook();
 
   return (
@@ -61,7 +62,6 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                     selectedSex === sex ? "selected" : ""
                   }`}
                   onClick={() => {
-
                     if (selectedSex === sex) {
                       handleSexSelection(null);
                     } else {
@@ -117,7 +117,9 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
 
           <div className="modal__WrapperConcerns">
             <div className="modal__WrapperTitle">
-              <h2 className="modal__TitleName" onClick={handleConcernsList}>Concerns</h2>
+              <h2 className="modal__TitleName" onClick={handleConcernsList}>
+                Concerns
+              </h2>
 
               <button
                 className="model__concernsBt"
@@ -194,7 +196,9 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
 
           <div className="modal__WrapperApproaches">
             <div className="modal__WrapperTitle">
-              <h2 className="modal__TitleName" onClick={handleApproachesList}>Approaches</h2>
+              <h2 className="modal__TitleName" onClick={handleApproachesList}>
+                Approaches
+              </h2>
 
               <button
                 className="model__concernsBt"
@@ -245,8 +249,18 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
         <span className="modal__lineBt"></span>
 
         <div className="Wrapper__button">
-          <button className="Bt__Reset" onClick={handleReset}>Reset</button>
-          <button className="Bt__Apply">Apply</button>
+          <button className="Bt__Reset" onClick={handleReset}>
+            Reset
+          </button>
+          <button
+            className="Bt__Apply"
+            onClick={() => {
+              handleApply();
+              onClose();
+            }}
+          >
+            Apply
+          </button>
         </div>
       </div>
     </div>

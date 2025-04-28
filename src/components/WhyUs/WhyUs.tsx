@@ -38,35 +38,29 @@ export const WhyUs = () => {
       </div>
 
       <div className="wrapper__button">
-        <button
-          className="whyUs__Prev"
-          onClick={handlePrev}
-          // disabled={activeIndex === 0}
-        >
+        <button className="whyUs__Prev" onClick={handlePrev}>
           <img src={prevBt} alt="prev" className="prev" />
         </button>
-        <button
-          className="whyUs__Next"
-          onClick={handleNext}
-          // disabled={activeIndex === components.length - 1}
-        >
+        <button className="whyUs__Next" onClick={handleNext}>
           <img src={nextBt} alt="next" className="next" />
         </button>
       </div>
 
-      <div
-        className="whyUs__card"
-        style={{
-          transform: isDesktop ? "none" : `translateX(-${activeIndex * 70}%)`,
-        }}
-      >
-        {components.map((component, index) => (
-          <div className="whyUs__content" key={index}>
-            <div className="whyUs__number">{component.number}</div>
-            <h2 className="whyUs__title">{component.title}</h2>
-            <p className="whyUs__description">{component.description}</p>
-          </div>
-        ))}
+      <div className="whyUs__viewport">
+        <div
+          className="whyUs__card"
+          style={{
+            transform: isDesktop ? "none" : `translateX(-${activeIndex * 70}%)`,
+          }}
+        >
+          {components.map((component, index) => (
+            <div className="whyUs__content" key={index}>
+              <div className="whyUs__number">{component.number}</div>
+              <h2 className="whyUs__title">{component.title}</h2>
+              <p className="whyUs__description">{component.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

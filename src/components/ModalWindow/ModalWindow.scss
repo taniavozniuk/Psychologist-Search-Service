@@ -1,3 +1,5 @@
+@use "../../utils/mixins.scss" as *;
+
 .modal__content {
   background-color: #f9f0e2;
   border: none;
@@ -9,6 +11,14 @@
   max-height: 90vh; // не виходить за межі екрану
   overflow: hidden;
   width: 554px;
+
+  @include onTablet {
+    width: 440px;
+  }
+
+  @include onDesktop {
+    width: 554px;
+  }
 }
 
 .modal__Wrapper {
@@ -45,6 +55,14 @@
   line-height: 50px;
   align-items: center;
   margin: 0;
+
+  @include onTablet {
+    font-size: 38px;
+  }
+
+  @include onDesktop {
+    font-size: 40px;
+  }
 }
 
 .close__btn {
@@ -82,6 +100,14 @@
 .modal__button {
   display: flex;
   gap: 32px;
+
+  @include onTablet {
+    gap: 16px;
+  }
+
+  @include onDesktop {
+    gap: 32px;
+  }
 }
 
 .button__name {
@@ -99,10 +125,15 @@
   padding: 12px 16px;
   border-radius: 8px;
 
-  // &:active {
-  //   background-color: #9B6A00;
-  //   color: white;
-  // }
+  @include onTablet {
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  @include onDesktop {
+    font-size: 16px;
+    line-height: 24px;
+  }
 }
 
 .button__SpecName {
@@ -118,6 +149,16 @@
   color: #4b463e;
   padding: 12px 16px;
   border-radius: 1000px;
+
+  @include onTablet {
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  @include onDesktop {
+    font-size: 16px;
+    line-height: 24px;
+  }
 }
 
 .modal__line {
@@ -151,6 +192,14 @@
 .modal__checkbox {
   display: flex;
   gap: 83px;
+
+  @include onTablet {
+    gap: 16px;
+  }
+
+  @include onDesktop {
+    gap: 83px;
+  }
 }
 
 .model__concernsDrop {
@@ -165,6 +214,16 @@
   font-size: 18px;
   color: #0c0b09;
   line-height: 30px;
+
+  @include onTablet {
+    font-size: 16px;
+    line-height: 14px;
+  }
+
+  @include onDesktop {
+    font-size: 18px;
+    line-height: 30px;
+  }
 }
 
 .model__concernsItem {
@@ -193,6 +252,14 @@
   font-family: "Aileron", sans-serif;
   font-weight: 700;
   font-size: 18px;
+
+  @include onTablet {
+    font-size: 16px;
+  }
+
+  @include onDesktop {
+    font-size: 18px;
+  }
 }
 
 .Bt__Apply {
@@ -205,4 +272,12 @@
   font-family: "Aileron", sans-serif;
   font-weight: 700;
   font-size: 18px;
+
+  @include onTablet {
+    font-size: 16px;
+  }
+
+  @include onDesktop {
+    font-size: 18px;
+  }
 }

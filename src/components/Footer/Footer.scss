@@ -1,6 +1,8 @@
+@use "../../utils/mixins.scss" as *;
+
 .footer {
   background-color: #2e281f;
-  padding: 0 40px;
+  padding: 0 24px;
 }
 
 .footer__list {
@@ -14,6 +16,40 @@
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
+
+  @include onTablet {
+    gap: 32px;
+  }
+
+  @include onDesktop {
+    gap: 56px;
+  }
+}
+
+.footer__list2 {
+  display: flex;
+  gap: 56px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: #f1efe9;
+  font-family: "Aileron", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+
+  @include onTablet {
+    display: block;
+  }
+
+  @include onDesktop {
+    display: flex;
+    gap: 56px;
+  }
+}
+
+.footer__item2:not(:last-child) {
+  margin-bottom: 16px;
 }
 
 .footer__link {
@@ -45,10 +81,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @include onTablet {
+    align-items: end;
+
+  }
+
+  @include onDesktop {
+    align-items: center;
+
+  }
 }
 
-.footer__email{
-  color: #F1EFE9;
+.footer__email {
+  color: #f1efe9;
   cursor: pointer;
   display: inline-block;
   text-decoration: none;
@@ -57,5 +103,4 @@
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
-
 }

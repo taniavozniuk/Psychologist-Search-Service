@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const sexOptions = ["Male", "Female", "Non-binary"];
 export const specOptions = ["Individual", "Non-binary"];
@@ -28,6 +29,8 @@ export const APPROACHES_LIST = [
 ];
 
 export const useModalLogicHook = () => {
+  const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = useState(false); //відкриття Concerns
   const [isOpenApproaches, setIsOpenApproaches] = useState(false); //відкриття Approaches
   const [selectedSex, setSelectedSex] = useState<string | null>(
@@ -42,6 +45,7 @@ export const useModalLogicHook = () => {
   const [selectedAppr, setSelectedAppr] = useState<string[]>(
     JSON.parse(localStorage.getItem("selectedAppr") || "[]")
   ); //збереження чекбоксів Approaches
+
 
   // відкриття concerns
   const handleConcernsList = () => {
@@ -62,7 +66,7 @@ export const useModalLogicHook = () => {
   //збереження стпеціалізації
   const handleSpexSelection = (spec: string | null) => {
     setSelectedSpec(spec);
-    localStorage.setItem("selectedSpec", spec || '');
+    localStorage.setItem("selectedSpec", spec || "");
   };
 
   // збереження чекбоксів занепокоїнь(Concerns)
@@ -71,7 +75,7 @@ export const useModalLogicHook = () => {
       const newSelectedCon = prevSelectedCon.includes(con)
         ? prevSelectedCon.filter((item) => item !== con) // Deselect
         : [...prevSelectedCon, con]; // Select
-  
+
       localStorage.setItem("selectedCon", JSON.stringify(newSelectedCon));
       return newSelectedCon;
     });
@@ -100,7 +104,16 @@ export const useModalLogicHook = () => {
     localStorage.removeItem("selectedAppr");
     localStorage.removeItem("selectedSex");
     localStorage.removeItem("selectedSpec");
-  }
+  };
+
+  const handleApply = () => {
+    navigate("/psychologist/:id");
+
+    localStorage.setItem("selectedCon", JSON.stringify(selectedCon));
+    localStorage.setItem("selectedAppr", JSON.stringify(selectedAppr));
+    localStorage.setItem("selectedSex", selectedSex || "");
+    localStorage.setItem("selectedSpec", selectedSpec || "");
+  };
 
   useEffect(() => {
     const storedSex = localStorage.getItem("selectedSex");
@@ -133,6 +146,10 @@ export const useModalLogicHook = () => {
     selectedSpec,
     selectedCon,
     selectedAppr,
+    setSelectedSex,
+    setSelectedSpec,
+    setSelectedCon,
+    setSelectedAppr,
     handleConcernsList,
     handleApproachesList,
     handleSexSelection,
@@ -140,5 +157,6 @@ export const useModalLogicHook = () => {
     handleConSelection,
     handleAprrSelection,
     handleReset,
+    handleApply,
   };
 };

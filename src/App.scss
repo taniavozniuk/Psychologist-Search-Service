@@ -1,0 +1,29 @@
+@use "../src/utils/mixins.scss" as *;
+
+.section__title {
+  margin: 0;
+  text-align: center;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 50px;
+  color: #0c0b09;
+  white-space: nowrap;
+}
+.section__wrapper {
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include onTablet {
+    margin-bottom: 48px;
+  }
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background-color: #9b6a00;
+  max-width: 316px;
+}

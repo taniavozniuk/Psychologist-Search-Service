@@ -115,4 +115,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @include onTablet{
+    width: 168px;
+    height: 48px;
+    font-size: 16px;
+  }
+
+  @include onDesktop{
+    width: 200px;
+    height: 51px;
+    font-size: 18px;
+  }
 }

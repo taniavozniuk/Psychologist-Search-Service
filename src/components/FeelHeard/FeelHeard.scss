@@ -1,8 +1,10 @@
-.feel{
+@use "../../utils/mixins.scss" as *;
+
+.feel {
   margin: 112px 40px;
 }
 
-.feel__content{
+.feel__content {
   display: flex;
 }
 
@@ -11,9 +13,18 @@
   font-weight: 400;
   font-size: 28px;
   line-height: 100%;
-  letter-spacing: 3%;
   color: #4b463e;
   margin: 0;
+
+  @include onTablet {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  @include onDesktop {
+    font-size: 28px;
+    line-height: 100%;
+  }
 }
 
 .feel__line {
@@ -31,13 +42,23 @@
   color: #615b52;
   margin: 0;
   width: 100%;
+
+  @include onTablet {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  @include onDesktop {
+    font-size: 18px;
+    line-height: 30px;
+  }
 }
 
-.feel__Img{
+.feel__Img {
   padding: 0 0 0 32px;
 }
 
-.feel__findButton{
+.feel__findButton {
   text-decoration: none;
   width: 200px;
   height: 51px;
@@ -53,4 +74,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @include onTablet {
+    width: 168px;
+    height: 48px;
+    font-size: 16px;
+    margin-top: 48px;
+  }
+
+  @include onDesktop {
+    width: 200px;
+    height: 51px;
+    font-size: 18px;
+    margin-top: 64px;
+  }
 }

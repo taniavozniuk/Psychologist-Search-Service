@@ -37,8 +37,9 @@ export const FeelHeard = () => {
             Find therapist
           </NavLink>
         </div>
-
-        <img src={selectedImage} alt="feel" className="feel__Img" />
+        <div className="feel__Img">
+          <img src={selectedImage} alt="feel" />
+        </div>
       </div>
     </div>
   );
