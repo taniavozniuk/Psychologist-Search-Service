@@ -1,38 +1,40 @@
+// import { Component } from "react";
+
 export const components = [
   {
     number: "01",
     title: "Verified Psychologists",
     description:
-      "All our specialists go through a thorough verification process. You can trust that you're speaking with licensed and experienced professionals.",
+      "All our therapists are licensed, vetted, and ready to support you.",
   },
   {
     number: "02",
-    title: "Your Matches",
+    title: "Personalized Matches",
     description:
-      "We help you find the right match through a smart combination of personalized tests, filters, and seTarch — tailored to your specific needs.",
+      "We match you with the right therapist based on your unique needs, preferences, and goals.",
   },
   {
     number: "03",
     title: "Secure & Confidential",
     description:
-      "Your privacy is our top priority. All sessions are encrypted and fully confidential, so you can feel safe and supported.",
+      "Your privacy matters. All sessions are encrypted and fully confidential.",
   },
   {
     number: "04",
-    title: "Online Therapy",
+    title: "Flexible Online Therapy",
     description:
-      "Get the support you need from anywhere. Book sessions that fit your schedule and connect with your psychologist from the comfort of your home.",
+      "Get the help you need — anytime, anywhere.",
   },
   {
     number: "05",
     title: "Real Reviews",
     description:
-      "Read honest feedback from other users to make informed decisions and feel confident in your choice of psychologist.",
+      "Hear honest feedback from real clients to help you choose confidently.",
   },
   {
     number: "06",
     title: "Ongoing Support",
     description:
-      "We’re here for you every step of the way. Whether you’re starting therapy or continuing your journey, our platform provides tools, reminders, and support to help you stay on track.",
+      "Stay on track with tools, reminders, and continuous mental health support.",
   },
 ];

@@ -1,8 +1,15 @@
 import "./FeelHeard.scss";
-import feelImg from "../../image/feelImg.svg";
+
 import { NavLink } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
+import feelImgDesktop from "../../image/feelImg.svg";
+import feelImgTablet from "../../image/fellImg2.svg";
 
 export const FeelHeard = () => {
+  const isTablet = useMediaQuery({ maxWidth: 768 });
+
+  const selectedImage = isTablet ? feelImgTablet : feelImgDesktop;
+
   return (
     <div className="feel">
       <div className="section__wrapper">
@@ -26,10 +33,12 @@ export const FeelHeard = () => {
               support.
             </p>
           </div>
-          <NavLink to='/find'className="feel__findButton">Find therapist</NavLink>
+          <NavLink to="/find" className="feel__findButton">
+            Find therapist
+          </NavLink>
         </div>
 
-        <img src={feelImg} alt="feelImg" className="feel__Img" />
+        <img src={selectedImage} alt="feel" className="feel__Img" />
       </div>
     </div>
   );

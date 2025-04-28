@@ -1,60 +1,120 @@
-@use '../../utils/mixins.scss' as *;
+@use "../../utils/mixins.scss" as *;
 
-.whyUs{
+.whyUs {
   margin: 112px 40px;
 }
 
-.whyUs__card{
+.whyUs__card {
   display: flex;
-  @include pageGrid;
+  justify-content: flex-start;
+  gap: 16px;
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
 
-  @include onTablet{
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-  
+  @include onTablet {
+    flex-wrap: nowrap;
+
   }
 
+  @include onDesktop {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow: visible;
+  }
 }
 
-.whyUs__content{
+.wrapper__button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+
+  @include onTablet {
+    display: flex;
+  }
+
+  @include onDesktop {
+    display: none;
+  }
+}
+
+.whyUs__Prev {
+  background-color: transparent;
+  border-radius: 100%;
+  border: 1px solid #b8aea0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: #9b6a00;
+    border: 1px solid #9b6a00;
+  }
+}
+
+.whyUs__Next {
+  background-color: transparent;
+  border-radius: 100%;
+  border: 1px solid #b8aea0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: #9b6a00;
+    border: 1px solid #9b6a00;
+  }
+}
+
+.whyUs__content {
   padding: 40px;
-  border: 1px solid #D6CDC0;
+  border: 1px solid #d6cdc0;
   border-radius: 8px;
+  // flex: 0 0 70%;
+  // max-width: 70%;
 
+  @include onTablet {
+    // flex: 0 0 70%;
+    // max-width: 70%;
+  }
 }
 
-.whyUs__number{
-  background-color: #9B6A00;
+.whyUs__number {
+  background-color: #9b6a00;
   border-radius: 100%;
   width: 56px;
   height: 56px;
-  display: flex; 
+  display: flex;
   justify-content: center;
   align-items: center;
-  color: #F1EFE9;
-  font-family: 'Aileron', sans-serif;
+  color: #f1efe9;
+  font-family: "Aileron", sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 30px;
   margin-bottom: 32px;
 }
 
-.whyUs__title{
-  font-family: 'Aileron', sans-serif;
+.whyUs__title {
+  font-family: "Aileron", sans-serif;
   font-size: 32px;
   font-weight: 700;
   line-height: 48px;
   margin: 0 0 16px 0;
-  color: #0C0B09;
+  color: #0c0b09;
   align-items: center;
 }
 
-.whyUs__description{
-  font-family: 'Aileron', sans-serif;
+.whyUs__description {
+  font-family: "Aileron", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #7C746A;
+  color: #7c746a;
   align-items: center;
   margin: 0;
 }

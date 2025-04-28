@@ -19,6 +19,15 @@
 
 .services__text {
   padding-left: 32px;
+
+  @include onTablet{
+    padding: 0;
+  }
+
+  @include onDesktop{
+    padding-left: 32px;
+
+  }
 }
 
 .servides__title {

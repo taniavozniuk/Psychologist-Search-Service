@@ -12,11 +12,11 @@ export const Header = () => {
         </div>
 
         <div className="header__descriptionWrapper">
-          <div className="Wrapper__description">
+          {/* <div className="Wrapper__description"> */}
             <h2 className="header__description">
               Your journey to feeling better starts here
             </h2>
-          </div>
+          {/* </div> */}
 
           <div className="Wrapper__Text">
             <h2 className="header__text">

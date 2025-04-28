@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./ModalWindow.scss";
 import ModalCloce from "../../image/modalClose.svg";
 import ConcernsBtClose from "../../image/ConcernsBtClose.svg";
@@ -6,58 +6,34 @@ import ConcernsBtOpen from "../../image/ConcernsBtOpen.svg";
 import { PriceSlider } from "./PriceSlider/PriceSlider";
 import {
   APPROACHES_LIST,
-  CheckboxList,
   CONCERNS_LIST1,
   CONCERNS_LIST2,
   sexOptions,
   specOptions,
+  useModalLogicHook,
 } from "./useHookModal";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 interface ModalProps {
   onClose: () => void;
 }
 
 export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isOpenApproaches, setIsOpenApproaches] = useState(false);
-  const [selectedSex, setSelectedSex] = useState<string | null>(
-    localStorage.getItem("selectedSex")
-  );
-  const [selectedSpec, setSelectedSpec] = useState<string | null>(
-    localStorage.getItem("selectedSpec")
-  );
-
-  const handleConcernsList = () => {
-    setIsOpen((prev) => !prev);
-  };
-
-  const handleApproachesList = () => {
-    setIsOpenApproaches((prev) => !prev);
-  };
-
-  const handleSexSelection = (sex: string) => {
-    setSelectedSex(sex);
-    localStorage.setItem("selectedSex", sex);
-  };
-
-  const handleSpexSelection = (spec: string) => {
-    setSelectedSpec(spec);
-    localStorage.setItem("selectedSex", spec);
-  };
-
-  useEffect(() => {
-    const storedSex = localStorage.getItem("selectedSex");
-
-    if (storedSex) {
-      setSelectedSex(storedSex);
-    }
-
-    const storedSpec = localStorage.getItem("selectedSpec");
-
-    if (storedSpec) {
-      setSelectedSpec(storedSpec);
-    }
-  });
+  const {
+    isOpen,
+    isOpenApproaches,
+    selectedSex,
+    selectedSpec,
+    selectedCon,
+    selectedAppr,
+    handleConcernsList,
+    handleApproachesList,
+    handleSexSelection,
+    handleSpexSelection,
+    handleConSelection,
+    handleAprrSelection,
+    handleReset,
+  } = useModalLogicHook();
 
   return (
     <div className="modal__content">
@@ -84,9 +60,17 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                   className={`button__name ${
                     selectedSex === sex ? "selected" : ""
                   }`}
-                  onClick={() => handleSexSelection(sex)}
+                  onClick={() => {
+
+                    if (selectedSex === sex) {
+                      handleSexSelection(null);
+                    } else {
+                      handleSexSelection(sex);
+                    }
+                  }}
                   style={{
                     backgroundColor: selectedSex === sex ? "#9B6A00" : "",
+                    color: selectedSex === sex ? "#f1efe9" : "",
                   }}
                 >
                   {sex}
@@ -106,9 +90,16 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                   className={`button__SpecName ${
                     selectedSpec === spec ? "selected" : ""
                   }`}
-                  onClick={() => handleSpexSelection(spec)}
+                  onClick={() => {
+                    if (selectedSpec === spec) {
+                      handleSpexSelection(null);
+                    } else {
+                      handleSpexSelection(spec);
+                    }
+                  }}
                   style={{
                     backgroundColor: selectedSpec === spec ? "#9B6A00" : "",
+                    color: selectedSpec === spec ? "#f1efe9" : "",
                   }}
                 >
                   {spec}
@@ -126,7 +117,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
 
           <div className="modal__WrapperConcerns">
             <div className="modal__WrapperTitle">
-              <h2 className="modal__TitleName">Concerns</h2>
+              <h2 className="modal__TitleName" onClick={handleConcernsList}>Concerns</h2>
 
               <button
                 className="model__concernsBt"
@@ -141,11 +132,59 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
 
             {isOpen && (
               <div className="modal__checkbox">
-                <div className="model__concernsDropWrapper">
-                  <CheckboxList items={CONCERNS_LIST1} />
+                <div className="model__concernsDropWrapper1">
+                  <ul className="model__concernsDrop">
+                    {CONCERNS_LIST1.map((label, index) => (
+                      <li key={index} className="model__concernsItem">
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              className="model__concernsList"
+                              sx={{
+                                color: "#0C0B09",
+                                "&.Mui-checked": {
+                                  color: "#9B6A00",
+                                },
+                                "&:hover": {
+                                  color: "#7C746A",
+                                },
+                              }}
+                              checked={selectedCon.includes(label)}
+                              onChange={() => handleConSelection(label)}
+                            />
+                          }
+                          label={label}
+                        />
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="model__concernsDropWrapper">
-                  <CheckboxList items={CONCERNS_LIST2} />
+                <div className="model__concernsDropWrapper2">
+                  <ul className="model__concernsDrop">
+                    {CONCERNS_LIST2.map((label, index) => (
+                      <li key={index} className="model__concernsItem">
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              className="model__concernsList"
+                              sx={{
+                                color: "#0C0B09",
+                                "&.Mui-checked": {
+                                  color: "#9B6A00",
+                                },
+                                "&:hover": {
+                                  color: "#7C746A",
+                                },
+                              }}
+                              checked={selectedCon.includes(label)}
+                              onChange={() => handleConSelection(label)}
+                            />
+                          }
+                          label={label}
+                        />
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             )}
@@ -155,7 +194,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
 
           <div className="modal__WrapperApproaches">
             <div className="modal__WrapperTitle">
-              <h2 className="modal__TitleName">Approaches</h2>
+              <h2 className="modal__TitleName" onClick={handleApproachesList}>Approaches</h2>
 
               <button
                 className="model__concernsBt"
@@ -170,7 +209,33 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
 
             {isOpenApproaches && (
               <div className="modal__checkbox">
-                <CheckboxList items={APPROACHES_LIST} />
+                <div className="model__concernsDropWrapper1">
+                  <ul className="model__concernsDrop">
+                    {APPROACHES_LIST.map((label, index) => (
+                      <li key={index} className="model__concernsItem">
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              className="model__concernsList"
+                              sx={{
+                                color: "#0C0B09",
+                                "&.Mui-checked": {
+                                  color: "#9B6A00",
+                                },
+                                "&:hover": {
+                                  color: "#7C746A",
+                                },
+                              }}
+                              checked={selectedAppr.includes(label)}
+                              onChange={() => handleAprrSelection(label)}
+                            />
+                          }
+                          label={label}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             )}
           </div>
@@ -180,7 +245,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
         <span className="modal__lineBt"></span>
 
         <div className="Wrapper__button">
-          <button className="Bt__Reset">Reset</button>
+          <button className="Bt__Reset" onClick={handleReset}>Reset</button>
           <button className="Bt__Apply">Apply</button>
         </div>
       </div>

@@ -16,8 +16,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
 
+  @include onTablet {
+    justify-content: center;
+    align-items: center;
+  }
+}
 
 .header__titleWrapper {
   padding-bottom: 80px;
@@ -32,6 +36,14 @@
   font-size: 86px;
   font-weight: 600;
   font-family: "Aileron", sans-serif;
+
+  @include onTablet {
+    font-size: 45px;
+  }
+
+  @include onDesktop {
+    font-size: 86px;
+  }
 }
 
 .header__descriptionWrapper {
@@ -50,6 +62,15 @@
   // padding-bottom: 53px;
   margin: 0;
   line-height: 57px;
+
+  @include onTablet {
+    font-size: 24px;
+    line-height: 37px;
+  }
+
+  @include onDesktop {
+    font-size: 32px;
+  }
 }
 
 .header__text {
@@ -62,6 +83,16 @@
   line-height: 27px;
   padding-bottom: 40px;
   text-align: right;
+
+  @include onTablet {
+    font-size: 16px;
+    width: 260px;
+  }
+
+  @include onDesktop {
+    font-size: 18px;
+    width: 421px;
+  }
 }
 
 .button__testWrapper {

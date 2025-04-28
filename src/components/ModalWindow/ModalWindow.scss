@@ -69,6 +69,8 @@
 }
 
 .modal__TitleName {
+  cursor: pointer;
+
   font-family: "Aileron", sans-serif;
   font-weight: 700;
   font-size: 20px;
@@ -97,10 +99,10 @@
   padding: 12px 16px;
   border-radius: 8px;
 
-  &:active {
-    background-color: #9B6A00;
-    color: white;
-  }
+  // &:active {
+  //   background-color: #9B6A00;
+  //   color: white;
+  // }
 }
 
 .button__SpecName {
@@ -139,6 +141,7 @@
 }
 
 .model__concernsBt {
+  cursor: pointer;
   background: transparent;
   border: none;
   width: 24px;

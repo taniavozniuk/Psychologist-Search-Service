@@ -7,18 +7,18 @@ export const services = [
     image: img1,
     title: "Smart Matching System",
     description:
-      "Start by taking a short personalized test or use our smart search and filters to find the right psychologist for you. Whether you want to be guided or prefer to explore specialists on your own, we make the process smooth and intuitive.",
+      "Take a quick personalized quiz or use smart filters to find the best licensed therapist online. Whether you want guidance or prefer to choose on your own, we make the process easy and intuitive.",
   },
   {
     image: img2,
     title: "Online Sessions",
     description:
-      "Once you’ve found your ideal psychologist, book an online session that fits your schedule. Enjoy professional support from the comfort of your home, with secure sessions designed to ensure privacy and comfort. ",
+      "Book secure online therapy sessions that fit your schedule. Connect with trusted mental health professionals from the comfort of your home.",
   },
   {
     image: img3,
     title: "Continuous Support",
     description:
-      "Our platform offers ongoing support, allowing you to continue working with your psychologist on a long-term basis. We provide resources to help you develop healthy coping mechanisms, improve mental well-being, and manage stress effectively.",
+      "We offer long-term support to help you build healthy coping strategies, reduce stress, and improve your overall well-being with ongoing therapist sessions.",
   },
 ];
