@@ -1,4 +1,76 @@
-.Registration__content{
-  background-color: white;
+.Registration__content {
+  background-color: #f9f0e2;
   width: 750px;
+  border-radius: 16px;
+  padding: 40px;
+}
+
+.registrationTitle__wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.registration__step {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #7c746a;
+  margin: 0;
+}
+
+.registration__title {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 50px;
+  color: #0c0b09;
+  margin-top: 24px;
+}
+
+.registration__close {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid #f9f0e2;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  // margin-right: 40px;
+}
+
+.registration__description {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #4b463e;
+  margin-bottom: 8px;
+}
+
+.registration__haveAccount{
+  display: flex;
+  align-items: center;
+}
+
+.haveAccount{
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #4B463E;
+  margin: 0;
+}
+
+.login{
+  font-family: "Aileron", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #9B6A00;
+  margin: 0 0 0 8px;
 }

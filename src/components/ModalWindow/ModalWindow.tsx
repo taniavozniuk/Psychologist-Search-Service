@@ -37,7 +37,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
   } = useModalLogicHook();
 
   return (
-    <div className="modal__content">
+    <div className="modal__content" onClick={(e) => e.stopPropagation()}>
       <div className="modal__WrappeTitleBt">
         <div className="title__conteiner">
           <h2 className="title__modal">Filter</h2>
