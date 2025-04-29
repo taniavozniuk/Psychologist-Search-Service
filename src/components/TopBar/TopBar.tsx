@@ -7,9 +7,10 @@ import { NavLink } from "react-router-dom";
 
 interface TopBarProps {
   onOpenFilter: () => void;
+  onOpenRegistration: () => void;
 }
 
-export const TopBar: React.FC<TopBarProps> = ({ onOpenFilter }) => {
+export const TopBar: React.FC<TopBarProps> = ({ onOpenFilter, onOpenRegistration }) => {
   return (
     <div className="top_bar">
       <div className="wraper__top_bar">
@@ -38,8 +39,9 @@ export const TopBar: React.FC<TopBarProps> = ({ onOpenFilter }) => {
           </div>
 
           <div className="user">
-            <button className="user__button">
+            <button className="user__button" onClick={onOpenRegistration}>
               <img src={UserIcon} alt="userIcon" className="button__icon" />
+              {/* <Registration onOpen={onOpenFilter}/> */}
             </button>
           </div>
         </div>

@@ -8,7 +8,7 @@ import { getPsychologist } from "../../api/api";
 export const Input = () => {
   const [searchText, setSearchText] = useState("");
   const [psychologists, setPsychologists] = useState<Psychologist[]>([]);
-  const [showSuggestion, setShowSuggestion] = useState(false);
+  // const [showSuggestion, setShowSuggestion] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,25 +36,25 @@ export const Input = () => {
     navigate(`/psychologist/${psychologistName}`);
   };
 
-  useEffect(() => {
-    if (searchText.trim() !== "" && psychologists.length === 0) {
-      setShowSuggestion(true);
+  // useEffect(() => {
+  //   if (searchText.trim() !== "" && psychologists.length === 0) {
+  //     setShowSuggestion(true);
 
-      const timer = setTimeout(() => {
-        setShowSuggestion(false);
-      }, 3000); // Затримка в 1 секунду
+  //     const timer = setTimeout(() => {
+  //       setShowSuggestion(false);
+  //     }, 2000);
 
-      return () => clearTimeout(timer);
-    }
-  }, [searchText, psychologists.length]);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [searchText, psychologists.length]);
 
   // const filtereredPsychologist = psychologists.filter((psych: Psychologist) =>
   //   psych.firstName.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
   // );
 
-  const handleSuggestionClick = () => {
-    navigate("/find"); // Перехід на сторінку з усіма психологами
-  };
+  // const handleSuggestionClick = () => {
+  //   navigate("/find"); // Перехід на сторінку з усіма психологами
+  // };
 
   return (
     <>
@@ -74,7 +74,10 @@ export const Input = () => {
             <li
               key={phych.id}
               className="search__item"
-              onClick={() => handleClickPsycholog(phych.firstName)}
+              onClick={() => {
+                handleClickPsycholog(phych.firstName);
+                setSearchText("");
+              }}
             >
               {phych.firstName} {phych.lastName}
             </li>
@@ -86,12 +89,12 @@ export const Input = () => {
           <li className="search__item">Не знайдено результатів</li>
         </ul>
       )}
-
+      {/* 
       {showSuggestion && (
         <div className="suggestion-box" onClick={handleSuggestionClick}>
           <p>Go to the psychologists page</p>
         </div>
-      )}
+      )} */}
       {/* <button onClick={handleAddPsychologist}>Add New Psychologist</button> */}
     </>
   );

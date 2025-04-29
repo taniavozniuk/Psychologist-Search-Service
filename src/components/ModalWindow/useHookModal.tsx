@@ -46,7 +46,6 @@ export const useModalLogicHook = () => {
     JSON.parse(localStorage.getItem("selectedAppr") || "[]")
   ); //збереження чекбоксів Approaches
 
-
   // відкриття concerns
   const handleConcernsList = () => {
     setIsOpen((prev) => !prev);
@@ -107,7 +106,9 @@ export const useModalLogicHook = () => {
   };
 
   const handleApply = () => {
-    navigate("/psychologist/:id");
+    navigate("/psychologist", {
+      state: { formApplyButton: true },
+    });
 
     localStorage.setItem("selectedCon", JSON.stringify(selectedCon));
     localStorage.setItem("selectedAppr", JSON.stringify(selectedAppr));

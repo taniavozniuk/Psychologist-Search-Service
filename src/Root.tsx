@@ -10,7 +10,9 @@ import { HomePage } from "./components/HomePage/HomePage";
 import App from "./App";
 import { StartTest } from "./components/StartTest/StartTest";
 import { FindTherapist } from "./components/FindTherapist/FindTherapist";
-import { PsychologistPageInfo } from "./components/PsychologistPI/PsychologistPI";
+import { PsychologistPageAll } from "./components/PsychologistPI/PsychologistPI";
+import { PsychologistProfile } from "./components/PsychologistsProfile/PsychologistsProfile";
+// import { Registration } from "./components/Registration/Registration";
 
 export const Root = () => {
   return (
@@ -22,8 +24,10 @@ export const Root = () => {
           <Route path="about" element={<About />} />
           <Route path="blog" element={<Blog />} />
           <Route path="test" element={<StartTest />} />
+          {/* <Route path="registration" element={<Registration />} /> */}
           <Route path="find" element={<FindTherapist />} />
-          <Route path="/psychologist/:id" element={<PsychologistPageInfo />} />
+          <Route path="/psychologist" element={<PsychologistPageAll />} />
+          <Route path="/psychologist/:id" element={<PsychologistProfile />} />
         </Route>
       </Routes>
     </Router>

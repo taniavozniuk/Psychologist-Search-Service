@@ -1,3 +1,26 @@
-.psychologists__card{
+.psychologists__card {
   margin: 0 40px;
+}
+
+.wrapper {
+  margin: 112px 40px 0;
+}
+
+.psychologists__title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.psychologists__description {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page__psychologists {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  background-color: #4157;
 }

@@ -8,16 +8,23 @@ import { TopBar } from "./components/TopBar/TopBar";
 import { useState } from "react";
 import { ModalWindow } from "./components/ModalWindow/ModalWindow";
 import { Outlet } from "react-router-dom";
-import { Footer } from "./components/Footer/Footer";
+import { Registration } from "./components/Registration/Registration";
+// import { Footer } from "./components/Footer/Footer";
+
+type ModalType = "filter" | "registration" | null;
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<ModalType>(null);
 
   return (
     <>
       {!isModalOpen && (
         <>
-          <TopBar onOpenFilter={() => setIsModalOpen(true)} />
+          <TopBar
+            onOpenFilter={() => setIsModalOpen(true)}
+            onOpenRegistration={() => setModalType("registration")}
+          />
         </>
       )}
 
@@ -27,15 +34,24 @@ function App() {
         </div>
       )}
 
-      <Outlet context={{ isModalOpen }} />
+      {isModalOpen && (
+        <div className="registation__modal">
+          <Registration onClose={() => setModalType(null)} />
+        </div>
+      )}
 
-      {!isModalOpen && (
+
+      <Outlet context={{ modalType }} />
+    </>
+  );
+
+  {
+    /* {!isModalOpen && (
         <div className="footer__container">
           <Footer />
         </div>
-      )}
-    </>
-  );
+      )} */
+  }
 }
 
 export default App;
