@@ -1,5 +1,6 @@
 import axios from "axios";
 import { postPsychologist } from "../types/post";
+import { SingUp } from "../types/singUp";
 
 
 const BASE_URL = "http://localhost:8080/api";
@@ -32,3 +33,14 @@ export const addPsychologist = async (newPsychologist: postPsychologist) => {
     throw error;
   }
 };
+
+//реєстрацію(sing Up)
+export const singUp = async (formData: SingUp) => {
+  try {
+    const response = await apiClient.post('/auth/register', formData);
+    return response.data;
+  } catch (error) {
+    console.log("SingUp error", error)
+    throw error;
+  }
+}

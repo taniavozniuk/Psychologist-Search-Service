@@ -1,29 +1,38 @@
 import "./App.scss";
-// import { Header } from "./components/Header/Header";
 import { TopBar } from "./components/TopBar/TopBar";
-// import { OurServices } from "./components/OurServices/OurServices";
-// import { WhyUs } from "./components/WhyUs/WhyUs";
-// import { FeelHeard } from "./components/FeelHeard/FeelHeard";
-// import { Footer } from "./components/Footer/Footer";
 import { useState } from "react";
 import { ModalWindow } from "./components/ModalWindow/ModalWindow";
 import { Outlet } from "react-router-dom";
-import { Registration } from "./components/Registration/Registration";
+import { Registration } from "./components/Ragistration/Ragistration";
+import { LogIn } from "./components/Ragistration/LogIn/LogIn";
+import { NextStep } from "./components/Ragistration/nextstep";
 // import { Footer } from "./components/Footer/Footer";
-
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenRegistration, setIsModalOpenRegistration] = useState(false);
+  const [isModalLogIn, setIsModalLogIn] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleNextStep = (email: string, password: string) => {
+    setEmail(email);
+    setPassword(password);
+    setCurrentStep(2);
+  };
 
   return (
     <>
-      {!isModalOpen  &&(
+      {!isModalOpen && (
         <>
           <TopBar
             onOpenFilter={() => setIsModalOpen(true)}
             setIsModalOpenRegistration={() => setIsModalOpenRegistration(true)}
             isModalOpenRegistration={isModalOpenRegistration}
+            setIsModalLogIn={() => setIsModalLogIn(true)}
+            isModalLogIn={isModalLogIn}
           />
         </>
       )}
@@ -34,14 +43,37 @@ function App() {
         </div>
       )}
 
-      {isModalOpenRegistration && !isModalOpen && (
-        <div className="registation__modal" onClick={(e) => e.stopPropagation()}>
-          <Registration onClose={() => setIsModalOpenRegistration(false)} />
+      {isModalOpenRegistration && currentStep === 1 && !isModalOpen && (
+        <div
+          className="registation__modal"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Registration
+            onClose={() => setIsModalOpenRegistration(false)}
+            onNextStep={handleNextStep}
+          />
         </div>
       )}
 
+      {currentStep === 2 && isModalOpenRegistration && (
+        <div className="next__modal">
+          <NextStep
+            onClose={() => setIsModalOpenRegistration(false)}
+            email={email}
+            password={password}
+          />
+        </div>
+      )}
 
-      <Outlet context={{ isModalOpen, isModalOpenRegistration }} />
+      {isModalLogIn && !isModalOpen && (
+        <div className="logIn__modal" onClick={(e) => e.stopPropagation()}>
+          <LogIn onClose={() => setIsModalLogIn(false)} />
+        </div>
+      )}
+
+      <Outlet
+        context={{ isModalOpen, isModalOpenRegistration, isModalLogIn }}
+      />
     </>
   );
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./ModalWindow.scss";
 import ModalCloce from "../../image/modalClose.svg";
 import ConcernsBtClose from "../../image/ConcernsBtClose.svg";
@@ -13,6 +13,7 @@ import {
   useModalLogicHook,
 } from "./useHookModal";
 import { Checkbox, FormControlLabel } from "@mui/material";
+import { useOutsideClick } from "../../hooks";
 
 interface ModalProps {
   onClose: () => void;
@@ -36,8 +37,17 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
     handleApply,
   } = useModalLogicHook();
 
+  const modalRef = useRef<HTMLDivElement>(null);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  useOutsideClick(modalRef, onClose);
+
   return (
-    <div className="modal__content" onClick={(e) => e.stopPropagation()}>
+    <div
+      ref={modalRef}
+      className="modal__content"
+      onClick={(e) => e.stopPropagation()}
+    >
       <div className="modal__WrappeTitleBt">
         <div className="title__conteiner">
           <h2 className="title__modal">Filter</h2>

@@ -1,24 +1,24 @@
-import "./Registration.scss";
-import ModalCloce from "../../image/modalClose.svg";
+import { useRef } from "react";
+import ModalCloce from "../../../image/modalClose.svg";
+import { useOutsideClick } from "../../../hooks";
 
-interface RegistrationProps {
+interface LogInProps {
   onClose: () => void;
 }
 
-export const Registration: React.FC<RegistrationProps> = ({ onClose }) => {
-  // const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-  //   if (event.target === event.currentTarget) {
-  //     onClose();
-  //   }
-  // };
+export const LogIn: React.FC<LogInProps> = ({ onClose }) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  useOutsideClick(modalRef, onClose);
   return (
-    <div className="Registration__content" onClick={(e) => e.stopPropagation()}>
+    <div
+      ref={modalRef}
+      className="Registration__content"
+      onClick={(e) => e.stopPropagation()}
+    >
       <div className="registrationTitle__wrapper">
-        <div className="wrapper__stepTitle">
-          <p className="registration__step">Step 1 of 2</p>
-          <h2 className="registration__title">Create Your Account</h2>
-        </div>
-
+        LOG IN
         <button onClick={onClose} className="registration__close">
           <img src={ModalCloce} alt="close" className="close" />
         </button>

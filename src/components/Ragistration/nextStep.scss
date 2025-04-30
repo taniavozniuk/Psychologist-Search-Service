@@ -1,0 +1,160 @@
+.next__content {
+  background-color: #f9f0e2;
+  width: 750px;
+  border-radius: 16px;
+  padding: 40px;
+}
+
+.nextStep__line {
+  display: block;
+  border: 1px solid #d6cdc0;
+  margin: 16px 0 16px 0;
+}
+
+.nextStep__content {
+  background-color: #f9f0e2;
+  width: 750px;
+  border-radius: 16px;
+  padding: 40px;
+}
+
+.nextStepTitle__wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nextStep__step {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #7c746a;
+  margin: 0;
+}
+
+.nextStep__title {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 50px;
+  color: #0c0b09;
+  margin: 24px 0 0 0;
+}
+
+.nextStep__close {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid #f9f0e2;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  // margin-right: 40px;
+}
+
+.nextStep__line {
+  display: block;
+  border: 1px solid #d6cdc0;
+  margin: 16px 0 16px 0;
+}
+
+.nextStep__description {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #4b463e;
+  margin-bottom: 8px;
+}
+
+.nextStep__haveAccount {
+  display: flex;
+  align-items: center;
+}
+
+.haveAccount {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #4b463e;
+  margin: 0;
+}
+
+.login {
+  font-family: "Aileron", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #9b6a00;
+  margin: 0 0 0 8px;
+}
+
+.formName {
+  margin-top: 40px;
+}
+
+.label__FirstName {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #0c0b09;
+}
+
+.FirstNameBox {
+  margin-top: 8px;
+}
+
+.inputFirstName {
+  width: 100%;
+  height: 51px;
+  border: 1px solid #615b52;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.field__SecondName {
+  margin-top: 16px;
+}
+
+.label__SecondName {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #0c0b09;
+}
+
+.SecondNameBox {
+  margin-top: 8px;
+}
+
+.inputSecondName {
+  width: 100%;
+  height: 51px;
+  border: 1px solid #615b52;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.checkBoxAggre{
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #0c0b09;
+}
+
+.agreeLink{
+    font-family: "Aileron", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #9B6A00;
+    text-decoration: none;
+}

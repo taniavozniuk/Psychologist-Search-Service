@@ -18,7 +18,6 @@
   margin: 0 16px;
   gap: 15px;
 
-
   @include onTablet {
     margin: 0 24px;
     justify-content: space-between;
@@ -140,5 +139,47 @@
   @include onDesktop {
     width: 48px;
     height: 48px;
+  }
+}
+
+.choose {
+  position: absolute;
+  width: 202px;
+  height: 110px;
+  margin-top: 48px;
+  background-color: rgba(46, 40, 31, 0.3019607843);
+  border-radius: 8px;
+  right: 40px;
+}
+
+.choose__sing {
+  cursor: pointer;
+  padding: 0 16px;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: "Aileron", sans-serif;
+  line-height: 30px;
+  color: #e8e0d2;
+  transition: background-color 0.2s ease-in-out;
+
+
+  &:hover {
+    background-color: rgba(66, 55, 49, 0.6);
+  }
+}
+
+.choose__login {
+  cursor: pointer;
+  padding: 0 16px;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: "Aileron", sans-serif;
+  line-height: 30px;
+  color: #e8e0d2;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: rgba(66, 55, 49, 0.6);
+    
   }
 }

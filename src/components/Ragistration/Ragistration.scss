@@ -1,0 +1,221 @@
+.Registration__content {
+  background-color: #f9f0e2;
+  width: 750px;
+  border-radius: 16px;
+  padding: 40px;
+  margin-inline: 20px;
+}
+
+.registrationTitle__wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.registration__step {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #7c746a;
+  margin: 0;
+}
+
+.registration__title {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 50px;
+  color: #0c0b09;
+  margin: 24px 0 0 0;
+}
+
+.registration__close {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid #f9f0e2;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  // margin-right: 40px;
+}
+
+.registration__line {
+  display: block;
+  border: 1px solid #d6cdc0;
+  margin: 16px 0 40px 0;
+}
+
+.registration__description {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #4b463e;
+  margin-bottom: 8px;
+}
+
+.registration__haveAccount {
+  display: flex;
+  align-items: center;
+}
+
+.haveAccount {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #4b463e;
+  margin: 0;
+}
+
+.login {
+  font-family: "Aileron", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #9b6a00;
+  margin: 0 0 0 8px;
+}
+
+.formSingUp {
+  margin-top: 27px;
+}
+
+.label__email {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #0c0b09;
+}
+
+.inputEmail {
+  width: 100%;
+  height: 51px;
+  border: 1px solid #615b52;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.PaswwordBox {
+  position: relative;
+}
+
+.field__Password {
+  margin-top: 16px;
+}
+
+.label__paswword {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #0c0b09;
+  margin: 0 0 8px 0;
+}
+
+.showPassword {
+  width: 37px;
+  height: 37px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.imgPassword {
+  width: 24px;
+  height: 24px;
+}
+
+.registrationContinue {
+  margin: 40px 0 0 0;
+  width: 100%;
+  height: 51px;
+  background-color: #393126;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+  color: #f1efe9;
+  border-radius: 8px;
+  border: 1px solid #393126;
+
+  &:hover {
+    background-color: #9b6a00;
+    border: 1px solid #9b6a00;
+  }
+}
+
+.registration__lineDown {
+  display: block;
+  border: 1px solid #d6cdc0;
+  margin: 40px 0 16px 0;
+}
+
+.registrationWrapperButton {
+  display: flex;
+  gap: 32px;
+}
+
+.registrationGoogle {
+  // margin: 40px 0 0 0;
+  width: 100%;
+  height: 51px;
+  background-color: transparent;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+  color: #4b463e;
+  border-radius: 8px;
+  border: 1px solid #615b52;
+  background-image: url(../../image/Resitration/google.svg);
+  background-repeat: no-repeat;
+  background-position: 16px 13.5px;
+
+  &:hover {
+    background-color: #9b6a00;
+    border: 1px solid #9b6a00;
+    color: #f1efe9;
+  }
+}
+
+.registrationApple {
+  width: 100%;
+  height: 51px;
+  background-color: transparent;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+  color: #4b463e;
+  border-radius: 8px;
+  border: 1px solid #615b52;
+  background-image: url(../../image/Resitration/iphone.svg);
+  background-repeat: no-repeat;
+  background-position: 16px 13.5px;
+
+  &:hover {
+    background-color: #9b6a00;
+    border: 1px solid #9b6a00;
+    color: #f1efe9;
+  }
+}
+
+.help{
+  margin: 0;
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: red;
+}

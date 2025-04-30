@@ -4,13 +4,14 @@ import React from "react";
 
 type HeaderProps = {
   isModalOpenRegistration: boolean;
+  isModalLogIn: boolean;
 };
 
-export const Header: React.FC<HeaderProps> = ({ isModalOpenRegistration }) => {
+export const Header: React.FC<HeaderProps> = ({ isModalOpenRegistration, isModalLogIn }) => {
   return (
     <div className="header">
       {/* <div className="header__wrapper"> */}
-      {!isModalOpenRegistration && (
+      {!isModalOpenRegistration && !isModalLogIn && (
         <div className="header__bottom">
           <div className="header__wrapper">
             <div className="header__titleWrapper">

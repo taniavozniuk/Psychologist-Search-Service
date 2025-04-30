@@ -4,19 +4,23 @@ import OurServices from "../OurServices/OurServices";
 import { WhyUs } from "../WhyUs/WhyUs";
 import { useOutletContext } from "react-router-dom";
 
-
 type OutletContextType = {
   isModalOpen: boolean;
   isModalOpenRegistration: boolean;
+  isModalLogIn: boolean;
 };
 
 export const HomePage = () => {
-  const { isModalOpen, isModalOpenRegistration } = useOutletContext<OutletContextType>();
+  const { isModalOpen, isModalOpenRegistration, isModalLogIn } =
+    useOutletContext<OutletContextType>();
 
   return (
     <>
       <div className="conteiner__header">
-        <Header isModalOpenRegistration={isModalOpenRegistration}/>
+        <Header
+          isModalOpenRegistration={isModalOpenRegistration}
+          isModalLogIn={isModalLogIn}
+        />
       </div>
 
       {!isModalOpen && !isModalOpenRegistration && (
