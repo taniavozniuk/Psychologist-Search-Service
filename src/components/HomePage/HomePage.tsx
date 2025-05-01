@@ -8,16 +8,18 @@ type OutletContextType = {
   isModalOpen: boolean;
   isModalOpenRegistration: boolean;
   isModalLogIn: boolean;
+  isCongratulationsOpen: boolean;
 };
 
 export const HomePage = () => {
-  const { isModalOpen, isModalOpenRegistration, isModalLogIn } =
+  const { isModalOpen, isModalOpenRegistration, isModalLogIn, isCongratulationsOpen } =
     useOutletContext<OutletContextType>();
 
   return (
     <>
       <div className="conteiner__header">
         <Header
+          isCongratulationsOpen={isCongratulationsOpen}
           isModalOpenRegistration={isModalOpenRegistration}
           isModalLogIn={isModalLogIn}
         />

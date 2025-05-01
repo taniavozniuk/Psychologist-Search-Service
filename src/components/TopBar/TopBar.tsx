@@ -13,6 +13,7 @@ interface TopBarProps {
   isModalOpenRegistration: boolean;
   setIsModalLogIn: () => void;
   isModalLogIn: boolean;
+  isCongratulationsOpen: boolean;
 }
 
 export const TopBar: React.FC<TopBarProps> = ({
@@ -21,6 +22,7 @@ export const TopBar: React.FC<TopBarProps> = ({
   isModalOpenRegistration,
   setIsModalLogIn,
   isModalLogIn,
+  isCongratulationsOpen,
 }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -35,17 +37,19 @@ export const TopBar: React.FC<TopBarProps> = ({
           <img src={logo} alt="Logo" className="logo__img" />
         </NavLink>
 
-        {!isModalOpenRegistration && !isModalLogIn && (
-          <div className="wraper__inputFilter">
-            <div className="input">
-              <Input />
-            </div>
+        {!isModalOpenRegistration &&
+          !isModalLogIn &&
+          !isCongratulationsOpen && (
+            <div className="wraper__inputFilter">
+              <div className="input">
+                <Input />
+              </div>
 
-            <div className="filter">
-              <Filetr onOpen={onOpenFilter} />
+              <div className="filter">
+                <Filetr onOpen={onOpenFilter} />
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
         <div className="navigation">
           <div className="menu">
@@ -82,10 +86,15 @@ export const TopBar: React.FC<TopBarProps> = ({
                 >
                   Sing Up
                 </h2>
-                <h2 className="choose__login" onClick={() => {
+                <h2
+                  className="choose__login"
+                  onClick={() => {
                     setIsModalLogIn();
                     setShowUserMenu(false);
-                  }}>Log In</h2>
+                  }}
+                >
+                  Log In
+                </h2>
               </div>
             )}
           </div>

@@ -5,13 +5,14 @@ import React from "react";
 type HeaderProps = {
   isModalOpenRegistration: boolean;
   isModalLogIn: boolean;
+  isCongratulationsOpen: boolean
 };
 
-export const Header: React.FC<HeaderProps> = ({ isModalOpenRegistration, isModalLogIn }) => {
+export const Header: React.FC<HeaderProps> = ({ isModalOpenRegistration, isModalLogIn, isCongratulationsOpen }) => {
   return (
     <div className="header">
       {/* <div className="header__wrapper"> */}
-      {!isModalOpenRegistration && !isModalLogIn && (
+      {!isModalOpenRegistration && !isModalLogIn && !isCongratulationsOpen &&(
         <div className="header__bottom">
           <div className="header__wrapper">
             <div className="header__titleWrapper">

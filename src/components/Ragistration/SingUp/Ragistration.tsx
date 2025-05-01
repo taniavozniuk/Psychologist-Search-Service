@@ -1,9 +1,10 @@
 import "./Ragistration.scss";
-import ModalCloce from "../../image/modalClose.svg";
+import ModalCloce from "../../../image/modalClose.svg";
 import { useRef, useState } from "react";
-import { useOutsideClick } from "../../hooks";
-import CloseEye from "../../image/Resitration/closeEye.svg";
-import OpneEye from "../../image/Resitration/openEye.svg";
+import { useOutsideClick } from "../../../hooks";
+import CloseEye from "../../../image/Resitration/closeEye.svg";
+import OpneEye from "../../../image/Resitration/openEye.svg";
+import Google from "../../../image/Resitration/google.svg";
 
 interface RegistrationProps {
   onClose: () => void;
@@ -95,7 +96,7 @@ export const Registration: React.FC<RegistrationProps> = ({
       <div className="registrationTitle__wrapper">
         <div className="wrapper__stepTitle">
           <p className="registration__step">Step 1 of 2</p>
-          <h2 className="registration__title">Create Your Account</h2>
+          <h3 className="registration__title">Create Your Account</h3>
         </div>
 
         <button onClick={onClose} className="registration__close">
@@ -163,15 +164,17 @@ export const Registration: React.FC<RegistrationProps> = ({
             </div>
           </div>
 
-          <button className="registrationContinue" onClick={handleContinue}>
-            Continue
-          </button>
+          <div className="WrapperBt">
+            <button className="registrationContinue" onClick={handleContinue}>
+              Continue
+            </button>
 
-          <span className="registration__lineDown"></span>
+            {/* <span className="registration__lineDown"></span> */}
 
-          <div className="registrationWrapperButton">
-            <button className="registrationGoogle">Google Login</button>
-            <button className="registrationApple">Apple Login</button>
+            <div className="registrationWrapperButton">
+              <button className="registrationGoogle"><img src={Google} /></button>
+              <button className="registrationApple"></button>
+            </div>
           </div>
         </div>
       </div>

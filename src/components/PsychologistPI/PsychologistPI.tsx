@@ -84,17 +84,20 @@ export const PsychologistPageAll = () => {
       </div>
 
       <div className="page__psychologists">
-        {/* <div className="psychologists__card"> */}
-
         {sortedPsychologists.map((psych) => (
           <div key={psych.id} className="psychologist__card">
-            <h3>
-              {psych.firstName} {psych.lastName}
-            </h3>
-            <p>Gender: {psych.gender}</p>
-            <p>Specialization: {psych.speciality.name}</p>
-            <p>Price: {psych.sessionPrice} UAH</p>
-            <p>{psych.introduction}</p>
+            <div className="psychologistWrapper__info">
+              <div className="info__NamePrice">
+                <h3>
+                  {psych.firstName} {psych.lastName}
+                </h3>
+              </div>
+
+              <p>Gender: {psych.gender}</p>
+              <p>Specialization: {psych.speciality.name}</p>
+              <p>Price: {psych.sessionPrice} UAH</p>
+              <p>{psych.introduction}</p>
+            </div>
           </div>
         ))}
       </div>

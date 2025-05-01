@@ -3,15 +3,17 @@ import { TopBar } from "./components/TopBar/TopBar";
 import { useState } from "react";
 import { ModalWindow } from "./components/ModalWindow/ModalWindow";
 import { Outlet } from "react-router-dom";
-import { Registration } from "./components/Ragistration/Ragistration";
 import { LogIn } from "./components/Ragistration/LogIn/LogIn";
 import { NextStep } from "./components/Ragistration/nextstep";
+import { Congratulations } from "./components/Ragistration/Congratulations/Congratulations";
+import { Registration } from "./components/Ragistration/SingUp/Ragistration";
 // import { Footer } from "./components/Footer/Footer";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenRegistration, setIsModalOpenRegistration] = useState(false);
   const [isModalLogIn, setIsModalLogIn] = useState(false);
+  const [isCongratulationsOpen, setIsCongratulationsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
 
   const [email, setEmail] = useState("");
@@ -31,6 +33,7 @@ function App() {
             onOpenFilter={() => setIsModalOpen(true)}
             setIsModalOpenRegistration={() => setIsModalOpenRegistration(true)}
             isModalOpenRegistration={isModalOpenRegistration}
+            isCongratulationsOpen={isCongratulationsOpen}
             setIsModalLogIn={() => setIsModalLogIn(true)}
             isModalLogIn={isModalLogIn}
           />
@@ -61,6 +64,7 @@ function App() {
             onClose={() => setIsModalOpenRegistration(false)}
             email={email}
             password={password}
+            setIsCongratulationsOpen={setIsCongratulationsOpen}
           />
         </div>
       )}
@@ -71,8 +75,14 @@ function App() {
         </div>
       )}
 
+      {isCongratulationsOpen && (
+        <div className="congratulations__modal">
+          <Congratulations onClose={() => setIsCongratulationsOpen(false)}/>
+        </div>
+      )}
+
       <Outlet
-        context={{ isModalOpen, isModalOpenRegistration, isModalLogIn }}
+        context={{ isModalOpen, isModalOpenRegistration, isModalLogIn, isCongratulationsOpen }}
       />
     </>
   );

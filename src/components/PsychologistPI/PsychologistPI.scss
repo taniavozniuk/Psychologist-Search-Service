@@ -10,12 +10,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 50px;
+  color: #0C0B09;
 }
 
 .psychologists__description {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #615B52;
 }
 
 .page__psychologists {
@@ -23,4 +33,13 @@
   justify-content: center;
   gap: 30px;
   background-color: #4157;
+}
+
+.psychologist__card{
+
+}
+
+.psychologistWrapper__info{
+  border: 1px solid #D6CDC0;
+  padding: 24px;
 }

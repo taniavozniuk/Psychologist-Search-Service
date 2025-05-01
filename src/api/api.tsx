@@ -1,7 +1,7 @@
 import axios from "axios";
 import { postPsychologist } from "../types/post";
 import { SingUp } from "../types/singUp";
-
+import { LogInType } from "../types/LogIn";
 
 const BASE_URL = "http://localhost:8080/api";
 
@@ -11,6 +11,16 @@ const apiClient = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+//додаю токен до кожного запиту
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem('accessToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+})
 
 //отримую психологів
 export const getPsychologist = async () => {
@@ -37,10 +47,22 @@ export const addPsychologist = async (newPsychologist: postPsychologist) => {
 //реєстрацію(sing Up)
 export const singUp = async (formData: SingUp) => {
   try {
-    const response = await apiClient.post('/auth/register', formData);
+    console.log("Submitting to backend:", formData);
+    const response = await apiClient.post("/auth/register", formData);
     return response.data;
   } catch (error) {
-    console.log("SingUp error", error)
+    console.log("SingUp error", error);
     throw error;
   }
-}
+};
+
+//логінація(LogIn)
+export const logInUser  = async (formData: LogInType) => {
+  try {
+    const response = await apiClient.post("/auth/login", formData);
+    return response.data;
+  } catch (error) {
+    console.log("LogIn error", error);
+    throw error;
+  }
+};

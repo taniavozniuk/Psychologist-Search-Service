@@ -5,6 +5,7 @@ import { Psychologist } from "../../types/Psychologist";
 import { useNavigate } from "react-router-dom";
 import { getPsychologist } from "../../api/api";
 
+
 export const Input = () => {
   const [searchText, setSearchText] = useState("");
   const [psychologists, setPsychologists] = useState<Psychologist[]>([]);
@@ -54,6 +55,27 @@ export const Input = () => {
 
   // const handleSuggestionClick = () => {
   //   navigate("/find"); // Перехід на сторінку з усіма психологами
+  // };
+
+  // const handleAddPsychologist = async () => {
+  //   const newPsychologist: postPsychologist = {
+  //     firstName: "Ben",
+  //     lastName: "Penter",
+  //     fatherName: "Jo",
+  //     phoneNumber: "41245566",
+  //     email: "ben.sge@gmail.com",
+  //     sessionPrice: "150.00",
+  //     introduction: "Some intro data",
+  //     specialityId: 1,
+  //     gender: "MALE",
+  //   };
+
+  //   try {
+  //     const result = await addPsychologist(newPsychologist);
+  //     console.log("Психолог успішно доданий:", result);
+  //   } catch (error) {
+  //     console.error("Помилка при додаванні психолога:", error);
+  //   }
   // };
 
   return (

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks";
 import "./nextstep.scss";
 import ModalCloce from "../../image/modalClose.svg";
@@ -9,12 +9,14 @@ interface nextStepProps {
   onClose: () => void;
   email: string;
   password: string;
+  setIsCongratulationsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const NextStep: React.FC<nextStepProps> = ({
   onClose,
   email,
   password,
+  setIsCongratulationsOpen
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -32,7 +34,7 @@ export const NextStep: React.FC<nextStepProps> = ({
   const [hasCheckboxError, setHasCheckboxError] = useState(false);
   const [errorCheckbox, setErrorCheckbox] = useState("");
 
-  const [error, setError] = useState("");
+  const [, setError] = useState("");
 
   const handleFirstNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -84,13 +86,14 @@ export const NextStep: React.FC<nextStepProps> = ({
         password,
         firstName,
         lastName: secondName,
-        fatherName: "",
+        fatherName: "Not Provided",
         confirmPassword: password,
-        gender: "unknown",
-        role: "user",
+        gender: "OTHER",
+        role: "CUSTOMER",
       });
 
       console.log("User registered successfully", response);
+      setIsCongratulationsOpen(true);
       onClose(); // or navigate to login
     } catch (err) {
       setError("Registration failed. Try again later.");
@@ -146,7 +149,7 @@ export const NextStep: React.FC<nextStepProps> = ({
 
           <div className="field__SecondName">
             <label className="label__SecondName" htmlFor="SingIn-SecondName">
-              First Name
+              Second Name
             </label>
 
             <div className="SecondNameBox">

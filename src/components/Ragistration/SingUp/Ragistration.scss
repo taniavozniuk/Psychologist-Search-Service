@@ -1,8 +1,8 @@
 .Registration__content {
   background-color: #f9f0e2;
-  width: 750px;
+  width: 574px;
   border-radius: 16px;
-  padding: 40px;
+  padding: 32px;
   margin-inline: 20px;
 }
 
@@ -23,10 +23,10 @@
 .registration__title {
   font-family: "Aileron", sans-serif;
   font-weight: 700;
-  font-size: 40px;
-  line-height: 50px;
+  font-size: 32px;
+  line-height: 48px;
   color: #0c0b09;
-  margin: 24px 0 0 0;
+  margin: 8px 0 0 0;
 }
 
 .registration__close {
@@ -47,7 +47,7 @@
 .registration__line {
   display: block;
   border: 1px solid #d6cdc0;
-  margin: 16px 0 40px 0;
+  margin: 4px 0 12px 0;
 }
 
 .registration__description {
@@ -56,7 +56,7 @@
   font-size: 20px;
   line-height: 30px;
   color: #4b463e;
-  margin-bottom: 8px;
+  margin: 0 0 8px 0;
 }
 
 .registration__haveAccount {
@@ -83,7 +83,7 @@
 }
 
 .formSingUp {
-  margin-top: 27px;
+  margin-top: 24px;
 }
 
 .label__email {
@@ -137,8 +137,13 @@
   height: 24px;
 }
 
+.WrapperBt{
+  display: flex;
+  margin: 24px 0 0 0;
+  gap: 16px;
+}
+
 .registrationContinue {
-  margin: 40px 0 0 0;
   width: 100%;
   height: 51px;
   background-color: #393126;
@@ -164,12 +169,12 @@
 
 .registrationWrapperButton {
   display: flex;
-  gap: 32px;
+  gap: 8px;
 }
 
 .registrationGoogle {
   // margin: 40px 0 0 0;
-  width: 100%;
+  width: 56px;
   height: 51px;
   background-color: transparent;
   font-family: "Aileron", sans-serif;
@@ -179,9 +184,9 @@
   color: #4b463e;
   border-radius: 8px;
   border: 1px solid #615b52;
-  background-image: url(../../image/Resitration/google.svg);
-  background-repeat: no-repeat;
-  background-position: 16px 13.5px;
+  // background-image: url(../../image/Resitration/google.svg);
+  // background-repeat: no-repeat;
+  // background-position: 16px 13.5px;
 
   &:hover {
     background-color: #9b6a00;
