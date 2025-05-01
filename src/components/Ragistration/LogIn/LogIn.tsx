@@ -61,14 +61,17 @@ export const LogIn: React.FC<LogInProps> = ({ onClose }) => {
     }
 
     try {
+      localStorage.removeItem("accessToken");
+
       const response = await logInUser({ email, password }); // API запит
       console.log("User logged in successfully", response);
       const { token } = response;
 
       if (token) {
-        localStorage.setItem('accessToken', token);
+        localStorage.setItem("accessToken", token);
         console.log("Token saved:", token);
       }
+
       onClose(); // закрити модалку
     } catch (err) {
       console.error("Login failed", err);

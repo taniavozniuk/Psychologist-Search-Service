@@ -19,6 +19,10 @@ apiClient.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
+  if (!token) {
+    localStorage.removeItem('accessToken');
+  }
+
   return config;
 })
 
@@ -29,6 +33,17 @@ export const getPsychologist = async () => {
     return response.data;
   } catch (error) {
     console.log("Get Error ", error);
+    throw error;
+  }
+};
+
+//отримую психологів з філтрами
+export const getFilterPsychologist = async () => {
+  try {
+    const response = await apiClient.get("psychologists/filter");
+    return response.data;
+  } catch (error) {
+    console.log("GetFilter Error ", error);
     throw error;
   }
 };

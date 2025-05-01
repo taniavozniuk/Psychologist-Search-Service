@@ -1,3 +1,7 @@
+.Page {
+  margin: 0 40px;
+}
+
 .psychologists__card {
   margin: 0 40px;
 }
@@ -14,7 +18,7 @@
   font-weight: 700;
   font-size: 40px;
   line-height: 50px;
-  color: #0C0B09;
+  color: #0c0b09;
 }
 
 .psychologists__description {
@@ -25,21 +29,72 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 30px;
-  color: #615B52;
+  color: #615b52;
 }
 
 .page__psychologists {
-  display: flex;
+  display: grid;
   justify-content: center;
-  gap: 30px;
-  background-color: #4157;
+  gap: 32px;
+  grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
 }
 
-.psychologist__card{
 
-}
-
-.psychologistWrapper__info{
-  border: 1px solid #D6CDC0;
+.psychologistWrapper__info {
+  width: 100%;
+  border: 1px solid black;
   padding: 24px;
+  background-color: #c2c0bd;
+
+}
+
+.psychologistInfo__name {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 48px;
+  color: #0c0b09;
+  margin: 24px 0 8px 0;
+}
+
+
+.psychologistInfo__line{
+  display: block;
+  border: 1px solid #d6cdc0;
+  margin: 24px 0;
+}
+
+.psychologistAbout__title{
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 100%;
+  color: #0c0b09;
+  margin: 0 0 8px 0;
+}
+
+.SpecializationWrraper{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.specTitle{
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #4B463E;
+  margin: 0;
+}
+
+.specName{
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #0C0B09;
+  margin: 16px 0 0 0;
 }

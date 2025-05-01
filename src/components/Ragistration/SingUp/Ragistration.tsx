@@ -77,6 +77,8 @@ export const Registration: React.FC<RegistrationProps> = ({
 
     // localStorage.removeItem("registrationEmail");
     // localStorage.removeItem("registrationPassword");
+    // localStorage.removeItem("accessToken");
+
 
     setHasEmailError(false);
     setHasPasswordError(false);
