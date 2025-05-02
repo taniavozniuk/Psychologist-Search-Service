@@ -12,9 +12,29 @@ import { StartTest } from "./components/StartTest/StartTest";
 import { FindTherapist } from "./components/FindTherapist/FindTherapist";
 import { PsychologistPageAll } from "./components/PsychologistPI/PsychologistPI";
 import { PsychologistProfile } from "./components/PsychologistsProfile/PsychologistsProfile";
+import { useEffect, useState } from "react";
+import { allFilterPsychologist } from "./types/allFilterPsychologist";
+import { getFilterPsychologist } from "./api/api";
 // import { Registration } from "./components/Registration/Registration";
 
 export const Root = () => {
+  const [psychologists, setPsychologists] = useState<allFilterPsychologist[]>(
+    []
+  );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getFilterPsychologist();
+        console.log("Fetched data:", data); // лог усієї відповіді
+        setPsychologists(data);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <Router>
       <Routes>
@@ -25,7 +45,10 @@ export const Root = () => {
           <Route path="blog" element={<Blog />} />
           <Route path="test" element={<StartTest />} />
           {/* <Route path="registration" element={<Registration />} /> */}
-          <Route path="find" element={<FindTherapist />} />
+          <Route
+            path="find"
+            element={<FindTherapist psychologists={psychologists} />}
+          />
           <Route path="/psychologist" element={<PsychologistPageAll />} />
           <Route path="/psychologist/:id" element={<PsychologistProfile />} />
         </Route>

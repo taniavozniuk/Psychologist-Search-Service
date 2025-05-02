@@ -12,12 +12,12 @@ export interface allFilterPsychologist {
   };
   sessionPrice: number;
   gender: string;
-  concernIds: {
+  concerns: [{
     id: number;
     name: string;
-  };
-  approachIds: {
+  }];
+  approaches: [{
     id: number;
     name: string;
-  };
+  }];
 }
