@@ -9,7 +9,6 @@ import Languages from "../../image/Profile/Languages.svg";
 import education from "../../image/Profile/education-filled.svg";
 
 import { USE, WORKWITH } from "./workWith";
-import "react-calendar/dist/Calendar.css";
 import Calendar from "./Calendar/Calendar";
 
 export const PsychologistProfile = () => {
