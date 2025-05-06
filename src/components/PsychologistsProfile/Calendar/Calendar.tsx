@@ -16,18 +16,30 @@ const Calendar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!id) return;
-        const todayString = new Date().toISOString().split("T")[0];
-        const data = await getDateBokkingId(id, todayString);
+        if (!id || !selectedDate) return;
+        const selectedDateString = selectedDate.toISOString().split("T")[0];
+        const data = await getDateBokkingId(id, selectedDateString);
+        console.log("API response:", selectHour, data);
+        
         setSelectHour(data);
-        console.log("fetch data BokkingId", data);
+
+        // if (JSON.stringify(data) !== JSON.stringify(selectHour)) {
+        //   setSelectHour(data);
+        // }
       } catch (error) {
         console.log("error BokkingId", error);
       }
     };
-
     fetchData();
-  }, []);
+  }, [id, selectedDate]);
+
+  useEffect(() => {
+    console.log("selectedDate changed:", selectedDate);
+  }, [selectedDate]);
+
+  useEffect(() => {
+    console.log("selectHour updated:", selectHour);
+  }, [selectHour]);
 
   // функція для отримання днів місяця
   const getDaysInMonth = (date: Date) => {
@@ -50,14 +62,23 @@ const Calendar = () => {
     return daysArray;
   };
 
-  const handleDayClick = (day: number | null) => {
-    if (day !== null) {
-      const fullDate = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        day
-      );
-      setSelectedDate(fullDate);
+  const handleDayClick = async (day: number | null) => {
+    if (day === null || !id) return;
+    const fullDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      day + 1,
+      0, 0, 0, 0
+    );
+
+    setSelectedDate(fullDate);
+    const formatted = fullDate.toISOString().split("T")[0];
+    try {
+      const data = await getDateBokkingId(id, formatted);
+      setSelectHour(data);
+      console.log("Fetched for selected day:", data);
+    } catch (error) {
+      console.error("Failed to fetch hours for selected date", error);
     }
   };
 
@@ -74,14 +95,23 @@ const Calendar = () => {
   //фільтрую години
   const availableTimes = selectHour?.filter((hour: string) => {
     if (!selectedDate) return false;
-
+  
     const hourDate = new Date(hour);
-    return (
-      hourDate.getFullYear() === selectedDate.getFullYear() &&
-      hourDate.getMonth() === selectedDate.getMonth() &&
-      hourDate.getDate() === selectedDate.getDate()
-    );
+  
+    // const match =
+    //   hourDate.getFullYear() === selectedDate.getFullYear() &&
+    //   hourDate.getMonth() === selectedDate.getMonth() &&
+    //   hourDate.getDate() === selectedDate.getDate();
+  
+    // if (!match) {
+    //   console.log("Skipping:", hourDate.toISOString(), "!= selected", selectedDate.toISOString());
+    // }
+  
+    return hourDate;
   });
+
+  console.log('availableTimes', availableTimes);
+  
   return (
     <div className="wrapperCalendar">
       <header className="headerCalendar">
