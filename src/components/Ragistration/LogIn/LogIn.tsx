@@ -5,6 +5,8 @@ import "./LogIn.scss";
 import CloseEye from "../../../image/Resitration/closeEye.svg";
 import OpneEye from "../../../image/Resitration/openEye.svg";
 import { logInUser } from "../../../api/api";
+import Google from "../../../image/Resitration/google.svg";
+import Apple from "../../../image/Resitration/iphone.svg";
 
 interface LogInProps {
   onClose: () => void;
@@ -154,16 +156,22 @@ export const LogIn: React.FC<LogInProps> = ({ onClose }) => {
               </button>
             </div>
           </div>
-
+          <h2 className="ForgotPassword">Forgot Password?</h2>
+        </div>
+        <div className="WrapperBt">
           <button className="registrationContinue" onClick={handleSingIn}>
             Sign In
           </button>
 
-          <span className="registration__lineDown"></span>
+          {/* <span className="registration__lineDown"></span> */}
 
           <div className="registrationWrapperButton">
-            <button className="registrationGoogle">Google Login</button>
-            <button className="registrationApple">Apple Login</button>
+            <button className="registrationBt">
+              <img src={Google} />
+            </button>
+            <button className="registrationBt">
+              <img src={Apple} />
+            </button>
           </div>
         </div>
       </div>

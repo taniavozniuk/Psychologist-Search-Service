@@ -1,0 +1,202 @@
+.wrapperProfile {
+  display: flex;
+}
+
+.Information {
+  width: 652px;
+  padding-left: 32px;
+}
+
+.profileImg {
+  width: 456px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+// .profileWrapperName{
+//   margin-bottom: 48px;
+// }
+
+.profileName {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 50px;
+  color: #0c0b09;
+  margin: 0;
+}
+
+.profileIntroduction {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #615b52;
+  margin: 16px 0 0 0;
+}
+
+.prodileLine {
+  border: 1px solid #d6cdc0;
+  display: flex;
+  width: 100%;
+  margin: 24px 0;
+}
+
+.BoxTitle {
+  display: inline-flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.boxTitle {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #0c0b09;
+  margin: 0;
+}
+
+.profileDescription {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  margin: 0;
+}
+
+.profileAbout {
+  margin-top: 96px;
+}
+
+.AboutTitle {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 48px;
+  margin: 0 0 16px 0;
+  color: #0c0b09;
+}
+
+.AboutDescription {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  margin: 0;
+  color: #4b463e;
+}
+
+.profileMainBlock {
+  display: flex;
+  justify-content: space-between;
+  margin: 96px 0 0 0;
+}
+
+.workWithTitle {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  margin: 0;
+  color: #0c0b09;
+}
+
+.workWithList {
+  margin: 24px 0 0 0;
+  padding: 0 0 0 20px;
+}
+
+.workWithItem {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0;
+  color: #4b463e;
+
+  &::marker {
+    width: 10px;
+    height: 10px;
+    color: #4b463e;
+  }
+}
+
+.Use {
+  margin: 96px 0 0 0;
+}
+
+.profileMainBlock {
+  display: flex;
+}
+
+.profileMainCalendar {
+  margin-left: 32px;
+  border: 1px solid #d6cdc0;
+  border-radius: 16px;
+}
+
+.calendarWrapper {
+  padding: 40px;
+}
+
+.planAppointment {
+  padding: 40px 40px 0 40px;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 48px;
+  margin: 0;
+  color: #0c0b09;
+}
+
+// .react-calendar {
+//   width: 569px !important;
+//   height: 472px;
+//   background-color: transparent !important;
+//   border: none !important;
+// }
+
+// .react-calendar__navigation{
+//   // display: flex;
+//   // flex-direction: row-reverse;
+//   padding-bottom: 16px;
+//   border-bottom: 1px solid yellow;
+// }
+
+// .react-calendar__navigation__label{
+//   color: pink;
+//   max-width: 200px;
+//   font-family: "Aileron", sans-serif;
+//   font-weight: 400;
+//   font-size: 28px;
+//   line-height: 100%;
+//   text-align: center;
+// }
+
+// .react-calendar__month-view__weekdays__weekday {
+//   color: green;
+//   max-width: 48px;
+//   height: 48px;
+//   padding: 0;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   box-sizing: border-box;
+// }
+
+// .react-calendar__tile {
+//   color: blue;
+//   max-width: 48px;
+//   height: 48px;
+//   padding: 0;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   box-sizing: border-box;
+// }
+
+// .react-calendar, .react-calendar *, .react-calendar *:before, .react-calendar *:after{
+//   text-decoration: none
+  
+// }

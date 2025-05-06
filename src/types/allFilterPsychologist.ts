@@ -12,6 +12,8 @@ export interface allFilterPsychologist {
   };
   sessionPrice: number;
   gender: string;
+  experience: number,
+  imageUrl: string,
   concerns: [{
     id: number;
     name: string;

@@ -3,6 +3,7 @@ import { Header } from "../Header/Header";
 import OurServices from "../OurServices/OurServices";
 import { WhyUs } from "../WhyUs/WhyUs";
 import { useOutletContext } from "react-router-dom";
+import './HomePage.scss'
 
 type OutletContextType = {
   isModalOpen: boolean;

@@ -1,10 +1,12 @@
 import "./TopBar.scss";
 import logo from "../../image/MindBloom.svg";
+import logoBlack from "../../image/MindBloomBlack.svg";
 import UserIcon from "../../image/UserIconButton.svg";
+import UserIconBlack from "../../image/userIconBlack.svg";
 import { Input } from "../Input/Input";
 import { Filetr } from "../Filter/Filter";
 import { NavLink } from "react-router-dom";
-import { useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks";
 
 interface TopBarProps {
@@ -14,6 +16,9 @@ interface TopBarProps {
   setIsModalLogIn: () => void;
   isModalLogIn: boolean;
   isCongratulationsOpen: boolean;
+  setCurrentStep: Dispatch<SetStateAction<number>>;
+  isHomePage: boolean;
+  isAbout: boolean;
 }
 
 export const TopBar: React.FC<TopBarProps> = ({
@@ -23,18 +28,54 @@ export const TopBar: React.FC<TopBarProps> = ({
   setIsModalLogIn,
   isModalLogIn,
   isCongratulationsOpen,
+  setCurrentStep,
+  isHomePage,
+  isAbout,
 }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  //стан для перевірки наявності токена
+  const [, setIsLoggedIn] = useState(
+    () => !!localStorage.getItem("accessToken")
+  );
+  const isTransparentTopBar = isHomePage || isAbout;
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   useOutsideClick(modalRef, setShowUserMenu);
+
+  const getLinkClass = ({ isActive }: { isActive: boolean }) =>
+    isActive ? "navbar-item navbar-item--active" : "navbar-item";
+
+  // оновлення стану при зміні токену
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsLoggedIn(!!localStorage.getItem("accessToken"));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  const handleLogOut = () => {
+    localStorage.removeItem("accessToken");
+    console.log("Token removed:", localStorage.getItem("accessToken"));
+    setIsLoggedIn(false);
+    setShowUserMenu(false);
+  };
   return (
-    <div className="top_bar">
+    <div
+      className={`top_bar ${
+        isTransparentTopBar ? "topbar--glass" : "topbar--plain"
+      }`}
+    >
       <div className="wraper__top_bar">
         <NavLink to="/" className="logo">
-          <img src={logo} alt="Logo" className="logo__img" />
+          <img
+            src={isTransparentTopBar ? logo : logoBlack}
+            alt="Logo"
+            className="logo__img"
+          />
         </NavLink>
 
         {!isModalOpenRegistration &&
@@ -42,22 +83,22 @@ export const TopBar: React.FC<TopBarProps> = ({
           !isCongratulationsOpen && (
             <div className="wraper__inputFilter">
               <div className="input">
-                <Input />
+                <Input isHomePage={isHomePage} isAbout={isAbout} />
               </div>
 
               <div className="filter">
-                <Filetr onOpen={onOpenFilter} />
+                <Filetr onOpen={onOpenFilter} isHomePage={isHomePage} isAbout={isAbout}/>
               </div>
             </div>
           )}
 
         <div className="navigation">
           <div className="menu">
-            <NavLink to="/about" className="about">
+            <NavLink className={getLinkClass} to="/about">
               About
             </NavLink>
 
-            <NavLink to="/blog" className="blog">
+            <NavLink to="/blog" className={getLinkClass}>
               Blog
             </NavLink>
           </div>
@@ -68,7 +109,11 @@ export const TopBar: React.FC<TopBarProps> = ({
               // onClick={setIsModalOpenRegistration}
               onClick={() => setShowUserMenu((prev) => !prev)}
             >
-              <img src={UserIcon} alt="userIcon" className="button__icon" />
+              <img
+                src={isTransparentTopBar ? UserIcon : UserIconBlack}
+                alt="userIcon"
+                className="button__icon"
+              />
               {/* <Registration onClose={onOpenFilter}/> */}
             </button>
             {showUserMenu && (
@@ -82,6 +127,7 @@ export const TopBar: React.FC<TopBarProps> = ({
                   onClick={() => {
                     setIsModalOpenRegistration();
                     setShowUserMenu(false);
+                    setCurrentStep(1);
                   }}
                 >
                   Sing Up
@@ -95,8 +141,47 @@ export const TopBar: React.FC<TopBarProps> = ({
                 >
                   Log In
                 </h2>
+                <h2
+                  className="choose__logout"
+                  onClick={() => {
+                    handleLogOut();
+                  }}
+                >
+                  Log Out
+                </h2>
               </div>
             )}
+            {/* {showUserMenu && (
+              <div className="choose" onClick={(e) => e.stopPropagation()} ref={modalRef}>
+                {isLoggedIn ? (
+                  <h2 className="choose__logout" onClick={handleLogOut}>
+                    Log Out
+                  </h2>
+                ) : (
+                  <>
+                    <h2
+                      className="choose__sing"
+                      onClick={() => {
+                        setIsModalOpenRegistration();
+                        setShowUserMenu(false);
+                        setCurrentStep(1);
+                      }}
+                    >
+                      Sign Up
+                    </h2>
+                    <h2
+                      className="choose__login"
+                      onClick={() => {
+                        setIsModalLogIn();
+                        setShowUserMenu(false);
+                      }}
+                    >
+                      Log In
+                    </h2>
+                  </>
+                )}
+              </div>
+            )} */}
           </div>
         </div>
       </div>

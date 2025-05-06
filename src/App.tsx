@@ -2,11 +2,12 @@ import "./App.scss";
 import { TopBar } from "./components/TopBar/TopBar";
 import { useState } from "react";
 import { ModalWindow } from "./components/ModalWindow/ModalWindow";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { LogIn } from "./components/Ragistration/LogIn/LogIn";
 import { NextStep } from "./components/Ragistration/nextstep";
 import { Congratulations } from "./components/Ragistration/Congratulations/Congratulations";
 import { Registration } from "./components/Ragistration/SingUp/Ragistration";
+import { Footer } from "./components/Footer/Footer";
 // import { Footer } from "./components/Footer/Footer";
 
 function App() {
@@ -18,6 +19,10 @@ function App() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+  const isAbout = location.pathname === "/about";
 
   const handleNextStep = (email: string, password: string) => {
     setEmail(email);
@@ -36,6 +41,9 @@ function App() {
             isCongratulationsOpen={isCongratulationsOpen}
             setIsModalLogIn={() => setIsModalLogIn(true)}
             isModalLogIn={isModalLogIn}
+            setCurrentStep={setCurrentStep}
+            isHomePage={isHomePage}
+            isAbout={isAbout}
           />
         </>
       )}
@@ -54,6 +62,10 @@ function App() {
           <Registration
             onClose={() => setIsModalOpenRegistration(false)}
             onNextStep={handleNextStep}
+            openLoginModal={() => {
+              setIsModalOpenRegistration(false);
+              setIsModalLogIn(true);
+            }}
           />
         </div>
       )}
@@ -65,6 +77,11 @@ function App() {
             email={email}
             password={password}
             setIsCongratulationsOpen={setIsCongratulationsOpen}
+            setCurrentStep={setCurrentStep}
+            openLoginModal={() => {
+              setIsModalOpenRegistration(false);
+              setIsModalLogIn(true);
+            }}
           />
         </div>
       )}
@@ -77,13 +94,24 @@ function App() {
 
       {isCongratulationsOpen && (
         <div className="congratulations__modal">
-          <Congratulations onClose={() => setIsCongratulationsOpen(false)}/>
+          <Congratulations onClose={() => setIsCongratulationsOpen(false)} />
         </div>
       )}
 
       <Outlet
-        context={{ isModalOpen, isModalOpenRegistration, isModalLogIn, isCongratulationsOpen }}
+        context={{
+          isModalOpen,
+          isModalOpenRegistration,
+          isModalLogIn,
+          isCongratulationsOpen,
+        }}
       />
+
+      {!isModalOpen && !isModalOpenRegistration && !isModalLogIn && (
+        <div className="footer__container">
+          <Footer />
+        </div>
+      )}
     </>
   );
 

@@ -4,19 +4,24 @@ import "./nextstep.scss";
 import ModalCloce from "../../image/modalClose.svg";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { singUp } from "../../api/api";
+import backBt from "../../image/Resitration/backBt.svg";
 
 interface nextStepProps {
   onClose: () => void;
   email: string;
   password: string;
   setIsCongratulationsOpen: Dispatch<SetStateAction<boolean>>;
+  setCurrentStep: Dispatch<SetStateAction<number>>;
+  openLoginModal: () => void;
 }
 
 export const NextStep: React.FC<nextStepProps> = ({
   onClose,
   email,
   password,
-  setIsCongratulationsOpen
+  setIsCongratulationsOpen,
+  setCurrentStep,
+  openLoginModal,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -35,6 +40,7 @@ export const NextStep: React.FC<nextStepProps> = ({
   const [errorCheckbox, setErrorCheckbox] = useState("");
 
   const [, setError] = useState("");
+
 
   const handleFirstNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -109,6 +115,13 @@ export const NextStep: React.FC<nextStepProps> = ({
     >
       <div className="nextStepTitle__wrapper">
         <div className="wrapper__stepTitle">
+          <div className="WrapperBack">
+            <img src={backBt} alt="back" onClick={() => setCurrentStep(1)} />
+            <p className="back" onClick={() => setCurrentStep(1)}>
+              Back
+            </p>
+          </div>
+
           <p className="nextStep__step">Step 2 of 2</p>
           <h2 className="nextStep__title">Create Your Account</h2>
         </div>
@@ -122,58 +135,61 @@ export const NextStep: React.FC<nextStepProps> = ({
       <div className="nextStep__from">
         <div className="nextStep__haveAccount">
           <h3 className="haveAccount">Already have an account?</h3>
-          <h3 className="login">Login</h3>
+          <h3 className="login" onClick={() => {
+              onClose();
+              openLoginModal()
+            }}>Login</h3>
         </div>
 
         <div className="formName">
-          <div className="field__FirstName">
-            <label className="label__FirstName" htmlFor="SingIn-FirstName">
-              First Name
-            </label>
+          <div className="formNameWrapper">
+            <div className="field__FirstName">
+              <label className="label__FirstName" htmlFor="SingIn-FirstName">
+                First Name
+              </label>
 
-            <div className="FirstNameBox">
-              <input
-                type="text"
-                id="SingIn-FirstName"
-                className={`inputFirstName ${
-                  hasFirstNameError ? "is-danger" : ""
-                } `}
-                value={firstName}
-                onChange={handleFirstNameChange}
-              />
-              {hasFirstNameError && (
-                <p className="help is-danger">{errorFirstName}</p>
-              )}
+              <div className="FirstNameBox">
+                <input
+                  type="text"
+                  id="SingIn-FirstName"
+                  className={`inputFirstName ${
+                    hasFirstNameError ? "is-danger" : ""
+                  } `}
+                  value={firstName}
+                  onChange={handleFirstNameChange}
+                />
+                {hasFirstNameError && (
+                  <p className="help is-danger">{errorFirstName}</p>
+                )}
+              </div>
+            </div>
+
+            <div className="field__SecondName">
+              <label className="label__SecondName" htmlFor="SingIn-SecondName">
+                Second Name
+              </label>
+
+              <div className="SecondNameBox">
+                <input
+                  type="text"
+                  id="SingIn-SecondName"
+                  className={`inputSecondName ${
+                    hasSecondNameError ? "is-danger" : ""
+                  } `}
+                  value={secondName}
+                  onChange={handleSecondNameChange}
+                />
+                {hasSecondNameError && (
+                  <p className="help is-danger">{errorSecondName}</p>
+                )}
+              </div>
             </div>
           </div>
 
-          <div className="field__SecondName">
-            <label className="label__SecondName" htmlFor="SingIn-SecondName">
-              Second Name
-            </label>
-
-            <div className="SecondNameBox">
-              <input
-                type="text"
-                id="SingIn-SecondName"
-                className={`inputSecondName ${
-                  hasSecondNameError ? "is-danger" : ""
-                } `}
-                value={secondName}
-                onChange={handleSecondNameChange}
-              />
-              {hasSecondNameError && (
-                <p className="help is-danger">{errorSecondName}</p>
-              )}
-            </div>
-          </div>
-
-          <button className="registrationContinue" onClick={handleCreateAcount}>
+          <button className="registrationCraeteAK" onClick={handleCreateAcount}>
             Create Account
           </button>
         </div>
-
-        <span className="registration__lineDown"></span>
 
         <FormControlLabel
           control={

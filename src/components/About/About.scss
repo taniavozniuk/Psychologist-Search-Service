@@ -1,4 +1,171 @@
-.about__title{
-  margin: 112px 40px;
-  color: #0C0B09;
+.HeaderaboutWrapper {
+  background-image: url(/Psychologist-Search-Service/src/image/header.svg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+.wrapperAbout {
+  margin: 0 auto;
+  max-width: 1170px;
+}
+
+.aboutSmallTitle {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #f1efe9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.aboutTitle {
+  font-family: "Aileron", sans-serif;
+  font-weight: 600;
+  font-size: 86px;
+  line-height: 30px;
+  color: #f1efe9;
+  letter-spacing: 3px;
+  line-height: 150%;
+  margin: 0;
+}
+
+.decriptionWrapper {
+  display: flex;
+  // align-items: center;
+  justify-content: space-between;
+  margin: 129px 0 0 0;
+}
+
+.firstDescription {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #ffffff;
+  width: 359px;
+  margin: 0;
+}
+
+.secondDescription {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #ffffff;
+  width: 362px;
+  margin: 0;
+}
+
+.createAccount {
+  text-decoration: none;
+  width: 261px;
+  height: 51px;
+  background-color: #393126;
+  border: 1px #393126 solid;
+  color: #f1efe9;
+  border-radius: 8px;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aboutInformation {
+  // margin: 0 40px;
+  margin: 0 auto;
+  max-width: 1170px;
+}
+
+.ConteinerLogo {
+  margin-top: 96px;
+}
+
+.logoWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.DesWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoDescription {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #615b52;
+  width: 750px;
+  align-items: center;
+  text-align: center;
+  margin: 48px 0 0 0;
+}
+
+.aboutLine {
+  display: block;
+  border: 1px solid #d6cdc0;
+  margin: 56px 0 96px 0;
+}
+
+.cardAbout {
+  display: flex;
+}
+
+.TextWpar {
+  padding-left: 32px;
+}
+
+.cardTitle {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 48px;
+  color: #0c0b09;
+  margin: 0 0 32px 0;
+}
+
+.cardDescription {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #615b52;
+  margin: 0;
+  width: 554px;
+}
+
+.cardAboutSecond {
+  display: flex;
+  margin: 128px 0;
+}
+
+.TextWparSecond {
+  margin-right: 32px;
+}
+
+.AboutCard {
+  margin: 0 0 100px 0;
+}
+
+// .cardAboutThird{
+//   display: flex;
+
+// }

@@ -5,7 +5,7 @@
   height: 54px;
   width: 416px;
   background: url("../../image/search.svg") no-repeat;
-  background-position: 12px 13px;
+  background-position: 16px 18px;
   padding: 0 0 0 39px;
   border: 1px #f1efe9 solid;
   border-radius: 10px;
@@ -13,6 +13,8 @@
   font-weight: 400;
   font-family: "Aileron", sans-serif;
   color: #e8e0d2;
+  background-color: transparent;
+  position: relative;
 
   &::placeholder {
     color: #e8e0d2;
@@ -41,8 +43,27 @@
     width: 416px;
     font-size: 18px;
     background-position: 12px 13px;
-    padding: 0 0 0 39px;
+    padding: 0 0 0 45px;
   }
+}
+
+.input--plain{
+  background: url("../../image/blackSearch.svg") no-repeat;
+  background-position: 16px 18px;
+  border: 1px solid #B8AEA0;
+
+  &::placeholder {
+    color: #0C0B09;
+  }
+
+}
+
+.input-icon {
+  position: absolute;
+  left: 19px;
+  top: 62%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .conteiner__input {
@@ -54,11 +75,13 @@
   position: relative;
 }
 
+
+
 .search__result {
   box-sizing: border-box;
   background-color: rgba(51, 41, 33, 70%);
   list-style: none;
-  height: 100%;
+  // height: 100%;
   width: 416px;
 
   border-radius: 10px;
@@ -67,7 +90,7 @@
   font-family: "Aileron", sans-serif;
   color: #e8e0d2;
   position: absolute;
-  padding: 0 40px 0 16px;
+  padding: 0 ;
 
 
 
@@ -88,8 +111,11 @@
   text-align: left;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  width: 100%;
+  // width: 100%;
   border-radius: 10px;
+    font-size: 18px;
+  font-weight: 400;
+  font-family: "Aileron", sans-serif;
 
   &:hover {
     background-color: rgba(66, 55, 49, 0.6);

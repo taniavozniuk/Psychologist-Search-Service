@@ -5,16 +5,16 @@ import { allFilterPsychologist } from "../../types/allFilterPsychologist";
 import { getFilterPsychologist } from "../../api/api";
 
 export const usePsychologPIHook = () => {
-    const {
-      selectedSex,
-      selectedSpec,
-      selectedCon,
-      selectedAppr,
-      setSelectedSex,
-      setSelectedSpec,
-      setSelectedCon,
-      setSelectedAppr,
-    } = useModalLogicHook();
+  const {
+    selectedSex,
+    selectedSpec,
+    selectedCon,
+    selectedAppr,
+    setSelectedSex,
+    setSelectedSpec,
+    setSelectedCon,
+    setSelectedAppr,
+  } = useModalLogicHook();
   const location = useLocation();
   const [psychologists, setPsychologists] = useState<allFilterPsychologist[]>(
     []
@@ -23,19 +23,31 @@ export const usePsychologPIHook = () => {
   const [searchParams, setSearchParams] = useSearchParams(); // url сторінки
   const pageFromParams = Number(searchParams.get("page")) || 1; // стосується url сторінки
   const [currentPage, setCurrentPage] = useState(pageFromParams); // url сторінки
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // setLoading(true);
     const fetchData = async () => {
       try {
         const data = await getFilterPsychologist();
-        console.log("Fetched data:", data); // лог усієї відповіді
+        console.log("Fetched data:", data);
         setPsychologists(data);
+
+
       } catch (error) {
         console.log("error", error);
+
+      } finally {
+        setLoading(false);
+        console.log("Loading finished");
       }
     };
 
     fetchData();
+
+    // const timeout = setTimeout(fetchData, 1000);
+
+    // return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -110,7 +122,6 @@ export const usePsychologPIHook = () => {
       .sort((a, b) => b.score - a.score);
   }, [psychologists, selectedSex, selectedSpec, selectedCon, selectedAppr]);
 
-
   //погінації
   const totalPages = Math.ceil(filteredPsychologists.length / itemPrePage);
   const indexOfLastItem = currentPage * itemPrePage;
@@ -138,5 +149,6 @@ export const usePsychologPIHook = () => {
     handlePageChange,
     psychologists,
     currentPage,
-  }
-}
+    loading,
+  };
+};

@@ -5,11 +5,39 @@
   height: 54px;
   width: 216px;
   background: url("../../image/filter.svg") no-repeat;
-  background-position: 16px 16px;
+  background-position: 16px 18px;
   padding-left: 48px;
   border: 1px #f1efe9 solid;
   border-radius: 10px;
   color: #f1efe9;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: "Aileron", sans-serif;
+  background-color: transparent;
+  text-align: left;
+  display: flex;
+  align-items: center;
+
+  @include onTablet{
+    height: 51px;
+    width: 94px;
+    
+  }
+
+  @include onDesktop{
+    height: 54px;
+    width: 216px;
+  }  
+}
+
+.filter__nothingChange{
+  cursor: pointer;
+  background: url("../../image/filterBlack.svg") no-repeat;
+  background-position: 16px 18px;
+  padding-left: 48px;
+  border: 1px #B8AEA0 solid;
+  border-radius: 10px;
+  color: #0C0B09;
   font-size: 18px;
   font-weight: 400;
   font-family: "Aileron", sans-serif;

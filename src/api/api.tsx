@@ -2,6 +2,10 @@ import axios from "axios";
 import { postPsychologist } from "../types/post";
 import { SingUp } from "../types/singUp";
 import { LogInType } from "../types/LogIn";
+// import { PsychologId } from "../types/psychologId";
+
+//затримка
+const delay = () => new Promise((resolve) => setTimeout(resolve, 500));
 
 const BASE_URL = "http://localhost:8080/api";
 
@@ -14,20 +18,21 @@ const apiClient = axios.create({
 
 //додаю токен до кожного запиту
 apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('accessToken');
+  const token = localStorage.getItem("accessToken");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
   if (!token) {
-    localStorage.removeItem('accessToken');
+    localStorage.removeItem("accessToken");
   }
 
   return config;
-})
+});
 
 //отримую психологів
 export const getPsychologist = async () => {
+  await delay();
   try {
     const response = await apiClient.get("/psychologists");
     return response.data;
@@ -39,11 +44,35 @@ export const getPsychologist = async () => {
 
 //отримую психологів з філтрами
 export const getFilterPsychologist = async () => {
+  await delay();
   try {
     const response = await apiClient.get("psychologists/filter");
     return response.data;
   } catch (error) {
     console.log("GetFilter Error ", error);
+    throw error;
+  }
+};
+//отримую психолога за id
+export const getPsychologistId = async (id: string) => {
+  try {
+    const response = await apiClient.get(`/psychologists/${id}`);
+    return response.data;
+  } catch (error) {
+    console.log("GetId Error ", error);
+    throw error;
+  }
+};
+
+//отримую всі доступні дати для психолога за ідентифікатором на вказану дату
+export const getDateBokkingId = async (id: string, selectedDate: string) => {
+  try {
+    const response = await apiClient.get(`/bookings/free_spots/${id}`, {
+      params: { selectedDate },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("GetDateBokkingId Error ", error);
     throw error;
   }
 };
@@ -72,7 +101,7 @@ export const singUp = async (formData: SingUp) => {
 };
 
 //логінація(LogIn)
-export const logInUser  = async (formData: LogInType) => {
+export const logInUser = async (formData: LogInType) => {
   try {
     const response = await apiClient.post("/auth/login", formData);
     return response.data;

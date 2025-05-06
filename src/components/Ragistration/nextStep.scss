@@ -1,8 +1,28 @@
+.formNameWrapper {
+  display: flex;
+  gap: 16px;
+}
+
+.WrapperBack {
+  margin-bottom: 24px;
+  display: flex;
+}
+
+.back {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #7c746a;
+  padding: 12px 0 12px 8px;
+  margin: 0;
+}
+
 .next__content {
   background-color: #f9f0e2;
   width: 574px;
   border-radius: 16px;
-  padding: 40px;
+  padding: 32px;
 }
 
 .nextStep__line {
@@ -95,7 +115,7 @@
 }
 
 .formName {
-  margin-top: 40px;
+  margin-top: 24px;
 }
 
 .label__FirstName {
@@ -119,7 +139,7 @@
 }
 
 .field__SecondName {
-  margin-top: 16px;
+  // margin-top: 16px;
 }
 
 .label__SecondName {
@@ -158,3 +178,31 @@
   color: #9b6a00;
   text-decoration: none;
 }
+
+.registrationCraeteAK {
+  margin: 24px 0;
+  width: 100%;
+  height: 51px;
+  background-color: #393126;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+  color: #f1efe9;
+  border-radius: 8px;
+  border: 1px solid #393126;
+
+  &:hover {
+    background-color: #9b6a00;
+    border: 1px solid #9b6a00;
+  }
+}
+
+.field__FirstName {
+  flex-grow: 1;
+}
+
+.field__SecondName {
+  flex-grow: 1;
+}
+

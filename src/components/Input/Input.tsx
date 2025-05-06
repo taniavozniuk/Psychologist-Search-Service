@@ -1,23 +1,33 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Input.scss";
 // import { addPsychologist, getPsychologist } from "../../api/api";
 import { Psychologist } from "../../types/Psychologist";
 import { useNavigate } from "react-router-dom";
 import { getPsychologist } from "../../api/api";
 
+interface InputProps {
+  isHomePage: boolean;
+  isAbout: boolean;
+}
 
-export const Input = () => {
+export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
   const [searchText, setSearchText] = useState("");
   const [psychologists, setPsychologists] = useState<Psychologist[]>([]);
   // const [showSuggestion, setShowSuggestion] = useState(false);
   const navigate = useNavigate();
 
+  const isTransparentTopBar = isHomePage || isAbout;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getPsychologist();
-        const filtered = data.filter((psych: Psychologist) =>
-          psych.firstName.toLowerCase().includes(searchText.toLowerCase())
+        const filtered = data.filter(
+          (psych: Psychologist) =>
+            psych.firstName
+              .toLowerCase()
+              .startsWith(searchText.toLowerCase()) ||
+            psych.lastName.toLowerCase().startsWith(searchText.toLowerCase())
         );
 
         setPsychologists(filtered);
@@ -84,11 +94,14 @@ export const Input = () => {
         <input
           name="name"
           type="text"
-          className="input__find"
+          className={`input__find ${
+            isTransparentTopBar ? "input--glass" : "input--plain"
+          }`}
           placeholder="Find the specialist by name"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-        ></input>
+        />
+
       </div>
       {psychologists.length > 0 && (
         <ul className="search__result">

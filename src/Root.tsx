@@ -15,6 +15,7 @@ import { PsychologistProfile } from "./components/PsychologistsProfile/Psycholog
 import { useEffect, useState } from "react";
 import { allFilterPsychologist } from "./types/allFilterPsychologist";
 import { getFilterPsychologist } from "./api/api";
+// import { LogIn } from "./components/Ragistration/LogIn/LogIn";
 // import { Registration } from "./components/Registration/Registration";
 
 export const Root = () => {
@@ -51,6 +52,7 @@ export const Root = () => {
           />
           <Route path="/psychologist" element={<PsychologistPageAll />} />
           <Route path="/psychologist/:id" element={<PsychologistProfile />} />
+          {/* <Route path="/login" element={<LogIn />} /> */}
         </Route>
       </Routes>
     </Router>

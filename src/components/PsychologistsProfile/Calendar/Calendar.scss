@@ -1,0 +1,139 @@
+// .wrapperCalendar{
+//   padding: 40px;
+// }
+
+.calendarWeek {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 39px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 16px 39px;
+}
+
+.Month {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 100%;
+  text-align: center;
+  margin: 0;
+}
+
+.wrapperBt {
+  display: flex;
+  gap: 24px;
+}
+
+.prevMonth {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  cursor: pointer;
+  border: 1px solid #b8aea0;
+  border-radius: 100%;
+}
+
+.calendarWeekday {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  cursor: pointer;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 30px;
+  color: #0c0b09;
+}
+
+.nextMonth {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  cursor: pointer;
+  border: 1px solid #b8aea0;
+  border-radius: 100%;
+}
+
+.calendar-day {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 100%;
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+
+  &:hover {
+    background-color: #9b6a00;
+    color: #f1efe9;
+  }
+}
+
+.calendar-day.empty {
+  background-color: transparent;
+}
+
+.headerCalendar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // margin-bottom: 10px;
+}
+
+.calendarLine {
+  border: 1px solid #d6cdc0;
+  display: flex;
+  width: 100%;
+  margin: 16px 0;
+}
+
+.calendarLineSecond{
+  border: 1px solid #d6cdc0;
+  display: flex;
+  width: 100%;
+  margin: 32px 0;
+}
+
+.hourTitle{
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #4B463E;
+}
+
+.wrapperHour{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 32px;
+
+}
+
+.hour{
+  width: 168px;
+  height: 54px;
+  border: 1px solid #615B52;
+  border-radius: 8px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

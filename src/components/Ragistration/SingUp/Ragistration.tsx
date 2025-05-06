@@ -5,15 +5,18 @@ import { useOutsideClick } from "../../../hooks";
 import CloseEye from "../../../image/Resitration/closeEye.svg";
 import OpneEye from "../../../image/Resitration/openEye.svg";
 import Google from "../../../image/Resitration/google.svg";
+import Apple from "../../../image/Resitration/iphone.svg";
 
 interface RegistrationProps {
   onClose: () => void;
   onNextStep: (email: string, password: string) => void;
+  openLoginModal: () => void;
 }
 
 export const Registration: React.FC<RegistrationProps> = ({
   onClose,
   onNextStep,
+  openLoginModal,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -114,7 +117,10 @@ export const Registration: React.FC<RegistrationProps> = ({
           </h3>
           <div className="registration__haveAccount">
             <h3 className="haveAccount">Already have an account?</h3>
-            <h3 className="login">Login</h3>
+            <h2 className="login" onClick={() => {
+              onClose();
+              openLoginModal()
+            }}>Login</h2>
           </div>
         </div>
 
@@ -174,8 +180,8 @@ export const Registration: React.FC<RegistrationProps> = ({
             {/* <span className="registration__lineDown"></span> */}
 
             <div className="registrationWrapperButton">
-              <button className="registrationGoogle"><img src={Google} /></button>
-              <button className="registrationApple"></button>
+              <button className="registrationBt"><img src={Google} /></button>
+              <button className="registrationBt"><img src={Apple} /></button>
             </div>
           </div>
         </div>

@@ -12,5 +12,15 @@ export interface Psychologist {
   };
   sessionPrice: number;
   gender: string;
+  experience: number,
+  imageUrl: string,
+  concerns: [{
+    id: number;
+    name: string;
+  }];
+  approaches: [{
+    id: number;
+    name: string;
+  }];
 }
 
