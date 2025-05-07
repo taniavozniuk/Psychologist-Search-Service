@@ -78,7 +78,6 @@ const Calendar = () => {
     setSelectedDate(fullDate);
     const formatted = fullDate.toISOString().split("T")[0];
 
-    console.log('formatted', formatted)
     try {
       const data = await getDateBokkingId(id, formatted);
       console.log("API response:", selectHour, data);

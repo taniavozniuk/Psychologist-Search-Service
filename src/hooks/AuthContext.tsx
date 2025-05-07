@@ -5,14 +5,19 @@ interface AuthContextType {
   logout: () => void;
 }
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => !!localStorage.getItem("accessToken"));
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
+    () => !!localStorage.getItem("accessToken")
+  );
   const login = (token: string) => {
     localStorage.setItem("accessToken", token);
     setIsLoggedIn(true);
   };
   const logout = () => {
     localStorage.removeItem("accessToken");
+    window.alert("logged out!");
     setIsLoggedIn(false);
   };
   // це якщо потрібна синхронизація між табами браузера (нагадаю, слухач storage не працює у тій самій вкладці браузера, де відбулась подія!

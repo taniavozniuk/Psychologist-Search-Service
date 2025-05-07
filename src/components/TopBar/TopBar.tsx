@@ -62,6 +62,8 @@ export const TopBar: React.FC<TopBarProps> = ({
 
   const handleLogOut = () => {
     logout();
+
+    // navigate("/login");
     setShowUserMenu(false);
   };
   return (

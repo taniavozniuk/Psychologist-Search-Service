@@ -7,6 +7,7 @@ import OpneEye from "../../../image/Resitration/openEye.svg";
 import { logInUser } from "../../../api/api";
 import Google from "../../../image/Resitration/google.svg";
 import Apple from "../../../image/Resitration/iphone.svg";
+import { useNavigate } from "react-router-dom";
 
 interface LogInProps {
   onClose: () => void;
@@ -26,6 +27,8 @@ export const LogIn: React.FC<LogInProps> = ({ onClose }) => {
   const [hasPasswordError, setHasPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [errorPassword, setErrorPassword] = useState("");
+  const navigate = useNavigate();
+
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -79,6 +82,8 @@ export const LogIn: React.FC<LogInProps> = ({ onClose }) => {
       console.error("Login failed", err);
       // setError("Login failed. Please check your credentials and try again.");
     }
+
+    navigate('/profile')
   };
 
   const isValidEmail = (email: string) => {

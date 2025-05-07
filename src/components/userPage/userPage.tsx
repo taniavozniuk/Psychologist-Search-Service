@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const UserPage = () => {
+  const navigate = useNavigate();
     const [, setIsLoggedIn] = useState<boolean>(
       () => !!localStorage.getItem("accessToken")
     );
@@ -17,6 +19,7 @@ export const UserPage = () => {
     localStorage.removeItem("accessToken");
     console.log("Token removed:", localStorage.getItem("accessToken"));
     setIsLoggedIn(false);
+    navigate("/");
     // setShowUserMenu(false);
   };
   return (

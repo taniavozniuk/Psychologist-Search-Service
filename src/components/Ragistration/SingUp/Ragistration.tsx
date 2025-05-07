@@ -82,7 +82,6 @@ export const Registration: React.FC<RegistrationProps> = ({
     // localStorage.removeItem("registrationPassword");
     // localStorage.removeItem("accessToken");
 
-
     setHasEmailError(false);
     setHasPasswordError(false);
     onNextStep(email, password);
@@ -117,10 +116,15 @@ export const Registration: React.FC<RegistrationProps> = ({
           </h3>
           <div className="registration__haveAccount">
             <h3 className="haveAccount">Already have an account?</h3>
-            <h2 className="login" onClick={() => {
-              onClose();
-              openLoginModal()
-            }}>Login</h2>
+            <h2
+              className="login"
+              onClick={() => {
+                onClose();
+                openLoginModal();
+              }}
+            >
+              Login
+            </h2>
           </div>
         </div>
 
@@ -180,8 +184,12 @@ export const Registration: React.FC<RegistrationProps> = ({
             {/* <span className="registration__lineDown"></span> */}
 
             <div className="registrationWrapperButton">
-              <button className="registrationBt"><img src={Google} /></button>
-              <button className="registrationBt"><img src={Apple} /></button>
+              <button className="registrationBt">
+                <img src={Google} />
+              </button>
+              <button className="registrationBt">
+                <img src={Apple} />
+              </button>
             </div>
           </div>
         </div>
