@@ -2,6 +2,7 @@ import axios from "axios";
 import { postPsychologist } from "../types/post";
 import { SingUp } from "../types/singUp";
 import { LogInType } from "../types/LogIn";
+// import { Booking } from "../types/bookings";
 // import { PsychologId } from "../types/psychologId";
 
 //затримка
@@ -76,6 +77,16 @@ export const getDateBokkingId = async (id: string, selectedDate: string) => {
     throw error;
   }
 };
+
+// export const getActiveDay = async (newBook: Booking) => {
+//   try {
+//     const response = await apiClient.get(`/bookings`, newBook);
+//     return response.data;
+//   } catch (error) {
+//     console.log("getActiveDay Error ", error);
+//     throw error;
+//   }
+// };
 
 //дадаю додаткового психолога до бази якщо треба
 export const addPsychologist = async (newPsychologist: postPsychologist) => {

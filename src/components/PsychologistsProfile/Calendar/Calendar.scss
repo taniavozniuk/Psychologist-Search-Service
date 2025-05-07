@@ -137,3 +137,14 @@
   justify-content: center;
   align-items: center;
 }
+
+.disabled{
+  pointer-events: none;
+  color: #B8AEA0;
+  background-color: transparent;
+}
+.calendar-day.selected {
+  background-color: #007bff; 
+  color: white;
+  border-radius: 50%;
+}

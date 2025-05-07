@@ -20,7 +20,7 @@ const Calendar = () => {
         const selectedDateString = selectedDate.toISOString().split("T")[0];
         const data = await getDateBokkingId(id, selectedDateString);
         console.log("API response:", selectHour, data);
-        
+
         setSelectHour(data);
 
         // if (JSON.stringify(data) !== JSON.stringify(selectHour)) {
@@ -67,8 +67,12 @@ const Calendar = () => {
     const fullDate = new Date(
       currentDate.getFullYear(),
       currentDate.getMonth(),
-      day + 1,
-      0, 0, 0, 0
+      // day + 1,
+      day,
+      0,
+      0,
+      0,
+      0
     );
 
     setSelectedDate(fullDate);
@@ -95,23 +99,23 @@ const Calendar = () => {
   //фільтрую години
   const availableTimes = selectHour?.filter((hour: string) => {
     if (!selectedDate) return false;
-  
+
     const hourDate = new Date(hour);
-  
+
     // const match =
     //   hourDate.getFullYear() === selectedDate.getFullYear() &&
     //   hourDate.getMonth() === selectedDate.getMonth() &&
     //   hourDate.getDate() === selectedDate.getDate();
-  
+
     // if (!match) {
     //   console.log("Skipping:", hourDate.toISOString(), "!= selected", selectedDate.toISOString());
     // }
-  
+
     return hourDate;
   });
 
-  console.log('availableTimes', availableTimes);
-  
+  console.log("availableTimes", availableTimes);
+
   return (
     <div className="wrapperCalendar">
       <header className="headerCalendar">
@@ -142,8 +146,29 @@ const Calendar = () => {
         {daysInMonth.map((day, index) => (
           <div
             key={index}
-            className={`calendar-day ${day ? "" : "empty"}`}
-            onClick={() => day && handleDayClick(day)}
+            className={`calendar-day ${day ? "" : "empty"} ${
+              day !== null &&
+              [0, 6].includes(
+                new Date(
+                  currentDate.getFullYear(),
+                  currentDate.getMonth(),
+                  day
+                ).getDay()
+              )
+                ? "disabled"
+                : ""
+            } ${selectedDate?.getDate() === day ? "selected" : ""}`} // додаю клас selected для вибраної дати
+            onClick={() =>
+              day !== null &&
+              ![0, 6].includes(
+                new Date(
+                  currentDate.getFullYear(),
+                  currentDate.getMonth(),
+                  day
+                ).getDay()
+              ) &&
+              handleDayClick(day)
+            }
           >
             {day || ""}
           </div>
