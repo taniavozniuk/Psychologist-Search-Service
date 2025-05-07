@@ -78,6 +78,7 @@ const Calendar = () => {
     setSelectedDate(fullDate);
     const formatted = fullDate.toISOString().split("T")[0];
 
+    console.log('formatted', formatted)
     try {
       const data = await getDateBokkingId(id, formatted);
       console.log("API response:", selectHour, data);
@@ -149,27 +150,9 @@ const Calendar = () => {
         {daysInMonth.map((day, index) => (
           <div
             key={index}
-            className={`calendar-day ${day ? "" : "empty"} ${
-              day !== null &&
-              [0, 6].includes(
-                new Date(
-                  currentDate.getFullYear(),
-                  currentDate.getMonth(),
-                  day
-                ).getDay()
-              )
-                ? "disabled"
-                : ""
-            } ${selectedDate?.getDate() === day ? "selected" : ""}`} // додаю клас selected для вибраної дати
+            className={`calendar-day ${day ? "" : "empty"} ${selectedDate?.getDate() === day ? "selected" : ""}`} // додаю клас selected для вибраної дати
             onClick={() =>
-              day !== null &&
-              ![0, 6].includes(
-                new Date(
-                  currentDate.getFullYear(),
-                  currentDate.getMonth(),
-                  day
-                ).getDay()
-              ) &&
+              day &&
               handleDayClick(day)
             }
           >

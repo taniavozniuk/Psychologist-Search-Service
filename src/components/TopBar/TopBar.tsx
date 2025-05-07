@@ -5,7 +5,7 @@ import UserIcon from "../../image/UserIconButton.svg";
 import UserIconBlack from "../../image/userIconBlack.svg";
 import { Input } from "../Input/Input";
 import { Filetr } from "../Filter/Filter";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks";
 
@@ -34,8 +34,9 @@ export const TopBar: React.FC<TopBarProps> = ({
 }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
   //стан для перевірки наявності токена
-  const [, setIsLoggedIn] = useState(
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
     () => !!localStorage.getItem("accessToken")
   );
   const isTransparentTopBar = isHomePage || isAbout;
@@ -87,7 +88,11 @@ export const TopBar: React.FC<TopBarProps> = ({
               </div>
 
               <div className="filter">
-                <Filetr onOpen={onOpenFilter} isHomePage={isHomePage} isAbout={isAbout}/>
+                <Filetr
+                  onOpen={onOpenFilter}
+                  isHomePage={isHomePage}
+                  isAbout={isAbout}
+                />
               </div>
             </div>
           )}
@@ -104,19 +109,23 @@ export const TopBar: React.FC<TopBarProps> = ({
           </div>
 
           <div className="user">
-            <button
+            <div
               className="user__button"
-              // onClick={setIsModalOpenRegistration}
-              onClick={() => setShowUserMenu((prev) => !prev)}
+              onClick={() => {
+                if (isLoggedIn) {
+                  navigate('/profile');
+                } else {
+                  setShowUserMenu((prev) => !prev);
+                }
+              }}
             >
               <img
                 src={isTransparentTopBar ? UserIcon : UserIconBlack}
                 alt="userIcon"
                 className="button__icon"
               />
-              {/* <Registration onClose={onOpenFilter}/> */}
-            </button>
-            {showUserMenu && (
+            </div>
+            {showUserMenu && !isLoggedIn && (
               <div
                 className="choose"
                 onClick={(e) => e.stopPropagation()}

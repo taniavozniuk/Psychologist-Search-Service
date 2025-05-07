@@ -15,6 +15,8 @@ import { PsychologistProfile } from "./components/PsychologistsProfile/Psycholog
 import { useEffect, useState } from "react";
 import { allFilterPsychologist } from "./types/allFilterPsychologist";
 import { getFilterPsychologist } from "./api/api";
+import { UserPage } from "./components/userPage/userPage";
+import { PrivateRoute } from "./PrivateRoot";
 // import { LogIn } from "./components/Ragistration/LogIn/LogIn";
 // import { Registration } from "./components/Registration/Registration";
 
@@ -22,6 +24,18 @@ export const Root = () => {
   const [psychologists, setPsychologists] = useState<allFilterPsychologist[]>(
     []
   );
+  // const [isLoggedIn, setIsLoggedIn] = useState(
+  //   () => !!localStorage.getItem("accessToken")
+  // );
+
+  // useEffect(() => {
+  //   const handleStorageChange = () => {
+  //     setIsLoggedIn(!!localStorage.getItem("accessToken"));
+  //   };
+
+  //   window.addEventListener("storage", handleStorageChange);
+  //   return () => window.removeEventListener("storage", handleStorageChange);
+  // }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,6 +59,7 @@ export const Root = () => {
           <Route path="about" element={<About />} />
           <Route path="blog" element={<Blog />} />
           <Route path="test" element={<StartTest />} />
+          {/* <Route path="profile" element={<UserPage />} /> */}
           {/* <Route path="registration" element={<Registration />} /> */}
           <Route
             path="find"
@@ -52,6 +67,29 @@ export const Root = () => {
           />
           <Route path="/psychologist" element={<PsychologistPageAll />} />
           <Route path="/psychologist/:id" element={<PsychologistProfile />} />
+          <Route
+            path="profile"
+            element={
+              <PrivateRoute>
+                <UserPage />
+              </PrivateRoute>
+            }
+          />
+          {/* <Route
+            path="/profile"
+            element={isLoggedIn ? <UserPage /> : <Navigate to="/" replace />}
+          /> */}
+          {/* <Route
+            path="/profile"
+            element={
+              localStorage.getItem("accessToken") ? (
+                <UserPage />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          /> */}
+
           {/* <Route path="/login" element={<LogIn />} /> */}
         </Route>
       </Routes>
