@@ -8,6 +8,7 @@ import { logInUser } from "../../../api/api";
 import Google from "../../../image/Resitration/google.svg";
 import Apple from "../../../image/Resitration/iphone.svg";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../hooks/AuthContext";
 
 interface LogInProps {
   onClose: () => void;
@@ -28,6 +29,8 @@ export const LogIn: React.FC<LogInProps> = ({ onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorPassword, setErrorPassword] = useState("");
   const navigate = useNavigate();
+
+  const { login: onSuccessLogin } = useAuth();
 
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,8 +75,9 @@ export const LogIn: React.FC<LogInProps> = ({ onClose }) => {
       console.log("User logged in successfully", response);
       const { token } = response;
 
+
       if (token) {
-        localStorage.setItem("accessToken", token);
+        onSuccessLogin(token);
         console.log("Token saved:", token);
       }
 

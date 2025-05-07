@@ -1,24 +1,12 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/AuthContext";
 
 export const UserPage = () => {
   const navigate = useNavigate();
-    const [, setIsLoggedIn] = useState<boolean>(
-      () => !!localStorage.getItem("accessToken")
-    );
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setIsLoggedIn(!!localStorage.getItem("accessToken"));
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
-  });
-    
+  const { logout } = useAuth();
   const handleLogOut = () => {
-    localStorage.removeItem("accessToken");
     console.log("Token removed:", localStorage.getItem("accessToken"));
-    setIsLoggedIn(false);
+    logout();
     navigate("/");
     // setShowUserMenu(false);
   };
