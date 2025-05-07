@@ -2,6 +2,8 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { Root } from "./Root.tsx";
+import { AuthProvider } from "./hooks/AuthContext.tsx";
+import React from "react";
 
 // createRoot(document.getElementById("root")!).render(
 //     <StrictMode>
@@ -12,4 +14,10 @@ import { Root } from "./Root.tsx";
 // import { createRoot } from "react-dom/client";
 // import { Root } from "./Root";
 
-createRoot(document.getElementById("root") as HTMLElement).render(<Root />);
+createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
+    <AuthProvider>
+      <Root />
+    </AuthProvider>
+  </React.StrictMode>
+);

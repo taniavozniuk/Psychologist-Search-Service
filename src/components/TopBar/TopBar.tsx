@@ -6,8 +6,9 @@ import UserIconBlack from "../../image/userIconBlack.svg";
 import { Input } from "../Input/Input";
 import { Filetr } from "../Filter/Filter";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks";
+import { useAuth } from "../../hooks/AuthContext";
 
 interface TopBarProps {
   onOpenFilter: () => void;
@@ -36,32 +37,31 @@ export const TopBar: React.FC<TopBarProps> = ({
   const modalRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   //стан для перевірки наявності токена
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
-    () => !!localStorage.getItem("accessToken")
-  );
+  // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
+  //   () => !!localStorage.getItem("accessToken")
+  // );
   const isTransparentTopBar = isHomePage || isAbout;
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   useOutsideClick(modalRef, setShowUserMenu);
+  const { isLoggedIn, logout } = useAuth();
 
   const getLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive ? "navbar-item navbar-item--active" : "navbar-item";
 
   // оновлення стану при зміні токену
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setIsLoggedIn(!!localStorage.getItem("accessToken"));
-    };
+  // useEffect(() => {
+  //   const handleStorageChange = () => {
+  //     setIsLoggedIn(!!localStorage.getItem("accessToken"));
+  //   };
 
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
+  //   window.addEventListener("storage", handleStorageChange);
+  //   return () => window.removeEventListener("storage", handleStorageChange);
+  // }, []);
 
   const handleLogOut = () => {
-    localStorage.removeItem("accessToken");
-    console.log("Token removed:", localStorage.getItem("accessToken"));
-    setIsLoggedIn(false);
+    logout();
     setShowUserMenu(false);
   };
   return (
