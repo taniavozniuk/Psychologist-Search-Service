@@ -19,7 +19,6 @@ const Calendar = () => {
         if (!id || !selectedDate) return;
         const selectedDateString = selectedDate.toISOString().split("T")[0];
         const data = await getDateBokkingId(id, selectedDateString);
-        console.log("API response:", selectHour, data);
 
         setSelectHour(data);
 
@@ -31,7 +30,7 @@ const Calendar = () => {
       }
     };
     fetchData();
-  }, [id, selectedDate]);
+  }, [id]);
 
   useEffect(() => {
     console.log("selectedDate changed:", selectedDate);
@@ -65,20 +64,24 @@ const Calendar = () => {
   const handleDayClick = async (day: number | null) => {
     if (day === null || !id) return;
     const fullDate = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      // day + 1,
-      day,
-      0,
-      0,
-      0,
-      0
+      Date.UTC(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        day,
+        0,
+        0,
+        0,
+        0
+      )
     );
 
     setSelectedDate(fullDate);
     const formatted = fullDate.toISOString().split("T")[0];
+
     try {
       const data = await getDateBokkingId(id, formatted);
+      console.log("API response:", selectHour, data);
+
       setSelectHour(data);
       console.log("Fetched for selected day:", data);
     } catch (error) {

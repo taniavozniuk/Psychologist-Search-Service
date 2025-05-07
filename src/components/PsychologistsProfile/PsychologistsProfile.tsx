@@ -85,7 +85,7 @@ export const PsychologistProfile = () => {
                 </div>
                 <div className="boxDescription">
                   <p className="profileDescription">
-                    Helping clients for {psycholog.experience} years
+                    {psycholog.languages}
                   </p>
                 </div>
               </div>
@@ -100,7 +100,7 @@ export const PsychologistProfile = () => {
               </div>
               <div className="boxDescription">
                 <p className="profileDescription">
-                  Helping clients for {psycholog.experience} years
+                  {psycholog.education}
                 </p>
               </div>
             </div>

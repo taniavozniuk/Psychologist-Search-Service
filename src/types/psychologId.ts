@@ -13,13 +13,19 @@ export interface PsychologId {
   sessionPrice: number;
   gender: string;
   experience: number;
+  languages: string;
+  education: string;
   imageUrl: string;
-  concerns: [{
-    id: number;
-    name: string;
-  }];
-  approaches: [{
-    id: number;
-    name: string;
-  }];
+  concerns: [
+    {
+      id: number;
+      name: string;
+    }
+  ];
+  approaches: [
+    {
+      id: number;
+      name: string;
+    }
+  ];
 }
