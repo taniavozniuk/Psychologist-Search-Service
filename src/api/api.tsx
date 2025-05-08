@@ -2,8 +2,7 @@ import axios from "axios";
 import { postPsychologist } from "../types/post";
 import { SingUp } from "../types/singUp";
 import { LogInType } from "../types/LogIn";
-// import { Booking } from "../types/bookings";
-// import { PsychologId } from "../types/psychologId";
+import { Booking } from "../types/bookings";
 
 //затримка
 const delay = () => new Promise((resolve) => setTimeout(resolve, 500));
@@ -78,6 +77,7 @@ export const getDateBokkingId = async (id: string, selectedDate: string) => {
   }
 };
 
+//отримую недоступні дні
 export const getLokedDates = async (id: string, selectedDate: string) => {
   try {
     const response = await apiClient.get(`/bookings/lockedDates/${id}`, {
@@ -89,6 +89,17 @@ export const getLokedDates = async (id: string, selectedDate: string) => {
     throw error;
   }
 };
+
+//booking
+export const addBooking = async (book: Booking) => {
+  try {
+    const response = await apiClient.post('/bookings', book);
+    return response.data
+  } catch (error) {
+    console.log("Bookings Error: ", error);
+    throw error;
+  }
+}
 
 //дадаю додаткового психолога до бази якщо треба
 export const addPsychologist = async (newPsychologist: postPsychologist) => {

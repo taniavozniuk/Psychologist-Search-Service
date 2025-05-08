@@ -1,18 +1,26 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Calendar.scss";
 import nextBt from "../../../image/nextBt.svg";
 import prevBt from "../../../image/prevBt.svg";
 import { getDateBokkingId, getLokedDates } from "../../../api/api";
 import { useParams } from "react-router-dom";
+import { FillingInfo } from "../FillingInfo/FillingInfo";
+import { PsychologId } from "../../../types/psychologId";
 
-const Calendar = () => {
+interface CalendarProps {
+  psycholog: PsychologId;
+}
+
+const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [chooseHour, setChooseHour] = useState<string | null>(null);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectHour, setSelectHour] = useState<string[]>([]);
   const [lockedDates, setLockedDates] = useState<string[]>([]);
   const { id } = useParams<{ id: string }>();
-
   const dni = ["S", "M", "T", "W", "T", "F", "S"];
+
+  const [onOpenFillingInfo, setOnOpenFillingInfo] = useState(false);
 
   //фетчу дні які недоступні в календарі
   useEffect(() => {
@@ -41,10 +49,6 @@ const Calendar = () => {
         const data = await getDateBokkingId(id, selectedDateString);
 
         setSelectHour(data);
-
-        // if (JSON.stringify(data) !== JSON.stringify(selectHour)) {
-        //   setSelectHour(data);
-        // }
       } catch (error) {
         console.log("error BokkingId", error);
       }
@@ -199,7 +203,11 @@ const Calendar = () => {
             <h2 className="hourTitle">Pick Your Preferred Time</h2>
             <div className="wrapperHour">
               {availableTimes?.map((time, index) => (
-                <div key={index} className="hour">
+                <div
+                  key={index}
+                  className={`hour ${chooseHour === time ? "choose-hour" : ""}`}
+                  onClick={() => setChooseHour(time)}
+                >
                   {new Date(time).toLocaleTimeString([], {
                     hour: "2-digit",
                     minute: "2-digit",
@@ -207,8 +215,27 @@ const Calendar = () => {
                 </div>
               ))}
             </div>
+            {chooseHour && (
+              <button
+                className="Book fade-in"
+                onClick={() => {
+                  setOnOpenFillingInfo(true);
+                }}
+              >
+                Book a Session{" "}
+              </button>
+            )}
           </div>
         </>
+      )}
+
+      {onOpenFillingInfo && selectedDate && chooseHour && (
+        <FillingInfo
+          onClose={() => setOnOpenFillingInfo(false)}
+          psycholog={psycholog}
+          selectedDate={selectedDate}
+          chooseHour ={chooseHour}
+        />
       )}
     </div>
   );

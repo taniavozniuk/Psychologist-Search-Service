@@ -36,12 +36,7 @@ export const TopBar: React.FC<TopBarProps> = ({
   const [showUserMenu, setShowUserMenu] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  //стан для перевірки наявності токена
-  // const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
-  //   () => !!localStorage.getItem("accessToken")
-  // );
   const isTransparentTopBar = isHomePage || isAbout;
-
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   useOutsideClick(modalRef, setShowUserMenu);
@@ -50,20 +45,9 @@ export const TopBar: React.FC<TopBarProps> = ({
   const getLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive ? "navbar-item navbar-item--active" : "navbar-item";
 
-  // оновлення стану при зміні токену
-  // useEffect(() => {
-  //   const handleStorageChange = () => {
-  //     setIsLoggedIn(!!localStorage.getItem("accessToken"));
-  //   };
-
-  //   window.addEventListener("storage", handleStorageChange);
-  //   return () => window.removeEventListener("storage", handleStorageChange);
-  // }, []);
-
   const handleLogOut = () => {
     logout();
 
-    // navigate("/login");
     setShowUserMenu(false);
   };
   return (
@@ -162,37 +146,6 @@ export const TopBar: React.FC<TopBarProps> = ({
                 </h2>
               </div>
             )}
-            {/* {showUserMenu && (
-              <div className="choose" onClick={(e) => e.stopPropagation()} ref={modalRef}>
-                {isLoggedIn ? (
-                  <h2 className="choose__logout" onClick={handleLogOut}>
-                    Log Out
-                  </h2>
-                ) : (
-                  <>
-                    <h2
-                      className="choose__sing"
-                      onClick={() => {
-                        setIsModalOpenRegistration();
-                        setShowUserMenu(false);
-                        setCurrentStep(1);
-                      }}
-                    >
-                      Sign Up
-                    </h2>
-                    <h2
-                      className="choose__login"
-                      onClick={() => {
-                        setIsModalLogIn();
-                        setShowUserMenu(false);
-                      }}
-                    >
-                      Log In
-                    </h2>
-                  </>
-                )}
-              </div>
-            )} */}
           </div>
         </div>
       </div>

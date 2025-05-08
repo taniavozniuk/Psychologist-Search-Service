@@ -14,7 +14,15 @@ import Calendar from "./Calendar/Calendar";
 export const PsychologistProfile = () => {
   const [psycholog, setPsycholog] = useState<PsychologId | null>(null);
   const { id } = useParams();
+  const [email, setEmail] = useState("");
+  const [firtsName, setFirtsName] = useState("");
+  const [lastName, setLastName] = useState("");
 
+  const handleReview = (email: string, firtsName: string, lastName: string) => {
+    setFirtsName(firtsName);
+    setLastName(lastName);
+    setEmail(email);
+  };
   useEffect(() => {
     const fetchData = async () => {
       if (!id) return;
@@ -84,9 +92,7 @@ export const PsychologistProfile = () => {
                   <h2 className="boxTitle">Languages</h2>
                 </div>
                 <div className="boxDescription">
-                  <p className="profileDescription">
-                    {psycholog.languages}
-                  </p>
+                  <p className="profileDescription">{psycholog.languages}</p>
                 </div>
               </div>
             </div>
@@ -99,9 +105,7 @@ export const PsychologistProfile = () => {
                 <h2 className="boxTitle">Education</h2>
               </div>
               <div className="boxDescription">
-                <p className="profileDescription">
-                  {psycholog.education}
-                </p>
+                <p className="profileDescription">{psycholog.education}</p>
               </div>
             </div>
           </div>
@@ -151,7 +155,14 @@ export const PsychologistProfile = () => {
         <div className="profileMainCalendar">
           <h2 className="planAppointment">Schedule Your Appointment</h2>
           <div className="calendarWrapper">
-            <Calendar />
+            {psycholog && (
+              <Calendar
+                psycholog={psycholog}
+                firtsName={firtsName}
+                lastName={lastName}
+                email={email}
+              />
+            )}
           </div>
         </div>
       </div>
