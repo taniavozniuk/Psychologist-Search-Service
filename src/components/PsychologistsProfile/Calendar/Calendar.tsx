@@ -2,16 +2,36 @@ import { useEffect, useState } from "react";
 import "./Calendar.scss";
 import nextBt from "../../../image/nextBt.svg";
 import prevBt from "../../../image/prevBt.svg";
-import { getDateBokkingId } from "../../../api/api";
+import { getDateBokkingId, getLokedDates } from "../../../api/api";
 import { useParams } from "react-router-dom";
 
 const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectHour, setSelectHour] = useState<string[]>([]);
+  const [lockedDates, setLockedDates] = useState<string[]>([]);
   const { id } = useParams<{ id: string }>();
 
   const dni = ["S", "M", "T", "W", "T", "F", "S"];
+
+  //фетчу дні які недоступні в календарі
+  useEffect(() => {
+    const fetcLockedhDates = async () => {
+      try {
+        if (!id) return;
+
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth() + 1;
+        const formattedMonth = `${year}-${month.toString().padStart(2, "0")}`;
+        const data = await getLokedDates(id, formattedMonth);
+        setLockedDates(data);
+      } catch (error) {
+        console.log("error fetch locked dates", error);
+      }
+    };
+
+    fetcLockedhDates();
+  }, [id, currentDate]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +59,10 @@ const Calendar = () => {
   useEffect(() => {
     console.log("selectHour updated:", selectHour);
   }, [selectHour]);
+
+  useEffect(() => {
+    console.log("lockedDates", lockedDates);
+  }, [lockedDates]);
 
   // функція для отримання днів місяця
   const getDaysInMonth = (date: Date) => {
@@ -105,15 +129,6 @@ const Calendar = () => {
 
     const hourDate = new Date(hour);
 
-    // const match =
-    //   hourDate.getFullYear() === selectedDate.getFullYear() &&
-    //   hourDate.getMonth() === selectedDate.getMonth() &&
-    //   hourDate.getDate() === selectedDate.getDate();
-
-    // if (!match) {
-    //   console.log("Skipping:", hourDate.toISOString(), "!= selected", selectedDate.toISOString());
-    // }
-
     return hourDate;
   });
 
@@ -146,18 +161,35 @@ const Calendar = () => {
       </div>
 
       <div className="calendar-grid">
-        {daysInMonth.map((day, index) => (
-          <div
-            key={index}
-            className={`calendar-day ${day ? "" : "empty"} ${selectedDate?.getDate() === day ? "selected" : ""}`} // додаю клас selected для вибраної дати
-            onClick={() =>
-              day &&
-              handleDayClick(day)
-            }
-          >
-            {day || ""}
-          </div>
-        ))}
+        {daysInMonth.map((day, index) => {
+          const dateObj = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            day || 1
+          );
+          const dateString = `${dateObj.getFullYear()}-${(
+            dateObj.getMonth() + 1
+          )
+            .toString()
+            .padStart(2, "0")}-${dateObj
+            .getDate()
+            .toString()
+            .padStart(2, "0")}`;
+
+          const isDisabled = lockedDates.includes(dateString);
+
+          return (
+            <div
+              key={index}
+              className={`calendar-day ${day ? "" : "empty"} 
+        ${selectedDate?.getDate() === day ? "selected" : ""} 
+        ${isDisabled ? "locked" : ""}`}
+              onClick={() => !isDisabled && day && handleDayClick(day)}
+            >
+              {day || ""}
+            </div>
+          );
+        })}
       </div>
 
       {selectedDate && (

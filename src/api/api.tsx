@@ -78,15 +78,17 @@ export const getDateBokkingId = async (id: string, selectedDate: string) => {
   }
 };
 
-// export const getActiveDay = async (newBook: Booking) => {
-//   try {
-//     const response = await apiClient.get(`/bookings`, newBook);
-//     return response.data;
-//   } catch (error) {
-//     console.log("getActiveDay Error ", error);
-//     throw error;
-//   }
-// };
+export const getLokedDates = async (id: string, selectedDate: string) => {
+  try {
+    const response = await apiClient.get(`/bookings/lockedDates/${id}`, {
+      params: { selectedDate },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("getLokedDates Error ", error);
+    throw error;
+  }
+};
 
 //дадаю додаткового психолога до бази якщо треба
 export const addPsychologist = async (newPsychologist: postPsychologist) => {

@@ -17,7 +17,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
   const logout = () => {
     localStorage.removeItem("accessToken");
-    window.alert("logged out!");
+
+    console.log("logged out!");
     setIsLoggedIn(false);
   };
   // це якщо потрібна синхронизація між табами браузера (нагадаю, слухач storage не працює у тій самій вкладці браузера, де відбулась подія!

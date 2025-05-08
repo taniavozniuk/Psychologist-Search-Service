@@ -148,3 +148,11 @@
   color: white;
   border-radius: 50%;
 }
+
+.locked {
+  pointer-events: none;
+  opacity: 0.3;
+  color: #B8AEA0;
+  background-color: transparent;
+  cursor: not-allowed;
+}
