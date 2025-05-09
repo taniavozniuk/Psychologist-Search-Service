@@ -9,9 +9,19 @@ import { PsychologId } from "../../../types/psychologId";
 
 interface CalendarProps {
   psycholog: PsychologId;
+  // firtsName: string;
+  // lastName: string;
+  // email: string;
+  // handleReview: (email: string, firtsName: string, lastName: string) => void;
 }
 
-const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
+const Calendar: React.FC<CalendarProps> = ({
+  psycholog,
+  // firtsName,
+  // lastName,
+  // email,
+  // handleReview,
+}) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [chooseHour, setChooseHour] = useState<string | null>(null);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -21,6 +31,8 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
   const dni = ["S", "M", "T", "W", "T", "F", "S"];
 
   const [onOpenFillingInfo, setOnOpenFillingInfo] = useState(false);
+  const [onOpneReview, setOnOpneReview] = useState(false);
+
 
   //фетчу дні які недоступні в календарі
   useEffect(() => {
@@ -234,7 +246,13 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
           onClose={() => setOnOpenFillingInfo(false)}
           psycholog={psycholog}
           selectedDate={selectedDate}
-          chooseHour ={chooseHour}
+          chooseHour={chooseHour}
+          onOpneReview={onOpneReview}
+          setOnOpneReview={setOnOpneReview}
+          // firtsName={firtsName}
+          // lastName={lastName}
+          // email={email}
+          // handleReview={handleReview}
         />
       )}
     </div>

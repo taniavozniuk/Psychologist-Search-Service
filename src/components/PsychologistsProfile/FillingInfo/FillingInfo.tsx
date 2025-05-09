@@ -1,15 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./FillingInfo.scss";
 import ModalCloce from "../../../image/modalClose.svg";
 import { PsychologId } from "../../../types/psychologId";
 import time from "../../../image/Calendar/time.svg";
 import calendar from "../../../image/Calendar/calendar-month.svg";
+import { Review } from "../Review/Review";
+import { useOutsideClick } from "../../../hooks";
+import { Booking } from "../../../types/bookings";
+import { useAuth } from "../../../hooks/AuthContext";
+import { addBooking } from "../../../api/api";
 
 interface FillingInfoProps {
   onClose: () => void;
   psycholog: PsychologId;
   selectedDate: Date;
   chooseHour: string;
+  onOpneReview: boolean;
+  setOnOpneReview: React.Dispatch<React.SetStateAction<boolean>>;
+  // firtsName: string;
+  // lastName: string;
+  // email: string;
+  // handleReview: (email: string, firtsName: string, lastName: string) => void;
 }
 
 export const FillingInfo: React.FC<FillingInfoProps> = ({
@@ -17,6 +28,9 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
   psycholog,
   selectedDate,
   chooseHour,
+  onOpneReview,
+  setOnOpneReview,
+  // handleReview,
 }) => {
   //firstName
   const [firtsName, setFirtsName] = useState("");
@@ -30,6 +44,14 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
   const [email, setEmail] = useState("");
   const [hasEmailError, setHasEmailError] = useState(false);
   const [errorEmail, setErrorEmail] = useState("");
+
+  const modalRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  useOutsideClick(modalRef, onClose);
+
+  const [booking, setBooking] = useState<Booking | null>(null);
+  const { user } = useAuth();
 
   const handleFirtsNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -54,8 +76,15 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
     setErrorEmail("");
   };
 
-  const handleConcinue = () => {
-    if (firtsName) {
+  //передаю дані в настпуне вікно
+  const handleReview = (email: string, firtsName: string, lastName: string) => {
+    setFirtsName(firtsName);
+    setLastName(lastName);
+    setEmail(email);
+  };
+
+  const handleConcinue = async () => {
+    if (!firtsName) {
       setHasFirtsNameError(true);
       setErrorFirtsName("Please enter your name");
       return;
@@ -67,15 +96,49 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
       return;
     }
 
-    if (!email) {
+    if (!isValidEmail(email)) {
       setHasEmailError(true);
       setErrorEmail("Email is required");
       return;
     }
 
     setHasEmailError(false);
+    setHasFirtsNameError(false);
     setHasLastNameError(false);
-    setHasLastNameError(false);
+
+    const newBooking: Booking = {
+      id: booking?.id ?? 0,
+      startTime: chooseHour,
+      endTime: "",
+      meetingUrl: "",
+      psychologistId: psycholog.id,
+      userId: user?.id ?? 0,
+      status: "PENDING",
+    };
+
+    try {
+      // відправляю бронювання на сервер
+      const response = await addBooking(newBooking);
+
+      setBooking(response); 
+
+      handleReview(email, firtsName, lastName);
+      setOnOpneReview(true);
+    } catch (error) {
+      console.error("Booking creation failed:", error);
+    }
+
+    // setBooking(newBooking);
+    // console.log("New booking ID:", newBooking.id);
+
+    // if (firtsName && lastName && isValidEmail(email)) {
+    //   handleReview(email, firtsName, lastName);
+    //   setOnOpneReview(true);
+    // }
+  };
+
+  const isValidEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
   useEffect(() => {
@@ -102,7 +165,7 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
   });
   return (
     <div className="FillingInfo-backdrop">
-      <div className="FillingInfo-content">
+      <div className="FillingInfo-content" ref={modalRef}>
         <button className="close" onClick={onClose}>
           <img src={ModalCloce} alt="close" />
         </button>
@@ -213,10 +276,25 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
               <p className="emailDes">We’ll send the session link here</p>
             </div>
 
-            <button className="FillingContinueBt">Continue</button>
+            <button className="FillingContinueBt" onClick={handleConcinue}>
+              Continue
+            </button>
           </div>
         </div>
       </div>
+
+      {onOpneReview && booking && (
+        <Review
+          onClose={() => setOnOpneReview(false)}
+          formattedDate={formattedDate}
+          formattedTime={formattedTime}
+          firtsName={firtsName}
+          lastName={lastName}
+          email={email}
+          psycholog={psycholog}
+          booking={booking}
+        />
+      )}
     </div>
   );
 };

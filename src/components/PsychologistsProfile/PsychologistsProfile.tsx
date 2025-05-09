@@ -14,15 +14,11 @@ import Calendar from "./Calendar/Calendar";
 export const PsychologistProfile = () => {
   const [psycholog, setPsycholog] = useState<PsychologId | null>(null);
   const { id } = useParams();
-  const [email, setEmail] = useState("");
-  const [firtsName, setFirtsName] = useState("");
-  const [lastName, setLastName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [firtsName, setFirtsName] = useState("");
+  // const [lastName, setLastName] = useState("");
 
-  const handleReview = (email: string, firtsName: string, lastName: string) => {
-    setFirtsName(firtsName);
-    setLastName(lastName);
-    setEmail(email);
-  };
+
   useEffect(() => {
     const fetchData = async () => {
       if (!id) return;
@@ -158,9 +154,10 @@ export const PsychologistProfile = () => {
             {psycholog && (
               <Calendar
                 psycholog={psycholog}
-                firtsName={firtsName}
-                lastName={lastName}
-                email={email}
+                // firtsName={firtsName}
+                // lastName={lastName}
+                // email={email}
+                // handleReview={handleReview}
               />
             )}
           </div>

@@ -1,0 +1,150 @@
+.Review-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(6, 4, 1, 0.8980392157);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.Review-content {
+  width: 554px;
+  background-color: #f9f0e2;
+  padding: 48px;
+  border-radius: 16px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.ReviewDes {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #4b463e;
+  text-align: center;
+  margin: 8px 0 0 0;
+}
+
+.ReviewBookInfo {
+  margin-top: 40px;
+}
+
+.reviewLine {
+  border: 1px solid #d6cdc0;
+  display: flex;
+  margin: 24px 0 32px 0;
+}
+
+.bookNumder {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.yourBooking {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #0c0b09;
+  margin: 0;
+}
+
+.yourBookingNumber {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #615b52;
+  margin: 0;
+}
+
+.BoxInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.boxsesTitle {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #615b52;
+  margin: 0 0 8px 0;
+}
+
+.boxsesDes {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #0c0b09;
+  margin: 0;
+}
+
+.boxsesInfo2 {
+  margin-top: 32px;
+}
+
+.boxsesInfo3 {
+  margin-top: 32px;
+  // width: 180px;
+}
+
+.boxsesDesEmail {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #0c0b09;
+  margin: 0;
+  word-break: break-word; // додає розрив слів
+  white-space: normal;
+}
+
+.totalSum{
+  display: flex;
+  justify-content: space-between;
+}
+
+.totalTitle {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #615b52;
+  margin: 0;
+}
+
+.totalDes {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #0c0b09;
+  margin: 0;
+}
+
+.ContiueToPay{
+  width: 100%;
+  height: 51px;
+  background-color: #393126;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+  color: #f1efe9;
+  border-radius: 8px;
+  border: 1px solid #393126;
+  margin: 40px 0 0 0;
+
+  &:hover {
+    background-color: #9b6a00;
+    border: 1px solid #9b6a00;
+  }
+}

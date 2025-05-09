@@ -93,13 +93,24 @@ export const getLokedDates = async (id: string, selectedDate: string) => {
 //booking
 export const addBooking = async (book: Booking) => {
   try {
-    const response = await apiClient.post('/bookings', book);
-    return response.data
+    const response = await apiClient.post("/bookings", book);
+    return response.data;
   } catch (error) {
     console.log("Bookings Error: ", error);
     throw error;
   }
-}
+};
+
+//user
+export const getUser = async () => {
+  try {
+    const response = await apiClient.get("/users/me");
+    return response.data;
+  } catch (error) {
+    console.log("getUser Error: ", error);
+    throw error;
+  }
+};
 
 //дадаю додаткового психолога до бази якщо треба
 export const addPsychologist = async (newPsychologist: postPsychologist) => {

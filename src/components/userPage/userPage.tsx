@@ -3,7 +3,9 @@ import { useAuth } from "../../hooks/AuthContext";
 
 export const UserPage = () => {
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
+
+  if (!user) return <p>Loading...</p>;
   const handleLogOut = () => {
     console.log("Token removed:", localStorage.getItem("accessToken"));
     logout();

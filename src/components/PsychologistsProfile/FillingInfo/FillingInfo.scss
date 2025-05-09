@@ -19,7 +19,7 @@
 .FillingInfo-content {
   width: 554px;
   background-color: #f9f0e2;
-  padding: 48px;
+  padding: 32px;
   border-radius: 16px;
   position: relative;
   box-sizing: border-box;
@@ -108,9 +108,9 @@
 
 .aboutYouTitle {
   font-family: "Aileron", sans-serif;
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 48px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
   color: #0c0b09;
   margin: 0;
   text-align: center;
@@ -127,7 +127,7 @@
 }
 
 .FormAboutYou {
-  margin: 32px 0 0 0;
+  margin: 24px 0 0 0;
 }
 
 .wrappeBoxInput {
@@ -214,7 +214,7 @@
   color: #f1efe9;
   border-radius: 8px;
   border: 1px solid #393126;
-  margin: 40px 0 0 0;
+  margin: 24px 0 0 0;
 
   &:hover {
     background-color: #9b6a00;

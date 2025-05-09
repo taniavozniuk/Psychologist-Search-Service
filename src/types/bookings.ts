@@ -1,9 +1,9 @@
 export type Booking = {
-  id: number;
+  id?: number;
   startTime: string;
   endTime: string;
   meetingUrl: string;
   psychologistId: number;
   userId: number;
-  status: string;
+  status: "PENDING" | "CONFIRMED" | "CANCELLED" | "EXPIRED";
 };
