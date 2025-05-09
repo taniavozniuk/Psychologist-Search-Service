@@ -123,7 +123,9 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
       setBooking(response); 
 
       handleReview(email, firtsName, lastName);
+      onClose();
       setOnOpneReview(true);
+      
     } catch (error) {
       console.error("Booking creation failed:", error);
     }

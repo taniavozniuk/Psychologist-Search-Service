@@ -40,7 +40,7 @@ export const Review: React.FC<ReviewProps> = ({
         amount: psycholog.sessionPrice,
       };
 
-      console.log('paymentData', paymentData)
+      console.log("paymentData", paymentData);
 
       const paymentResponse = await addPayment(paymentData);
       setPay(paymentResponse);
@@ -124,7 +124,14 @@ export const Review: React.FC<ReviewProps> = ({
             <h2 className="totalDes">${psycholog.sessionPrice}</h2>
           </div>
 
-          <button className="ContiueToPay" onClick={handlePayment}>
+          <button
+            className="ContiueToPay"
+            onClick={(e) => {
+              e.stopPropagation();
+              console.log("clicking payment");
+              handlePayment();
+            }}
+          >
             Continue to Paymentsion
           </button>
         </div>

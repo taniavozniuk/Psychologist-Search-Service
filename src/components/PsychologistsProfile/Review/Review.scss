@@ -142,6 +142,8 @@
   border-radius: 8px;
   border: 1px solid #393126;
   margin: 40px 0 0 0;
+  z-index: 1000;
+position: relative;
 
   &:hover {
     background-color: #9b6a00;

@@ -241,7 +241,7 @@ const Calendar: React.FC<CalendarProps> = ({
         </>
       )}
 
-      {onOpenFillingInfo && selectedDate && chooseHour && (
+      {onOpenFillingInfo && selectedDate && chooseHour && onOpneReview &&(
         <FillingInfo
           onClose={() => setOnOpenFillingInfo(false)}
           psycholog={psycholog}
