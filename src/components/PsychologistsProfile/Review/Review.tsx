@@ -126,8 +126,7 @@ export const Review: React.FC<ReviewProps> = ({
 
           <button
             className="ContiueToPay"
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               console.log("clicking payment");
               handlePayment();
             }}

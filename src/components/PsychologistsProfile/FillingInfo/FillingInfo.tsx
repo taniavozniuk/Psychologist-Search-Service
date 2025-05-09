@@ -123,9 +123,7 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
       setBooking(response); 
 
       handleReview(email, firtsName, lastName);
-      onClose();
       setOnOpneReview(true);
-      
     } catch (error) {
       console.error("Booking creation failed:", error);
     }
@@ -146,6 +144,7 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     document.body.classList.add("no-scroll");
+
     return () => {
       document.body.classList.remove("no-scroll");
     };

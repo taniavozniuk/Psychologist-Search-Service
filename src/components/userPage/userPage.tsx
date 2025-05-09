@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/AuthContext";
+import "./userPage.scss";
 
 export const UserPage = () => {
   const navigate = useNavigate();
@@ -14,20 +15,27 @@ export const UserPage = () => {
   };
   return (
     <>
-      <h1>userpage</h1>
-      <h1>userpage</h1>
-      <h1>userpage</h1>
-      <h1>userpage</h1>
-      <h1>userpage</h1>
+      <div className="profilePge">
+        <div className="sidebar">
+          <ul className="sidebarUl">
+            <li className="sidebarIl">Dashboard</li>
+            <li className="sidebarIl">Settings</li>
+            <li className="sidebarIl" onClick={handleLogOut}>
+              Log Out
+            </li>
+          </ul>
+        </div>
 
-      <h2
-        // className="choose__logout"
-        onClick={() => {
-          handleLogOut();
-        }}
-      >
-        Log Out
-      </h2>
+        <div className="profilePage">
+          <h1 className="profileTitle">Profile information</h1>
+          <h1 className="profileTitle">Profile information</h1>
+          <h1 className="profileTitle">Profile information</h1>
+          <h1 className="profileTitle">Profile information</h1>
+          <h1 className="profileTitle">Profile information</h1>
+          <h1 className="profileTitle">Profile information</h1>
+          
+        </div>
+      </div>
     </>
   );
 };

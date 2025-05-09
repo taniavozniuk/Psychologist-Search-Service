@@ -5,6 +5,7 @@ import messange from "../../image/AboutPsychologist/mesege.svg";
 import brain from "../../image/AboutPsychologist/brain.svg";
 import nextBt from "../../image/nextBt.svg";
 import prevBt from "../../image/prevBt.svg";
+import like from "../../image/like.svg";
 import { usePsychologPIHook } from "./usePsychologPIHook";
 import { Loader } from "../Loader/Loader";
 // import { FindTherapist } from "../FindTherapist/FindTherapist";
@@ -19,7 +20,6 @@ export const PsychologistPageAll = () => {
 
   return (
     <div className="Page">
-      <Loader />
       <div className="wrapper">
         <h2 className="psychologists__title">Psychologists just for you</h2>
         <p className="psychologists__description">
@@ -49,6 +49,9 @@ export const PsychologistPageAll = () => {
                       />
                       <div className="experience-badge">
                         {psych.experience} years' experience
+                      </div>
+                      <div className="folow">
+                        <img src={like} alt="like" className="like"/>
                       </div>
                     </div>
                     <div className="warapperNamePrice">
