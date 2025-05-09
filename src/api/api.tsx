@@ -3,6 +3,7 @@ import { postPsychologist } from "../types/post";
 import { SingUp } from "../types/singUp";
 import { LogInType } from "../types/LogIn";
 import { Booking } from "../types/bookings";
+import { Payment } from "../types/Payment";
 
 //затримка
 const delay = () => new Promise((resolve) => setTimeout(resolve, 500));
@@ -100,6 +101,17 @@ export const addBooking = async (book: Booking) => {
     throw error;
   }
 };
+
+//payment
+export const addPayment = async (pay: Payment) => {
+  try {
+    const response = await apiClient.post('/payments', pay);
+    return response.data
+  }catch (error) {
+    console.log("Payment Error: ", error);
+    throw error;
+  }
+}
 
 //user
 export const getUser = async () => {

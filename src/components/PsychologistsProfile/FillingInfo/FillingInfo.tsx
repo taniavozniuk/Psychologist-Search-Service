@@ -142,14 +142,9 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
   };
 
   useEffect(() => {
-    // прокрутка вгору
     window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // вимкнути прокрутку
     document.body.classList.add("no-scroll");
-
     return () => {
-      // увімкнути прокрутку назад
       document.body.classList.remove("no-scroll");
     };
   }, []);
@@ -166,7 +161,7 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
   return (
     <div className="FillingInfo-backdrop">
       <div className="FillingInfo-content" ref={modalRef}>
-        <button className="close" onClick={onClose}>
+        <button className="closeModal" onClick={onClose}>
           <img src={ModalCloce} alt="close" />
         </button>
         <div className="AlmostWrapper">

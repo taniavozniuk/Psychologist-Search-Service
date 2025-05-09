@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import ModalCloce from "../../../image/modalClose.svg";
 import "./Review.scss";
 import { PsychologId } from "../../../types/psychologId";
 import { Booking } from "../../../types/bookings";
+import { addPayment } from "../../../api/api";
+import { Payment } from "../../../types/Payment";
 
 interface ReviewProps {
   onClose: () => void;
@@ -25,11 +27,36 @@ export const Review: React.FC<ReviewProps> = ({
   psycholog,
   booking,
 }) => {
+  const [pay, setPay] = useState<Payment | null>(null);
+
+  const handlePayment = async () => {
+    try {
+      const paymentData: Payment = {
+        id: 0,
+        bookingId: booking?.id ?? 0,
+        status: "PENDING",
+        sessionId: "",
+        sessionUrl: "",
+        amount: psycholog.sessionPrice,
+      };
+
+      console.log('paymentData', paymentData)
+
+      const paymentResponse = await addPayment(paymentData);
+      setPay(paymentResponse);
+
+      if (paymentResponse.sessionUrl) {
+        window.location.href = paymentResponse.sessionUrl;
+      }
+    } catch (error) {
+      console.error("Payment initiation failed", error);
+    }
+  };
 
   return (
     <div className="Review-backdrop">
       <div className="Review-content">
-        <button className="close" onClick={onClose}>
+        <button className="closeModal" onClick={onClose}>
           <img src={ModalCloce} alt="close" />
         </button>
         <div className="AlmostWrapper">
@@ -97,7 +124,9 @@ export const Review: React.FC<ReviewProps> = ({
             <h2 className="totalDes">${psycholog.sessionPrice}</h2>
           </div>
 
-          <button className="ContiueToPay">Continue to Paymentsion </button>
+          <button className="ContiueToPay" onClick={handlePayment}>
+            Continue to Paymentsion
+          </button>
         </div>
       </div>
     </div>

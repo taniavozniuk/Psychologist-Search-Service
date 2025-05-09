@@ -35,7 +35,7 @@ export const PsychologistProfile = () => {
   }, [id]);
 
   return (
-    <div className="profile" style={{ padding: "120px 40px" }}>
+    <div className="profile">
       {/* <h1>Psychologist Profile</h1> */}
       {psycholog ? (
         <div className="wrapperProfile">
@@ -61,7 +61,7 @@ export const PsychologistProfile = () => {
                 </div>
                 <div className="boxDescription">
                   <p className="profileDescription">
-                    ${psycholog.sessionPrice} . 1 hour
+                    ${psycholog.sessionPrice} . 50 min
                   </p>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ModalCloce from "../../../image/modalClose.svg";
 import { useOutsideClick } from "../../../hooks";
 import "./LogIn.scss";
@@ -31,7 +31,6 @@ export const LogIn: React.FC<LogInProps> = ({ onClose }) => {
   const navigate = useNavigate();
 
   const { login: onSuccessLogin } = useAuth();
-
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -75,7 +74,6 @@ export const LogIn: React.FC<LogInProps> = ({ onClose }) => {
       console.log("User logged in successfully", response);
       const { token } = response;
 
-
       if (token) {
         onSuccessLogin(token);
         console.log("Token saved:", token);
@@ -87,12 +85,25 @@ export const LogIn: React.FC<LogInProps> = ({ onClose }) => {
       // setError("Login failed. Please check your credentials and try again.");
     }
 
-    navigate('/profile')
+    navigate("/profile");
   };
 
   const isValidEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
+
+    useEffect(() => {
+      // прокрутка вгору
+      window.scrollTo({ top: 0, behavior: "smooth" });
+  
+      // вимкнути прокрутку
+      document.body.classList.add("no-scroll");
+  
+      return () => {
+        // увімкнути прокрутку назад
+        document.body.classList.remove("no-scroll");
+      };
+    }, []);
   return (
     <div
       ref={modalRef}
@@ -105,13 +116,10 @@ export const LogIn: React.FC<LogInProps> = ({ onClose }) => {
           <img src={ModalCloce} alt="close" className="close" />
         </button>
       </div>
-      <span className="modal__line"></span>
+      <span className="LogiLine"></span>
 
       <div className="registration__from">
         <div className="registration__infoBox">
-          <h3 className="registration__description">
-            Register with your e-mail
-          </h3>
           <div className="registration__haveAccount">
             <h3 className="haveAccount">New user?</h3>
             <h3 className="regitration">Create an account</h3>
