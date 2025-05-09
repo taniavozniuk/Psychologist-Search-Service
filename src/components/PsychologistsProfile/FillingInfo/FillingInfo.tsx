@@ -120,10 +120,11 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
       // відправляю бронювання на сервер
       const response = await addBooking(newBooking);
 
-      setBooking(response); 
+      setBooking(response);
 
       handleReview(email, firtsName, lastName);
       setOnOpneReview(true);
+      // onClose();
     } catch (error) {
       console.error("Booking creation failed:", error);
     }
@@ -159,125 +160,130 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
     hour: "2-digit",
     minute: "2-digit",
   });
+
   return (
     <div className="FillingInfo-backdrop">
-      <div className="FillingInfo-content" ref={modalRef}>
-        <button className="closeModal" onClick={onClose}>
-          <img src={ModalCloce} alt="close" />
-        </button>
-        <div className="AlmostWrapper">
-          <div className="AlmostTitle">
-            <h2 className="titleAlmost">You're Almost There!</h2>
+      {!onOpneReview && !booking && (
+        <div className="FillingInfo-content" ref={modalRef}>
+          <button className="closeModal" onClick={onClose}>
+            <img src={ModalCloce} alt="close" />
+          </button>
+          <div className="AlmostWrapper">
+            <div className="AlmostTitle">
+              <h2 className="titleAlmost">You're Almost There!</h2>
+            </div>
+            <div className="generalInfo">
+              <div className="totalPrice">
+                <p className="PriceTilte">
+                  <span className="PriceLabel">Total Price:</span>
+                  <span className="PriceAmount">
+                    ${psycholog.sessionPrice} .
+                  </span>{" "}
+                  {/* <span className="PricePoint">.</span> */}
+                  <span className="PriceDuration"> 50 hour</span>
+                </p>
+              </div>
+              <div className="WrapperTimeDay">
+                <div className="BoxTimeDay">
+                  <img src={time} alt="time" />
+                  <p className="titleTimeDay">{formattedTime}</p>
+                </div>
+                <div className="BoxTimeDay">
+                  <img src={calendar} alt="time" />
+                  <p className="titleTimeDay">{formattedDate}</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="generalInfo">
-            <div className="totalPrice">
-              <p className="PriceTilte">
-                <span className="PriceLabel">Total Price:</span>
-                <span className="PriceAmount">
-                  ${psycholog.sessionPrice} .
-                </span>{" "}
-                {/* <span className="PricePoint">.</span> */}
-                <span className="PriceDuration"> 50 hour</span>
+
+          <span className="FillingLine"></span>
+
+          <div className="wrapperAboutYou">
+            <div className="wrapperTitleDesAY">
+              <h2 className="aboutYouTitle">Tell Us a Bit About You</h2>
+              <p className="aboutYouDes">
+                We just need a few details to secure your booking and send you
+                the confirmation.
               </p>
             </div>
-            <div className="WrapperTimeDay">
-              <div className="BoxTimeDay">
-                <img src={time} alt="time" />
-                <p className="titleTimeDay">{formattedTime}</p>
+
+            <div className="FormAboutYou">
+              <div className="wrappeBoxInput">
+                <div className="field__First">
+                  <label className="labelFirst" htmlFor="SingIn-FirstName">
+                    First Name
+                  </label>
+
+                  <div className="FirstNameBox">
+                    <input
+                      type="text"
+                      id="SingIn-FirstName"
+                      className={`inputFirst ${
+                        hasFirtsNameError ? "is-danger" : ""
+                      }`}
+                      value={firtsName}
+                      onChange={handleFirtsNameChange}
+                    />
+                  </div>
+                  {hasFirtsNameError && (
+                    <p className="help is-danger">{errorFirtsName}</p>
+                  )}
+                </div>
+
+                <div className="field__LastName">
+                  <label className="label__LastName" htmlFor="SingIn-LastName">
+                    Last Name
+                  </label>
+
+                  <div className="LastNameBox">
+                    <input
+                      type="text"
+                      id="SingIn-LastName"
+                      className={`inputLastName ${
+                        hasLastNameError ? "is-danger" : ""
+                      }`}
+                      value={lastName}
+                      onChange={handleLastNameChange}
+                    />
+                  </div>
+                  {hasLastNameError && (
+                    <p className="help is-danger">{errorLastName}</p>
+                  )}
+                </div>
               </div>
-              <div className="BoxTimeDay">
-                <img src={calendar} alt="time" />
-                <p className="titleTimeDay">{formattedDate}</p>
+
+              <div className="wrapperBoxEmail">
+                <div className="field__email">
+                  <label className="labelEmail" htmlFor="SingIn-email">
+                    Email Address
+                  </label>
+
+                  <div className="emailBox">
+                    <input
+                      type="email"
+                      id="SingIn-email"
+                      className={`inputEmail ${
+                        hasEmailError ? "is-danger" : ""
+                      }`}
+                      value={email}
+                      onChange={handleEmailChange}
+                    />
+                  </div>
+                  {hasEmailError && (
+                    <p className="help is-danger">{errorEmail}</p>
+                  )}
+                </div>
+
+                <p className="emailDes">We’ll send the session link here</p>
               </div>
+
+              <button className="FillingContinueBt" onClick={handleConcinue}>
+                Continue
+              </button>
             </div>
           </div>
         </div>
-
-        <span className="FillingLine"></span>
-
-        <div className="wrapperAboutYou">
-          <div className="wrapperTitleDesAY">
-            <h2 className="aboutYouTitle">Tell Us a Bit About You</h2>
-            <p className="aboutYouDes">
-              We just need a few details to secure your booking and send you the
-              confirmation.
-            </p>
-          </div>
-
-          <div className="FormAboutYou">
-            <div className="wrappeBoxInput">
-              <div className="field__First">
-                <label className="labelFirst" htmlFor="SingIn-FirstName">
-                  First Name
-                </label>
-
-                <div className="FirstNameBox">
-                  <input
-                    type="text"
-                    id="SingIn-FirstName"
-                    className={`inputFirst ${
-                      hasFirtsNameError ? "is-danger" : ""
-                    }`}
-                    value={firtsName}
-                    onChange={handleFirtsNameChange}
-                  />
-                </div>
-                {hasFirtsNameError && (
-                  <p className="help is-danger">{errorFirtsName}</p>
-                )}
-              </div>
-
-              <div className="field__LastName">
-                <label className="label__LastName" htmlFor="SingIn-LastName">
-                  Last Name
-                </label>
-
-                <div className="LastNameBox">
-                  <input
-                    type="text"
-                    id="SingIn-LastName"
-                    className={`inputLastName ${
-                      hasLastNameError ? "is-danger" : ""
-                    }`}
-                    value={lastName}
-                    onChange={handleLastNameChange}
-                  />
-                </div>
-                {hasLastNameError && (
-                  <p className="help is-danger">{errorLastName}</p>
-                )}
-              </div>
-            </div>
-
-            <div className="wrapperBoxEmail">
-              <div className="field__email">
-                <label className="labelEmail" htmlFor="SingIn-email">
-                  Email Address
-                </label>
-
-                <div className="emailBox">
-                  <input
-                    type="email"
-                    id="SingIn-email"
-                    className={`inputEmail ${hasEmailError ? "is-danger" : ""}`}
-                    value={email}
-                    onChange={handleEmailChange}
-                  />
-                </div>
-                {hasEmailError && (
-                  <p className="help is-danger">{errorEmail}</p>
-                )}
-              </div>
-
-              <p className="emailDes">We’ll send the session link here</p>
-            </div>
-
-            <button className="FillingContinueBt" onClick={handleConcinue}>
-              Continue
-            </button>
-          </div>
-        </div>
-      </div>
+      )}
 
       {onOpneReview && booking && (
         <Review

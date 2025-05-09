@@ -116,13 +116,13 @@ export const Review: React.FC<ReviewProps> = ({
               </div>
             </div>
           </div>
-
+{/* 
           <span className="reviewLine"></span>
 
           <div className="totalSum">
             <h2 className="totalTitle">Total</h2>
             <h2 className="totalDes">${psycholog.sessionPrice}</h2>
-          </div>
+          </div> */}
 
           <button
             className="ContiueToPay"
