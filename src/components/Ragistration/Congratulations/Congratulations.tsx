@@ -16,7 +16,7 @@ export const Congratulations: React.FC<CongratulationsProps> = ({
   useOutsideClick(modalRef, onClose);
 
   return (
-    <div className="Congratulations__wrapper">
+    <div className="Congratulations__wrapper" ref={modalRef}>
       <div className="Congratulations__modal">
         <h2 className="Congratulations__title">You're Registered!</h2>
         <p className="Congratulations__description">

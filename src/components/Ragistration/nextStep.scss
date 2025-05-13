@@ -1,4 +1,5 @@
 .formNameWrapper {
+  box-sizing: border-box;
   display: flex;
   gap: 16px;
 }
@@ -19,6 +20,7 @@
 }
 
 .next__content {
+  box-sizing: border-box;
   background-color: #f9f0e2;
   width: 574px;
   border-radius: 16px;
@@ -58,7 +60,7 @@
   font-size: 40px;
   line-height: 50px;
   color: #0c0b09;
-  margin: 24px 0 0 0;
+  margin: 8px 0 0 0;
 }
 
 .nextStep__close {
@@ -131,16 +133,20 @@
 }
 
 .inputFirstName {
-  width: 100%;
+  box-sizing: border-box;
+  padding: 0 0 0 10px;
+  width: 247px;
   height: 51px;
   border: 1px solid #615b52;
   border-radius: 8px;
   background-color: transparent;
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #615b52;
 }
 
-.field__SecondName {
-  // margin-top: 16px;
-}
 
 .label__SecondName {
   font-family: "Aileron", sans-serif;
@@ -155,11 +161,18 @@
 }
 
 .inputSecondName {
-  width: 100%;
+  box-sizing: border-box;
+  padding: 0 0 0 10px;
+  width: 247px;
   height: 51px;
   border: 1px solid #615b52;
   border-radius: 8px;
   background-color: transparent;
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #615b52;
 }
 
 .checkBoxAggre {
@@ -205,4 +218,3 @@
 .field__SecondName {
   flex-grow: 1;
 }
-

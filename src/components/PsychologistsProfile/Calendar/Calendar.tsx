@@ -9,18 +9,10 @@ import { PsychologId } from "../../../types/psychologId";
 
 interface CalendarProps {
   psycholog: PsychologId;
-  // firtsName: string;
-  // lastName: string;
-  // email: string;
-  // handleReview: (email: string, firtsName: string, lastName: string) => void;
 }
 
 const Calendar: React.FC<CalendarProps> = ({
   psycholog,
-  // firtsName,
-  // lastName,
-  // email,
-  // handleReview,
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [chooseHour, setChooseHour] = useState<string | null>(null);
@@ -249,10 +241,6 @@ const Calendar: React.FC<CalendarProps> = ({
           chooseHour={chooseHour}
           onOpneReview={onOpneReview}
           setOnOpneReview={setOnOpneReview}
-          // firtsName={firtsName}
-          // lastName={lastName}
-          // email={email}
-          // handleReview={handleReview}
         />
       )}
     </div>

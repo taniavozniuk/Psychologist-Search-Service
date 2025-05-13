@@ -17,6 +17,8 @@ import { allFilterPsychologist } from "./types/allFilterPsychologist";
 import { getFilterPsychologist } from "./api/api";
 import { UserPage } from "./components/userPage/userPage";
 import { useAuth } from "./hooks/AuthContext";
+import { MySesions } from "./components/MySesions/MySesions";
+import { Favorites } from "./components/Favorites/Favorites";
 // import { PrivateRoute } from "./PrivateRoot";
 // import { LogIn } from "./components/Ragistration/LogIn/LogIn";
 // import { Registration } from "./components/Registration/Registration";
@@ -56,8 +58,16 @@ export const Root = () => {
           <Route path="/psychologist" element={<PsychologistPageAll />} />
           <Route path="/psychologist/:id" element={<PsychologistProfile />} />
           <Route
-            path="profile"
+            path="/profile"
             element={isLoggedIn ? <UserPage /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/profile/sessions"
+            element={isLoggedIn ? <MySesions /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/profile/favorites"
+            element={isLoggedIn ? <Favorites /> : <Navigate to="/" />}
           />
         </Route>
       </Routes>

@@ -40,16 +40,12 @@ export const TopBar: React.FC<TopBarProps> = ({
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   useOutsideClick(modalRef, setShowUserMenu);
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   const getLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive ? "navbar-item navbar-item--active" : "navbar-item";
 
-  const handleLogOut = () => {
-    logout();
 
-    setShowUserMenu(false);
-  };
   return (
     <div
       className={`top_bar ${
@@ -99,7 +95,7 @@ export const TopBar: React.FC<TopBarProps> = ({
               className="user__button"
               onClick={() => {
                 if (isLoggedIn) {
-                  navigate('/profile');
+                  navigate("/profile");
                 } else {
                   setShowUserMenu((prev) => !prev);
                 }
@@ -135,14 +131,6 @@ export const TopBar: React.FC<TopBarProps> = ({
                   }}
                 >
                   Log In
-                </h2>
-                <h2
-                  className="choose__logout"
-                  onClick={() => {
-                    handleLogOut();
-                  }}
-                >
-                  Log Out
                 </h2>
               </div>
             )}

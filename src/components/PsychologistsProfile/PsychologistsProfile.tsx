@@ -14,10 +14,6 @@ import Calendar from "./Calendar/Calendar";
 export const PsychologistProfile = () => {
   const [psycholog, setPsycholog] = useState<PsychologId | null>(null);
   const { id } = useParams();
-  // const [email, setEmail] = useState("");
-  // const [firtsName, setFirtsName] = useState("");
-  // const [lastName, setLastName] = useState("");
-
 
   useEffect(() => {
     const fetchData = async () => {

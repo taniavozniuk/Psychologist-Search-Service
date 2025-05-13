@@ -5,6 +5,7 @@ import ModalCloce from "../../image/modalClose.svg";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { singUp } from "../../api/api";
 import backBt from "../../image/Resitration/backBt.svg";
+// import { useAuth } from "../../hooks/AuthContext";
 
 interface nextStepProps {
   onClose: () => void;
@@ -23,6 +24,8 @@ export const NextStep: React.FC<nextStepProps> = ({
   setCurrentStep,
   openLoginModal,
 }) => {
+  // const { login } = useAuth();
+
   const modalRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
@@ -40,7 +43,6 @@ export const NextStep: React.FC<nextStepProps> = ({
   const [errorCheckbox, setErrorCheckbox] = useState("");
 
   const [, setError] = useState("");
-
 
   const handleFirstNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -98,6 +100,12 @@ export const NextStep: React.FC<nextStepProps> = ({
         role: "CUSTOMER",
       });
 
+      //       const { accessToken } = response.data; // або response.token — залежить від API
+
+      // if (accessToken) {
+      //   await login(accessToken); // <- із useAuth()
+      // }
+
       console.log("User registered successfully", response);
       setIsCongratulationsOpen(true);
       onClose(); // or navigate to login
@@ -135,10 +143,15 @@ export const NextStep: React.FC<nextStepProps> = ({
       <div className="nextStep__from">
         <div className="nextStep__haveAccount">
           <h3 className="haveAccount">Already have an account?</h3>
-          <h3 className="login" onClick={() => {
+          <h3
+            className="login"
+            onClick={() => {
               onClose();
-              openLoginModal()
-            }}>Login</h3>
+              openLoginModal();
+            }}
+          >
+            Login
+          </h3>
         </div>
 
         <div className="formName">
@@ -166,13 +179,14 @@ export const NextStep: React.FC<nextStepProps> = ({
 
             <div className="field__SecondName">
               <label className="label__SecondName" htmlFor="SingIn-SecondName">
-                Second Name
+                Last Name
               </label>
 
               <div className="SecondNameBox">
                 <input
                   type="text"
                   id="SingIn-SecondName"
+                  autoComplete="family-name"
                   className={`inputSecondName ${
                     hasSecondNameError ? "is-danger" : ""
                   } `}

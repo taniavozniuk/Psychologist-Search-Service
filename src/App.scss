@@ -42,8 +42,11 @@
   z-index: 10;
 }
 
-.logIn__modal{
+.input-filled {
+  color: #0c0b09;
+}
 
+.logIn__modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -56,7 +59,7 @@
   z-index: 10;
 }
 
-.next__modal{
+.next__modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -67,20 +70,24 @@
   justify-content: center;
   align-items: center;
   z-index: 10;
-
 }
 
-.congratulations__modal{
+.congratulations__modal {
   position: fixed;
   // width: 554px;
   // height: 100%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-    // background: rgba(6, 4, 1, 0.8980392157);
+  // background: rgba(6, 4, 1, 0.8980392157);
   background-color: #fff;
   padding: 40px;
   border-radius: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.footer__container {
+  position: relative;
   z-index: 10;
 }

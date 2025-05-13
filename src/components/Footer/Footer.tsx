@@ -1,6 +1,7 @@
 import "./Footer.scss";
 import instagram from "../../image/media/instagram.svg";
 import fecebook from "../../image/media/fecebook.svg";
+import { NavLink } from "react-router-dom";
 
 export const Footer = () => {
   return (
@@ -14,14 +15,14 @@ export const Footer = () => {
               </a>
             </li>
             <li className="footer__item">
-              <a className="footer__link" href="#">
+              <NavLink to="/about" className="footer__link" >
                 About Us
-              </a>
+              </NavLink>
             </li>
             <li className="footer__item">
-              <a className="footer__link" href="#">
+              <NavLink to="/blog" className="footer__link">
                 Blog
-              </a>
+              </NavLink>
             </li>
             <li className="footer__item">
               <a className="footer__link" href="#">

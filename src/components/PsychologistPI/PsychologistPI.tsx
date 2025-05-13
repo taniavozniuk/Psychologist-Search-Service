@@ -62,9 +62,9 @@ export const PsychologistPageAll = () => {
                         <p className="psychologistInfo__price">
                           <span className="priceLabel">Price:</span>
                           <span className="priceAmount">
-                            ${psych.sessionPrice}.
+                            ${psych.sessionPrice}
                           </span>
-                          <span className="duration"> 1 hour</span>
+                          <span className="duration"> • 50 min</span>
                         </p>
                       </div>
 

@@ -32,15 +32,6 @@ export const Registration: React.FC<RegistrationProps> = ({
   const [showPassword, setShowPassword] = useState(false);
   const [errorPassword, setErrorPassword] = useState("");
 
-  // зчитування з localStorage при першому рендері
-  // useEffect(() => {
-  //   const savedEmail = localStorage.getItem("registrationEmail");
-  //   const savedPassword = localStorage.getItem("registrationPassword");
-
-  //   if (savedEmail) setEmail(savedEmail);
-  //   if (savedPassword) setPassword(savedPassword);
-  // }, []);
-
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setEmail(value);

@@ -5,8 +5,10 @@ import messange from "../../image/AboutPsychologist/mesege.svg";
 import brain from "../../image/AboutPsychologist/brain.svg";
 import nextBt from "../../image/nextBt.svg";
 import prevBt from "../../image/prevBt.svg";
+import like from "../../image/like.svg";
+
 import { Psychologist } from "../../types/Psychologist";
-import { getPsychologist } from "../../api/api";
+import { getFilterPsychologist } from "../../api/api";
 import { Loader } from "../Loader/Loader";
 
 interface FindProps {
@@ -28,38 +30,18 @@ export const FindTherapist: React.FC<FindProps> = () => {
   );
   const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   const fetchData = async () => {
-  //     try {
-  //       const data = await getPsychologist();
-  //       console.log("Fetched data:", data); // лог усієї відповіді
-  //       setPsychologists(data);
-
-
-  //     } catch (error) {
-  //       console.log("error", error);
-  //     } finally {
-  //       setLoading(false);
-  //       console.log('loading')
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
       try {
-        const data = await getPsychologist();
+        const data = await getFilterPsychologist();
         console.log("Fetched data:", data);
         setPsychologists(data);
 
         // ⏳ Затримка перед вимкненням loader'а
-        setTimeout(() => {
+        // setTimeout(() => {
           setLoading(false);
-        }, 1500); // 1.5 секунди
+        // }, 1500); // 1.5 секунди
       } catch (error) {
         console.log("error", error);
         setLoading(false); // навіть у разі помилки потрібно виключити loader
@@ -112,6 +94,9 @@ export const FindTherapist: React.FC<FindProps> = () => {
                       />
                       <div className="experience-badge">
                         {psych.experience} years' experience
+                      </div>
+                      <div className="folow">
+                        <img src={like} alt="like" className="like"/>
                       </div>
                     </div>
                     <div className="warapperNamePrice">

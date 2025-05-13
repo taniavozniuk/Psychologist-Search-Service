@@ -1,18 +1,21 @@
-import { NavLink } from "react-router-dom";
 import "./Header.scss";
 import React from "react";
 
 type HeaderProps = {
   isModalOpenRegistration: boolean;
   isModalLogIn: boolean;
-  isCongratulationsOpen: boolean
+  isCongratulationsOpen: boolean;
 };
 
-export const Header: React.FC<HeaderProps> = ({ isModalOpenRegistration, isModalLogIn, isCongratulationsOpen }) => {
+export const Header: React.FC<HeaderProps> = ({
+  isModalOpenRegistration,
+  isModalLogIn,
+  isCongratulationsOpen,
+}) => {
   return (
     <div className="header">
       {/* <div className="header__wrapper"> */}
-      {!isModalOpenRegistration && !isModalLogIn && !isCongratulationsOpen &&(
+      {!isModalOpenRegistration && !isModalLogIn && !isCongratulationsOpen && (
         <div className="header__bottom">
           <div className="header__wrapper">
             <div className="header__titleWrapper">
@@ -33,9 +36,13 @@ export const Header: React.FC<HeaderProps> = ({ isModalOpenRegistration, isModal
                 </h2>
 
                 <div className="button__testWrapper">
-                  <NavLink to="/test" className="button__test">
+                  {/* to="/test" */}
+                  <button
+                    className="button__test"
+                    title="This function will be in the future"
+                  >
                     Start the Test
-                  </NavLink>
+                  </button>
                 </div>
               </div>
             </div>

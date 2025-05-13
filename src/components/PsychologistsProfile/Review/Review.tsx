@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import ModalCloce from "../../../image/modalClose.svg";
 import "./Review.scss";
 import { PsychologId } from "../../../types/psychologId";
 import { Booking } from "../../../types/bookings";
 import { addPayment } from "../../../api/api";
 import { Payment } from "../../../types/Payment";
+import { useOutsideClick } from "../../../hooks";
 
 interface ReviewProps {
   onClose: () => void;
@@ -27,7 +28,11 @@ export const Review: React.FC<ReviewProps> = ({
   psycholog,
   booking,
 }) => {
-  const [pay, setPay] = useState<Payment | null>(null);
+    const modalRef = useRef<HTMLDivElement>(null);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    useOutsideClick(modalRef, onClose);
+  const [, setPay] = useState<Payment | null>(null);
 
   const handlePayment = async () => {
     try {
@@ -46,7 +51,8 @@ export const Review: React.FC<ReviewProps> = ({
       setPay(paymentResponse);
 
       if (paymentResponse.sessionUrl) {
-        window.location.href = paymentResponse.sessionUrl;
+        window.open(paymentResponse.sessionUrl, "_blank"); // відкриває в новій вкладці
+        onClose();
       }
     } catch (error) {
       console.error("Payment initiation failed", error);
@@ -55,7 +61,7 @@ export const Review: React.FC<ReviewProps> = ({
 
   return (
     <div className="Review-backdrop">
-      <div className="Review-content">
+      <div className="Review-content" ref={modalRef}>
         <button className="closeModal" onClick={onClose}>
           <img src={ModalCloce} alt="close" />
         </button>

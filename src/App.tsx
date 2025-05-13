@@ -8,6 +8,7 @@ import { NextStep } from "./components/Ragistration/nextstep";
 import { Congratulations } from "./components/Ragistration/Congratulations/Congratulations";
 import { Registration } from "./components/Ragistration/SingUp/Ragistration";
 import { Footer } from "./components/Footer/Footer";
+import { SideBar } from "./components/userPage/SideBar/SideBar";
 // import { Footer } from "./components/Footer/Footer";
 
 function App() {
@@ -23,6 +24,10 @@ function App() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const isAbout = location.pathname === "/about";
+  const isUserPage =
+    location.pathname.startsWith("/profile") ||
+    location.pathname.startsWith("/sessions") ||
+    location.pathname.startsWith("/favorites");
 
   const handleNextStep = (email: string, password: string) => {
     setEmail(email);
@@ -88,7 +93,13 @@ function App() {
 
       {isModalLogIn && !isModalOpen && (
         <div className="logIn__modal" onClick={(e) => e.stopPropagation()}>
-          <LogIn onClose={() => setIsModalLogIn(false)} />
+          <LogIn
+            onClose={() => setIsModalLogIn(false)}
+            openRegistration={() => {
+              setIsModalLogIn(false);
+              setIsModalOpenRegistration(true);
+            }}
+          />
         </div>
       )}
 
@@ -97,6 +108,8 @@ function App() {
           <Congratulations onClose={() => setIsCongratulationsOpen(false)} />
         </div>
       )}
+
+      <div className="wrappeSideBar">{isUserPage && <SideBar />}</div>
 
       <Outlet
         context={{
@@ -114,14 +127,6 @@ function App() {
       )}
     </>
   );
-
-  {
-    /* {!isModalOpen && (
-        <div className="footer__container">
-          <Footer />
-        </div>
-      )} */
-  }
 }
 
 export default App;

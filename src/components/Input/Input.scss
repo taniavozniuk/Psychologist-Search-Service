@@ -1,5 +1,7 @@
 @use "../../utils/mixins.scss" as *;
 
+
+
 .input__find {
   box-sizing: border-box;
   height: 54px;
@@ -46,6 +48,8 @@
     padding: 0 0 0 45px;
   }
 }
+
+
 
 .input--plain{
   background: url("../../image/blackSearch.svg") no-repeat;

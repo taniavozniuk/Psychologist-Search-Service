@@ -12,9 +12,10 @@ import { useAuth } from "../../../hooks/AuthContext";
 
 interface LogInProps {
   onClose: () => void;
+  openRegistration: () => void;
 }
 
-export const LogIn: React.FC<LogInProps> = ({ onClose }) => {
+export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
@@ -92,18 +93,18 @@ export const LogIn: React.FC<LogInProps> = ({ onClose }) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-    useEffect(() => {
-      // прокрутка вгору
-      window.scrollTo({ top: 0, behavior: "smooth" });
-  
-      // вимкнути прокрутку
-      document.body.classList.add("no-scroll");
-  
-      return () => {
-        // увімкнути прокрутку назад
-        document.body.classList.remove("no-scroll");
-      };
-    }, []);
+  useEffect(() => {
+    // прокрутка вгору
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // вимкнути прокрутку
+    document.body.classList.add("no-scroll");
+
+    return () => {
+      // увімкнути прокрутку назад
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
   return (
     <div
       ref={modalRef}
@@ -122,7 +123,15 @@ export const LogIn: React.FC<LogInProps> = ({ onClose }) => {
         <div className="registration__infoBox">
           <div className="registration__haveAccount">
             <h3 className="haveAccount">New user?</h3>
-            <h3 className="regitration">Create an account</h3>
+            <h3
+              className="regitration"
+              onClick={() => {
+                onClose();
+                openRegistration();
+              }}
+            >
+              Create an account
+            </h3>
           </div>
         </div>
 

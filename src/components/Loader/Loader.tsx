@@ -5,3 +5,9 @@ export const Loader = () => {
     <span className="loader"></span>
   )
 }
+
+export const SmallLoader = () => {
+  return (
+    <span className="smallloader"></span>
+  )
+}

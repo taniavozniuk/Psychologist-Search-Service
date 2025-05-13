@@ -13,6 +13,7 @@ interface InputProps {
 export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
   const [searchText, setSearchText] = useState("");
   const [psychologists, setPsychologists] = useState<Psychologist[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   // const [showSuggestion, setShowSuggestion] = useState(false);
   const navigate = useNavigate();
 
@@ -20,6 +21,7 @@ export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const data = await getPsychologist();
         const filtered = data.filter(
@@ -31,8 +33,14 @@ export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
         );
 
         setPsychologists(filtered);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1500); // 1.5 секунди
       } catch (error) {
         console.log("Failed to fetch psychologists", error);
+        setPsychologists([]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -90,6 +98,11 @@ export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
 
   return (
     <>
+      {/* {isLoading && (
+        <div className="loader-container">
+          <SmallLoader />
+        </div>
+      )} */}
       <div className="conteiner__input">
         <input
           name="name"
@@ -101,7 +114,6 @@ export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
-
       </div>
       {psychologists.length > 0 && (
         <ul className="search__result">
@@ -119,9 +131,15 @@ export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
           ))}
         </ul>
       )}
-      {searchText && psychologists.length === 0 && (
+      {searchText && psychologists.length === 0 && !isLoading && (
         <ul className="search__result">
-          <li className="search__item">Не знайдено результатів</li>
+          <li className="search__item">No results found</li>
+        </ul>
+      )}
+
+      {isLoading && (
+        <ul className="search__result">
+          <li className="search__item">Loading...</li>
         </ul>
       )}
       {/* 
