@@ -19,6 +19,7 @@ import { UserPage } from "./components/userPage/userPage";
 import { useAuth } from "./hooks/AuthContext";
 import { MySesions } from "./components/MySesions/MySesions";
 import { Favorites } from "./components/Favorites/Favorites";
+import { FavoritesProvider } from "./hooks/FavouritesContext";
 // import { PrivateRoute } from "./PrivateRoot";
 // import { LogIn } from "./components/Ragistration/LogIn/LogIn";
 // import { Registration } from "./components/Registration/Registration";
@@ -43,34 +44,36 @@ export const Root = () => {
     fetchData();
   }, []);
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<HomePage />} />
-          <Route path="home" element={<Navigate to="/" replace />} />
-          <Route path="about" element={<About />} />
-          <Route path="blog" element={<Blog />} />
-          <Route path="test" element={<StartTest />} />
-          <Route
-            path="find"
-            element={<FindTherapist psychologists={psychologists} />}
-          />
-          <Route path="/psychologist" element={<PsychologistPageAll />} />
-          <Route path="/psychologist/:id" element={<PsychologistProfile />} />
-          <Route
-            path="/profile"
-            element={isLoggedIn ? <UserPage /> : <Navigate to="/" replace />}
-          />
-          <Route
-            path="/profile/sessions"
-            element={isLoggedIn ? <MySesions /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/profile/favorites"
-            element={isLoggedIn ? <Favorites /> : <Navigate to="/" />}
-          />
-        </Route>
-      </Routes>
-    </Router>
+    <FavoritesProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route index element={<HomePage />} />
+            <Route path="home" element={<Navigate to="/" replace />} />
+            <Route path="about" element={<About />} />
+            <Route path="blog" element={<Blog />} />
+            <Route path="test" element={<StartTest />} />
+            <Route
+              path="find"
+              element={<FindTherapist psychologists={psychologists} />}
+            />
+            <Route path="/psychologist" element={<PsychologistPageAll />} />
+            <Route path="/psychologist/:id" element={<PsychologistProfile />} />
+            <Route
+              path="/profile"
+              element={isLoggedIn ? <UserPage /> : <Navigate to="/" replace />}
+            />
+            <Route
+              path="/profile/sessions"
+              element={isLoggedIn ? <MySesions /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/profile/favorites"
+              element={isLoggedIn ? <Favorites /> : <Navigate to="/" />}
+            />
+          </Route>
+        </Routes>
+      </Router>
+    </FavoritesProvider>
   );
 };

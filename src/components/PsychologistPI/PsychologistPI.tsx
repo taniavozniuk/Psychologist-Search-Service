@@ -6,8 +6,12 @@ import brain from "../../image/AboutPsychologist/brain.svg";
 import nextBt from "../../image/nextBt.svg";
 import prevBt from "../../image/prevBt.svg";
 import like from "../../image/like.svg";
+import liked from "../../image/liked.svg";
+
 import { usePsychologPIHook } from "./usePsychologPIHook";
 import { Loader } from "../Loader/Loader";
+import { useFavourites } from "../../hooks/FavouritesContext";
+import React from "react";
 // import { FindTherapist } from "../FindTherapist/FindTherapist";
 export const PsychologistPageAll = () => {
   const {
@@ -17,6 +21,7 @@ export const PsychologistPageAll = () => {
     currentPage,
     loading,
   } = usePsychologPIHook();
+  const { favorites, toggleFavorite } = useFavourites();
 
   return (
     <div className="Page">
@@ -38,6 +43,13 @@ export const PsychologistPageAll = () => {
         <>
           <div className="page__psychologists">
             {currentPsychologists.map((psych) => {
+              const isFavorite = favorites.some((fav) => fav.id === psych.id);
+
+              const handleToogleFavorite = (e: React.MouseEvent) => {
+                e.stopPropagation();
+                toggleFavorite(psych);
+                console.log('favorite click');
+              };
               return (
                 <div key={psych.id} className="psychologist__card">
                   <div className="psychologistWrapper__info">
@@ -50,9 +62,9 @@ export const PsychologistPageAll = () => {
                       <div className="experience-badge">
                         {psych.experience} years' experience
                       </div>
-                      <div className="folow">
-                        <img src={like} alt="like" className="like"/>
-                      </div>
+                      <button className="folow" onClick={handleToogleFavorite}>
+                        <img src={isFavorite ? liked : like} alt="like" className="like" />
+                      </button>
                     </div>
                     <div className="warapperNamePrice">
                       <div className="psychologistInfo__NamePrice">

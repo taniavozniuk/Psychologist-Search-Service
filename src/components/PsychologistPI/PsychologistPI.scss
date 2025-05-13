@@ -5,6 +5,14 @@
 
 .psychologist__card {
   width: 358px;
+
+  &:hover {
+    box-shadow: 1px 0 0.4em #393126;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
 }
 
 // .psychologists__card {
@@ -79,8 +87,8 @@
   // height: 40px;
   bottom: 16px;
   left: 16px;
-  background-color: rgb(208, 208, 208, 0.48) ;
-  color: #F1EFE9;
+  background-color: rgb(208, 208, 208, 0.48);
+  color: #f1efe9;
   padding: 8px;
   border-radius: 8px;
   font-family: "Aileron", sans-serif;
@@ -92,7 +100,7 @@
   display: flex;
 }
 
-.folow{
+.folow {
   position: absolute;
   bottom: 16px;
   right: 16px;
@@ -106,7 +114,7 @@
   height: 48px;
 }
 
-.like{
+.like {
   width: 24px;
   height: 24px;
   // text-align: center;
@@ -123,7 +131,7 @@
   margin: 0 0 8px 0;
 }
 
-.psychologistInfo__price{
+.psychologistInfo__price {
   font-family: "Aileron", sans-serif;
   font-weight: 400;
   font-size: 18px;
@@ -132,7 +140,7 @@
   margin: 24px 0 0 0;
 }
 
-.priceAmount{
+.priceAmount {
   font-weight: 700;
   font-size: 20px;
   line-height: 30px;

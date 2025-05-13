@@ -6,10 +6,13 @@ import brain from "../../image/AboutPsychologist/brain.svg";
 import nextBt from "../../image/nextBt.svg";
 import prevBt from "../../image/prevBt.svg";
 import like from "../../image/like.svg";
+import liked from "../../image/liked.svg";
+
 
 import { Psychologist } from "../../types/Psychologist";
-import { getFilterPsychologist } from "../../api/api";
+import { getPsychologist } from "../../api/api";
 import { Loader } from "../Loader/Loader";
+import { useFavourites } from "../../hooks/FavouritesContext";
 
 interface FindProps {
   psychologists: Psychologist[];
@@ -29,18 +32,19 @@ export const FindTherapist: React.FC<FindProps> = () => {
     indexOfLastItem
   );
   const [loading, setLoading] = useState(true);
+  const { favorites, toggleFavorite } = useFavourites();
 
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
       try {
-        const data = await getFilterPsychologist();
+        const data = await getPsychologist();
         console.log("Fetched data:", data);
         setPsychologists(data);
 
         // ⏳ Затримка перед вимкненням loader'а
         // setTimeout(() => {
-          setLoading(false);
+        setLoading(false);
         // }, 1500); // 1.5 секунди
       } catch (error) {
         console.log("error", error);
@@ -83,6 +87,13 @@ export const FindTherapist: React.FC<FindProps> = () => {
         <>
           <div className="page__psychologists">
             {currentPsychologists.map((psych) => {
+              const isFavorite = favorites.some((fav) => fav.id === psych.id);
+
+              const handleToogleFavorite = (e: React.MouseEvent) => {
+                e.stopPropagation();
+                toggleFavorite(psych);
+                console.log("favorite click");
+              };
               return (
                 <div key={psych.id} className="psychologist__card">
                   <div className="psychologistWrapper__info">
@@ -95,9 +106,9 @@ export const FindTherapist: React.FC<FindProps> = () => {
                       <div className="experience-badge">
                         {psych.experience} years' experience
                       </div>
-                      <div className="folow">
-                        <img src={like} alt="like" className="like"/>
-                      </div>
+                      <button className="folow" onClick={handleToogleFavorite}>
+                        <img src={isFavorite ? liked : like} alt="like" className="like" />
+                      </button>
                     </div>
                     <div className="warapperNamePrice">
                       <div className="psychologistInfo__NamePrice">
