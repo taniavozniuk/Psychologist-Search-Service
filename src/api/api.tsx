@@ -4,6 +4,7 @@ import { SingUp } from "../types/singUp";
 import { LogInType } from "../types/LogIn";
 import { Booking } from "../types/bookings";
 import { Payment } from "../types/Payment";
+import { Review } from "../types/review";
 
 //затримка
 const delay = () => new Promise((resolve) => setTimeout(resolve, 500));
@@ -105,13 +106,13 @@ export const addBooking = async (book: Booking) => {
 //payment
 export const addPayment = async (pay: Payment) => {
   try {
-    const response = await apiClient.post('/payments', pay);
-    return response.data
-  }catch (error) {
+    const response = await apiClient.post("/payments", pay);
+    return response.data;
+  } catch (error) {
     console.log("Payment Error: ", error);
     throw error;
   }
-}
+};
 
 //user
 export const getUser = async () => {
@@ -123,6 +124,18 @@ export const getUser = async () => {
     throw error;
   }
 };
+
+//отримую всі бронювання які робив користувач
+export const getBookingUser = async () => {
+  try {
+    const response = await apiClient.get("/bookings/my");
+    return response.data;
+  } catch (error) {
+    console.log("getBookingUser Error: ", error);
+    throw error;
+  }
+};
+
 
 //дадаю додаткового психолога до бази якщо треба
 export const addPsychologist = async (newPsychologist: postPsychologist) => {
@@ -154,6 +167,17 @@ export const logInUser = async (formData: LogInType) => {
     return response.data;
   } catch (error) {
     console.log("LogIn error", error);
+    throw error;
+  }
+};
+
+//відгук
+export const postReview = async (review: Review) => {
+  try {
+    const response = await apiClient.post("/reviews", review);
+    return response.data;
+  } catch (error) {
+    console.log("postReview error", error);
     throw error;
   }
 };

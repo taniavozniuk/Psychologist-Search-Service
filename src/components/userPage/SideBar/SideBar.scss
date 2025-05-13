@@ -1,9 +1,8 @@
-
 .sidebar {
   width: 60px;
-    background-color: #ff9807;
+  // background-color: #ff9807;
 
-  // background-color: #F5EBDD;
+  background-color: #f5ebdd;
   color: white;
   transition: width 0.3s ease;
   overflow: hidden;
@@ -14,7 +13,7 @@
   z-index: 10;
   position: fixed;
 
-  &:hover{
+  &:hover {
     width: 204px;
   }
 }
@@ -24,18 +23,18 @@
   padding: 0;
   margin: 64px 0 0 0;
 }
-.wrapperIl{
+.wrapperIl {
   display: flex;
 }
 
-.sidebarIcon{
+.sidebarIcon {
   width: 24px;
   height: 24px;
   margin: 0 auto;
   transition: margin 0.3s ease;
 }
 
-.sidebarText{
+.sidebarText {
   opacity: 0;
   white-space: nowrap;
   transition: opacity 0.3s ease;
@@ -55,20 +54,18 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 30px;
-  color: #7C746A;
+  color: #7c746a;
   padding-left: 11px;
   text-decoration: none;
-  
 
   &:hover {
-    background-color: #EFE3D2;
-    color: #0C0B09;
+    background-color: #efe3d2;
+    color: #0c0b09;
   }
 }
 
-
-.sidebarLine{
-  border: 1px solid #D6CDC0;
+.sidebarLine {
+  border: 1px solid #d6cdc0;
   display: flex;
   margin: 40px 8px;
 }
