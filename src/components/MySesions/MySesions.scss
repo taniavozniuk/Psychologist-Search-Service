@@ -106,8 +106,8 @@
   }
 
   &-expired {
-    background-color: #DFAE2B1A;
-    color: #DFAE2B;
+    background-color: #dfae2b1a;
+    color: #dfae2b;
   }
   // &-completed {
   //   background-color: #6d91a31a;
@@ -124,4 +124,9 @@
   font-size: 16px;
   line-height: 24px;
   color: #9b6a00;
+}
+
+.noBookImage {
+  margin-top: 64px;
+  margin-left: 201px;
 }

@@ -67,6 +67,8 @@ function App() {
           <Registration
             onClose={() => setIsModalOpenRegistration(false)}
             onNextStep={handleNextStep}
+            isHomePage={isHomePage}
+            isAbout={isAbout}
             openLoginModal={() => {
               setIsModalOpenRegistration(false);
               setIsModalLogIn(true);

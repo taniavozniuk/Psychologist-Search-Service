@@ -118,6 +118,7 @@
   color: #f1efe9;
   font-size: 16px;
   font-weight: 600;
+  line-height: 24px;
   font-family: "Aileron", sans-serif;
 }
 
@@ -133,6 +134,9 @@
     height: 1.5px;
     background-color: #F1EFE9; 
   }
+}
+.navbar-item--black{
+  color: #0C0B09;
 }
 
 .blog {

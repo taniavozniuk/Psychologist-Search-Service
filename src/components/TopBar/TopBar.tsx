@@ -42,10 +42,15 @@ export const TopBar: React.FC<TopBarProps> = ({
   useOutsideClick(modalRef, setShowUserMenu);
   const { isLoggedIn } = useAuth();
 
-  const getLinkClass = ({ isActive }: { isActive: boolean }) =>
-    isActive ? "navbar-item navbar-item--active" : "navbar-item";
+  const getLinkClass = ({ isActive }: { isActive: boolean }) => {
+    const baseClass = "navbar-item";
+    const activeClass = isActive ? "navbar-item--active" : "";
+    const colorClass =
+      isHomePage || isAbout ? "navbar-item--white" : "navbar-item--black";
+    return `${baseClass} ${activeClass} ${colorClass}`;
+  };
 
-
+  
   return (
     <div
       className={`top_bar ${

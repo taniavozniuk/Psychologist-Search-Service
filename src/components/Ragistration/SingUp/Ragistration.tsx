@@ -11,17 +11,22 @@ interface RegistrationProps {
   onClose: () => void;
   onNextStep: (email: string, password: string) => void;
   openLoginModal: () => void;
+  isHomePage: boolean;
+  isAbout: boolean;
 }
 
 export const Registration: React.FC<RegistrationProps> = ({
   onClose,
   onNextStep,
   openLoginModal,
+  isHomePage,
+  isAbout,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   useOutsideClick(modalRef, onClose);
+  const isTransparentTopBar = isHomePage || isAbout;
 
   const [email, setEmail] = useState("");
   const [hasEmailError, setHasEmailError] = useState(false);
@@ -85,7 +90,7 @@ export const Registration: React.FC<RegistrationProps> = ({
   return (
     <div
       ref={modalRef}
-      className="Registration__content"
+      className={`Registration__content ${isTransparentTopBar ? 'modal-while': 'modal-black'}`}
       onClick={(e) => e.stopPropagation()}
     >
       <div className="registrationTitle__wrapper">
