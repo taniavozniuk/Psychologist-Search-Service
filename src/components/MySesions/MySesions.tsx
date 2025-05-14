@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
-import {
-  canceledPaymnt,
-  getBookingUser,
-  getCancelPayment,
-} from "../../api/api";
+import { canceledPaymnt, getBookingUser } from "../../api/api";
 import { useAuth } from "../../hooks/AuthContext";
 import "./MySesions.scss";
 import { MyBokking } from "../../types/MyBooking";
+import bookNotYet from "../../image/Profile/bookNotYet.svg";
 
 export const MySesions = () => {
   const [booking, setBooking] = useState<MyBokking[]>([]);
@@ -37,10 +34,6 @@ export const MySesions = () => {
     console.log("Cancel booking:", bookingId);
 
     try {
-      // Спершу скасовуємо оплату
-      await getCancelPayment(bookingId.toString());
-      console.log("Сесія оплати скасована");
-
       // Потім скасовуємо саму бронь
       await canceledPaymnt(bookingId);
       console.log("Бронювання скасовано");
@@ -60,85 +53,91 @@ export const MySesions = () => {
     <div className="UserPage">
       <div className="profilePage">
         <div className="bookConteiner">
-          <h1 className="profileTitle">Your Appointments & Payments</h1>
+          {booking.length > 0 && (
+            <h1 className="profileTitle">Your Appointments & Payments</h1>
+          )}
 
           <div className="dookCard">
-            {booking.length > 0 ? (
-              <div className="tableWrapper">
-                <table className="bookingList">
-                  <thead className="thead">
-                    <tr className="tr">
-                      <th className="th">Date & Time</th>
-                      <th className="th">Specialist</th>
-                      <th className="th">Amount</th>
-                      <th className="th">Status</th>
-                      <th className="th">Actions</th>
-                    </tr>
-                  </thead>
+            {booking.length > 0 && (
+              <table className="bookingList">
+                <thead className="thead">
+                  <tr className="tr">
+                    <th className="th">Date & Time</th>
+                    <th className="th">Specialist</th>
+                    <th className="th">Amount</th>
+                    <th className="th">Status</th>
+                    <th className="th">Actions</th>
+                  </tr>
+                </thead>
 
-                  <tbody className="tbody">
-                    {booking.map((bookings) => (
-                      <tr key={bookings.id} className="tr">
-                        <td className="td">
-                          {new Date(bookings.startTime).toLocaleString(
-                            "en-US",
-                            {
-                              weekday: "short",
-                              month: "short",
-                              day: "numeric",
-                              hour: "numeric",
-                              minute: "2-digit",
-                              hour12: true,
-                            }
-                          )}
-                        </td>
+                <tbody className="tbody">
+                  {booking.map((bookings) => (
+                    <tr key={bookings.id} className="tr">
+                      <td className="td">
+                        {new Date(bookings.startTime).toLocaleString("en-US", {
+                          weekday: "short",
+                          month: "short",
+                          day: "numeric",
+                          hour: "numeric",
+                          minute: "2-digit",
+                          hour12: true,
+                        })}
+                      </td>
 
-                        <td className="td">
-                          Dr. {bookings.psychologistDto.firstName}{" "}
-                          {bookings.psychologistDto.lastName}
-                        </td>
+                      <td className="td">
+                        Dr. {bookings.psychologistDto.firstName}{" "}
+                        {bookings.psychologistDto.lastName}
+                      </td>
 
-                        <td className="td">
-                          $ {bookings.psychologistDto.sessionPrice}
-                        </td>
+                      <td className="td">
+                        $ {bookings.psychologistDto.sessionPrice}
+                      </td>
 
-                        <td className="td">
-                          <span
-                            className={`status status-${bookings.status.toLowerCase()}`}
+                      <td className="td">
+                        <span
+                          className={`status status-${bookings.status.toLowerCase()}`}
+                        >
+                          {bookings.status.charAt(0).toUpperCase() +
+                            bookings.status.slice(1).toLowerCase()}
+                        </span>
+                      </td>
+
+                      <td className="td">
+                        {bookings.status.toLowerCase() === "pending" && (
+                          <button
+                            className="action-button cancel-button"
+                            onClick={() => handleCancel(bookings.id)}
                           >
-                            {bookings.status.charAt(0).toUpperCase() +
-                              bookings.status.slice(1).toLowerCase()}
-                          </span>
-                        </td>
+                            Cancel
+                          </button>
+                        )}
 
-                        <td className="td">
-                          {bookings.status.toLowerCase() === "confirmed" && (
-                            <button
-                              className="action-button cancel-button"
-                              onClick={() => handleCancel(bookings.id)}
-                            >
-                              Cancel
-                            </button>
-                          )}
-
-                          {bookings.status.toLowerCase() === "paid" && (
-                            <button
-                              className="action-button details-button"
-                              onClick={() => handleViewDetails(bookings.id)}
-                            >
-                              View Details
-                            </button>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <p>You don’t have any bookings yet.</p>
+                        {bookings.status.toLowerCase() === "paid" && (
+                          <button
+                            className="action-button details-button"
+                            onClick={() => handleViewDetails(bookings.id)}
+                          >
+                            View Details
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             )}
           </div>
+
+          {booking.length === 0 && (
+            <>
+              <h1 className="profileTitle">You haven’t booked any sessions yet</h1>
+              <img
+                src={bookNotYet}
+                alt="No favorites"
+                className="noFavoritesImage"
+              />
+            </>
+          )}
         </div>
       </div>
     </div>

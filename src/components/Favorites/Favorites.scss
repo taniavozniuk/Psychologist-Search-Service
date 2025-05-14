@@ -66,7 +66,6 @@
   padding: 24px;
 }
 
-
 .psychologistName {
   color: #0c0b09;
   font-family: "Aileron", sans-serif;
@@ -94,4 +93,29 @@
 .Spec {
   display: flex;
   gap: 8px;
+}
+
+.noFavoritesImage {
+  margin-top: 64px;
+  
+}
+
+.profileTitleNotYet {
+  text-align: center;
+
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 50px;
+  color: #0c0b09;
+  margin: 0 0 20px 0;
+}
+
+.favoritesDesNotYet {
+  text-align: center;
+  color: #615b52;
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
 }

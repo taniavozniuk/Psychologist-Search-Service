@@ -115,18 +115,19 @@ export const addPayment = async (pay: Payment) => {
 };
 
 //отримання скасування оплати
-export const getCancelPayment = async (sessionId: string) => {
-  try {
-    const response = await apiClient.get(`/payments/cancel`, {
-      params: { sessionId },
-    });
-    console.log("Payment cancelled successfully", response.data);
-    return response.data;
-  } catch (error) {
-    console.error("Error cancelling payment:", error);
-    throw error;
-  }
-};
+// export const getCancelPayment = async (sessionId: string) => {
+//   try {
+//     const response = await apiClient.get(`/payments/cancel`, {
+//       params: { sessionId },
+//     });
+//     console.log("Payment cancelled successfully", response.data);
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error cancelling payment:", error);
+//     console.log("Деталі помилки:", error.response?.data);
+//     throw error;
+//   }
+// };
 
 //скасування оплати
 export const canceledPaymnt = async (bookingId: number) => {

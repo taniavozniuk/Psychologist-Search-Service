@@ -62,8 +62,6 @@ export const Review: React.FC<ReviewProps> = ({
     }
   };
 
- 
-
   return (
     <div className="Review-backdrop">
       <div className="Review-content" ref={modalRef}>
