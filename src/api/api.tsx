@@ -114,6 +114,46 @@ export const addPayment = async (pay: Payment) => {
   }
 };
 
+//отримання скасування оплати
+export const getCancelPayment = async (sessionId: string) => {
+  try {
+    const response = await apiClient.get(`/payments/cancel`, {
+      params: { sessionId },
+    });
+    console.log("Payment cancelled successfully", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error cancelling payment:", error);
+    throw error;
+  }
+};
+
+//скасування оплати
+export const canceledPaymnt = async (bookingId: number) => {
+  try {
+    const response = await apiClient.delete(`/bookings/${bookingId}`, {
+      data: { status: "CANCELLED" },
+    });
+    console.log("Відповідь від сервера після скасування:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Помилка при скасуванні бронювання:", error);
+    throw error;
+  }
+};
+
+//отримую всі бронювання які робив користувач
+export const getBookingUser = async () => {
+  try {
+    const response = await apiClient.get("/bookings/my");
+    console.log("Запит до API успішний:", response.data);
+    return response.data;
+  } catch (error) {
+    console.log("getBookingUser Error: ", error);
+    throw error;
+  }
+};
+
 //user
 export const getUser = async () => {
   try {
@@ -124,18 +164,6 @@ export const getUser = async () => {
     throw error;
   }
 };
-
-//отримую всі бронювання які робив користувач
-export const getBookingUser = async () => {
-  try {
-    const response = await apiClient.get("/bookings/my");
-    return response.data;
-  } catch (error) {
-    console.log("getBookingUser Error: ", error);
-    throw error;
-  }
-};
-
 
 //дадаю додаткового психолога до бази якщо треба
 export const addPsychologist = async (newPsychologist: postPsychologist) => {

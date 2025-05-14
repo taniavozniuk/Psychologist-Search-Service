@@ -1,0 +1,108 @@
+.bookConteiner {
+  max-width: 900px;
+  padding-left: 240px;
+  margin: 0 auto;
+  max-width: 1250px;
+}
+
+.dookCard {
+  border: 1px solid #d6cdc0;
+  border-radius: 16px;
+}
+
+.bookingList {
+  box-sizing: border-box;
+  width: 936px;
+  border-collapse: collapse;
+}
+
+.tr {
+  position: relative;
+
+  &::before {
+    height: 1px;
+    position: absolute;
+    content: "";
+    bottom: 0;
+    inset-inline: 40px;
+    background-color: #d6cdc0;
+  }
+}
+
+.th {
+  // width: 210px;
+  text-align: start;
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #615b52;
+  margin: 0;
+  padding: 40px 0 32px 0;
+  // border-bottom: 1px solid #d6cdc0;
+}
+
+.th:first-child {
+  padding-left: 40px;
+}
+
+.th:last-child {
+  padding-right: 40px;
+}
+
+.td {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #000000;
+  margin: 0;
+  padding: 40px 0 32px 0;
+  // border-bottom: 1px solid #d6cdc0;
+}
+
+.td:first-child {
+  padding-left: 40px;
+}
+
+// .td:last-child {
+//   border: none;
+// }
+
+// .bookingItem {
+//   height: 46px;
+//   border-bottom: 1px solid #d6cdc0;
+// }
+
+.bookingItem:last-child {
+  border: none;
+}
+
+.status {
+  padding: 8px 8px;
+  border-radius: 8px;
+  font-weight: 600;
+  display: inline-block;
+  text-transform: capitalize;
+
+  &-confirmed {
+        background-color: #6d91a31a;
+    color: #6d91a3;
+
+  }
+
+  &-pending {
+    background-color: #5b8c5a1a;
+    color: #5b8c5a;
+  }
+
+  &-cancelled {
+    background-color: #a24a3c;
+    color: #a24a3c1a;
+  }
+
+  &-completed {
+    background-color: #6d91a31a;
+    color: #6d91a3;
+  }
+}

@@ -127,26 +127,27 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
     } catch (error) {
       console.error("Booking creation failed:", error);
     }
-
   };
+
+
 
   const isValidEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-useEffect(() => {
-  const shouldBlockScroll = !onOpneReview && !booking;
+  useEffect(() => {
+    const shouldBlockScroll = !onOpneReview && !booking;
 
-  if (shouldBlockScroll) {
-    document.body.classList.add("no-scroll");
-  } else {
-    document.body.classList.remove("no-scroll");
-  }
+    if (shouldBlockScroll) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
 
-  return () => {
-    document.body.classList.remove("no-scroll");
-  };
-}, [onOpneReview, booking]);
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, [onOpneReview, booking]);
 
   const formattedDate = selectedDate.toLocaleDateString("en-US", {
     year: "numeric",
@@ -297,6 +298,7 @@ useEffect(() => {
           email={email}
           psycholog={psycholog}
           booking={booking}
+          setBooking={setBooking}
         />
       )}
     </>

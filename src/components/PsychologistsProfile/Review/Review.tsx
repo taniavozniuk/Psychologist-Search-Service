@@ -16,6 +16,7 @@ interface ReviewProps {
   lastName: string;
   email: string;
   booking: Booking;
+  setBooking: React.Dispatch<React.SetStateAction<Booking | null>>;
   // handleReview: (email: string, firtsName: string, lastName: string) => void;
 }
 export const Review: React.FC<ReviewProps> = ({
@@ -28,10 +29,10 @@ export const Review: React.FC<ReviewProps> = ({
   psycholog,
   booking,
 }) => {
-    const modalRef = useRef<HTMLDivElement>(null);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    useOutsideClick(modalRef, onClose);
+  const modalRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  useOutsideClick(modalRef, onClose);
   const [, setPay] = useState<Payment | null>(null);
 
   const handlePayment = async () => {
@@ -54,10 +55,14 @@ export const Review: React.FC<ReviewProps> = ({
         window.open(paymentResponse.sessionUrl, "_blank"); // відкриває в новій вкладці
         onClose();
       }
+
+      // const sessionId = paymentResponse.sessionId;
     } catch (error) {
       console.error("Payment initiation failed", error);
     }
   };
+
+ 
 
   return (
     <div className="Review-backdrop">
@@ -122,7 +127,7 @@ export const Review: React.FC<ReviewProps> = ({
               </div>
             </div>
           </div>
-{/* 
+          {/* 
           <span className="reviewLine"></span>
 
           <div className="totalSum">
