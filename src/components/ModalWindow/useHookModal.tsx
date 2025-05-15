@@ -114,6 +114,12 @@ export const useModalLogicHook = () => {
     localStorage.setItem("selectedAppr", JSON.stringify(selectedAppr));
     localStorage.setItem("selectedSex", selectedSex || "");
     localStorage.setItem("selectedSpec", selectedSpec || "");
+
+    setTimeout(() => {
+      navigate("/psychologist", {
+        state: { formApplyButton: true, forceRefresh: Date.now() }, // додаю унікальний ключ щоб useEffect спрацював
+      });
+    }, 200);
   };
 
   useEffect(() => {

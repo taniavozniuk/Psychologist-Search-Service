@@ -32,11 +32,8 @@ export const usePsychologPIHook = () => {
         const data = await getFilterPsychologist();
         console.log("Fetched data:", data);
         setPsychologists(data);
-
-
       } catch (error) {
         console.log("error", error);
-
       } finally {
         setLoading(false);
         console.log("Loading finished");
@@ -55,18 +52,32 @@ export const usePsychologPIHook = () => {
     const storedSpec = localStorage.getItem("selectedSpec");
     const storedConcerns = localStorage.getItem("selectedCon");
     const storedApproaches = localStorage.getItem("selectedAppr");
-
+    
     if (storedSex) setSelectedSex(storedSex);
+    else setSelectedSex(null);
+
     if (storedSpec) setSelectedSpec(storedSpec);
+    else setSelectedSpec(null);
+
     if (storedConcerns) setSelectedCon(JSON.parse(storedConcerns));
+    else setSelectedCon([]);
+
     if (storedApproaches) setSelectedAppr(JSON.parse(storedApproaches));
-  }, [location.state]);
+    else setSelectedAppr([]);
+  }, [location.state?.formApplyButton, location.state?.forceRefresh]);
+
+  //   if (storedSex) setSelectedSex(storedSex);
+  //   if (storedSpec) setSelectedSpec(storedSpec);
+  //   if (storedConcerns) setSelectedCon(JSON.parse(storedConcerns));
+  //   if (storedApproaches) setSelectedAppr(JSON.parse(storedApproaches));
+  // }, [location.state]);
 
   const filteredPsychologists = useMemo(() => {
     return psychologists
       .map((psych) => {
         let score = 0;
-
+        console.log("Gender:", psych.gender);
+        console.log("Selected sex:", selectedSex);
         // перевірка на відповідність статі
         const sexMatch = selectedSex
           ? psych.gender?.toLowerCase() === selectedSex.toLowerCase()
