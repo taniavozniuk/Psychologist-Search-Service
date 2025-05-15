@@ -55,8 +55,10 @@ export const getFilterPsychologist = async () => {
     throw error;
   }
 };
+
 //отримую психолога за id
 export const getPsychologistId = async (id: string) => {
+    await delay();
   try {
     const response = await apiClient.get(`/psychologists/${id}`);
     return response.data;

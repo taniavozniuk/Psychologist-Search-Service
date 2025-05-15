@@ -6,7 +6,7 @@
 }
 
 .dookCard {
-  // border: 1px solid #d6cdc0;
+  border: 1px solid #d6cdc0;
   border-radius: 16px;
   margin-bottom: 110px;
 }
@@ -109,13 +109,10 @@
     background-color: #dfae2b1a;
     color: #dfae2b;
   }
-  // &-completed {
-  //   background-color: #6d91a31a;
-  //   color: #6d91a3;
-  // }
 }
 
-.cancel-button {
+.cancel,
+.details-button {
   text-decoration: none;
   background-color: transparent;
   border: none;
@@ -129,4 +126,150 @@
 .noBookImage {
   margin-top: 64px;
   margin-left: 201px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(6, 4, 1, 0.8980392157);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 11;
+  box-sizing: border-box;
+}
+
+.modal {
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  background-color: #F9F0E2 ;
+  // max-width: 400px;
+  width: 554px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.modalTitleDeteils {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 48px;
+  color: #0c0b09;
+  margin: 0;
+}
+
+.modalDesDeteils {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #4b463e;
+  margin: 8px 0 0 0;
+}
+
+.modal-actions {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.confirm-button,
+.cancel-button {
+  width: 166px;
+  height: 51px;
+  // padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #615b52;
+  cursor: pointer;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+  color: #4b463e;
+}
+
+.reschedule-button {
+  width: 166px;
+  height: 51px;
+  border-radius: 8px;
+  border: 1px solid #615b52;
+  cursor: pointer;
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #393126;
+  color: #f1efe9;
+
+  &:hover {
+    border: 1px solid #9b6a00;
+    background-color: #9b6a00;
+    color: #f1efe9;
+  }
+}
+
+.confirm-button {
+  background-color: #393126;
+  color: #f1efe9;
+
+  &:hover {
+    border: 1px solid #9b6a00;
+    background-color: #9b6a00;
+    color: #f1efe9;
+  }
+}
+
+.cancel-button {
+  background-color: transparent;
+  color: #0c0b09;
+
+  &:hover {
+    border: 1px solid #9b6a00;
+    background-color: #9b6a00;
+    color: #f1efe9;
+  }
+}
+
+.modalCancelOn {
+  font-family: "Aileron", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 27px;
+  color: #615b52;
+  margin: 24px 0 0 0;
+}
+.cancelDate {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #0c0b09;
+}
+
+.sessionSumary{
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #615B52;
+  margin: 32px 0 0 0;
+}
+
+.discussed {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #0C0B09;
+  margin: 8px 0 0 0;
 }

@@ -4,10 +4,19 @@ import { useAuth } from "../../hooks/AuthContext";
 import "./MySesions.scss";
 import { MyBokking } from "../../types/MyBooking";
 import bookNotYet from "../../image/Profile/bookNotYet.svg";
+import { NavLink } from "react-router-dom";
 
 export const MySesions = () => {
   const [booking, setBooking] = useState<MyBokking[]>([]);
   const { user } = useAuth();
+  const [cancelModalOpen, setCancelModalOpen] = useState(false);
+  const [viewDeteilsCancelModalOpen, setViewDeteilsCancelModalOpen] =
+    useState(false);
+  const [viewDeteilsConfirmedModal, setViewDeteilsConfirmedModal] =
+    useState(false);
+  const [selectedBookingId, setSelectedBookingId] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
     const fetchBooking = async () => {
@@ -27,25 +36,47 @@ export const MySesions = () => {
 
   const handleViewDetails = (bookingId: number) => {
     console.log("View details for booking:", bookingId);
-    // TODO: відкрий модалку або перейди на сторінку деталей
+    setSelectedBookingId(bookingId);
+    setViewDeteilsCancelModalOpen(true);
+  };
+
+  const handleViewConfirmedDetails = (bookingId: number) => {
+    console.log("View details for booking:", bookingId);
+    setSelectedBookingId(bookingId);
+    setViewDeteilsConfirmedModal(true);
   };
 
   const handleCancel = async (bookingId: number) => {
     console.log("Cancel booking:", bookingId);
 
     try {
-      // Потім скасовуємо саму бронь
+      //скасовуємо саму бронь
       await canceledPaymnt(bookingId);
       console.log("Бронювання скасовано");
 
-      // Оновлюємо стан бронювань — помічаємо, що ця бронь скасована
+      // оновлюю стан бронювань — помічаємо, що ця бронь скасована
       setBooking((prevBooking) =>
         prevBooking.map((b) =>
-          b.id === bookingId ? { ...b, status: "CANCELLED" } : b
+          b.id === bookingId ? { ...b, status: "CANCELED" } : b
         )
       );
     } catch (error) {
       console.error("Помилка при скасуванні бронювання:", error);
+    }
+  };
+
+  const selectBookink = booking.find((b) => b.id === selectedBookingId);
+
+  const openCancelModal = (bookingId: number) => {
+    setSelectedBookingId(bookingId);
+    setCancelModalOpen(true);
+  };
+
+  const confirmCancel = async () => {
+    if (selectedBookingId !== null) {
+      await handleCancel(selectedBookingId);
+      setCancelModalOpen(false);
+      setSelectedBookingId(null);
     }
   };
 
@@ -106,17 +137,28 @@ export const MySesions = () => {
                         <td className="td">
                           {bookings.status.toLowerCase() === "pending" && (
                             <button
-                              className="action-button cancel-button"
-                              onClick={() => handleCancel(bookings.id)}
+                              className="action-button cancel"
+                              onClick={() => openCancelModal(bookings.id)}
                             >
                               Cancel
                             </button>
                           )}
 
-                          {bookings.status.toLowerCase() === "paid" && (
+                          {bookings.status.toLowerCase() === "canceled" && (
                             <button
                               className="action-button details-button"
                               onClick={() => handleViewDetails(bookings.id)}
+                            >
+                              View Details
+                            </button>
+                          )}
+
+                          {bookings.status.toLowerCase() === "confirmed" && (
+                            <button
+                              className="action-button details-button"
+                              onClick={() =>
+                                handleViewConfirmedDetails(bookings.id)
+                              }
                             >
                               View Details
                             </button>
@@ -136,17 +178,123 @@ export const MySesions = () => {
 
               <p className="favoritesDesNotYet">
                 Find a specialist who fits your needs and schedule your first
-                session.{" "}
+                session.
               </p>
-              <img
-                src={bookNotYet}
-                alt="No bookings"
-                className="noBookImage"
-              />
+              <img src={bookNotYet} alt="No bookings" className="noBookImage" />
             </div>
           )}
         </div>
       </div>
+
+      {cancelModalOpen && selectBookink && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <h2 className="modalTitleDeteils">Cancellation Confirmation</h2>
+            <p className="modalDesDeteils">
+              Are you sure you want to cancel your session with Dr.{" "}
+              {selectBookink.psychologistDto.firstName}
+              {selectBookink.psychologistDto.lastName}? This action cannot be
+              undone.
+            </p>
+            <div className="modal-actions">
+              <button
+                onClick={() => setCancelModalOpen(false)}
+                className="cancel-button"
+              >
+                Cancel
+              </button>
+              <button onClick={confirmCancel} className="confirm-button">
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {viewDeteilsCancelModalOpen && selectBookink && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <h2 className="modalTitleDeteils">Session Details</h2>
+            <p className="modalDesDeteils">
+              This session with Dr. {selectBookink.psychologistDto.firstName}
+              {selectBookink.psychologistDto.lastName} has been cancelled.
+            </p>
+            <p className="modalCancelOn">
+              Cancelled on:{" "}
+              <span className="cancelDate">
+                {new Date(selectBookink.startTime).toLocaleString("en-US", {
+                  weekday: "short",
+                  month: "short",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                  hour12: true,
+                })}
+              </span>
+            </p>
+            <div className="modal-actions">
+              <button
+                onClick={() => setViewDeteilsCancelModalOpen(false)}
+                className="cancel-button"
+              >
+                Close
+              </button>
+              <NavLink
+                to={`/psychologist/${selectBookink.psychologistDto.id}`}
+                className="reschedule-button"
+              >
+                Reschedule
+              </NavLink>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {viewDeteilsConfirmedModal && selectBookink && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <h2 className="modalTitleDeteils">Session Details</h2>
+            <p className="modalDesDeteils">
+              This session with Dr. {selectBookink.psychologistDto.firstName}
+              {selectBookink.psychologistDto.lastName} has been confirmed.
+            </p>
+            <p className="modalCancelOn">
+              Confirmed on:{" "}
+              <span className="cancelDate">
+                {new Date(selectBookink.startTime).toLocaleString("en-US", {
+                  weekday: "short",
+                  month: "short",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                  hour12: true,
+                })}
+              </span>
+            </p>
+            <p className="sessionSumary">Session Summary:</p>
+            <p className="discussed">
+              Dr. {selectBookink.psychologistDto.firstName}
+              {selectBookink.psychologistDto.lastName} discussed coping
+              strategies for anxiety and stress management. Techniques and
+              resources were shared during the session.
+            </p>
+            <div className="modal-actions">
+              <button
+                onClick={() => setViewDeteilsConfirmedModal(false)}
+                className="cancel-button"
+              >
+                Close
+              </button>
+              <NavLink
+                to={`/psychologist/${selectBookink.psychologistDto.id}`}
+                className="reschedule-button"
+              >
+                Book Next
+              </NavLink>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

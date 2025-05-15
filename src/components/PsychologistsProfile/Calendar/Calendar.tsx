@@ -11,9 +11,7 @@ interface CalendarProps {
   psycholog: PsychologId;
 }
 
-const Calendar: React.FC<CalendarProps> = ({
-  psycholog,
-}) => {
+const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [chooseHour, setChooseHour] = useState<string | null>(null);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -25,7 +23,7 @@ const Calendar: React.FC<CalendarProps> = ({
   const [onOpenFillingInfo, setOnOpenFillingInfo] = useState(false);
   const [onOpneReview, setOnOpneReview] = useState(false);
 
-
+  const today = new Date();
   //фетчу дні які недоступні в календарі
   useEffect(() => {
     const fetcLockedhDates = async () => {
@@ -137,7 +135,14 @@ const Calendar: React.FC<CalendarProps> = ({
 
     const hourDate = new Date(hour);
 
-    return hourDate;
+        const isToday =
+      selectedDate.getFullYear() === today.getFullYear() &&
+      selectedDate.getMonth() === today.getMonth() &&
+      selectedDate.getDate() === today.getDate();
+
+    return !isToday || hourDate > new Date();
+
+    // return hourDate;
   });
 
   console.log("availableTimes", availableTimes);
@@ -184,7 +189,12 @@ const Calendar: React.FC<CalendarProps> = ({
             .toString()
             .padStart(2, "0")}`;
 
-          const isDisabled = lockedDates.includes(dateString);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0); // обнуляємо час
+
+          const isPastDate = dateObj < today;
+          const isDisabled = lockedDates.includes(dateString) || isPastDate;
+          // const isDisabled = lockedDates.includes(dateString);
 
           return (
             <div
