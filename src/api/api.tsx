@@ -6,7 +6,6 @@ import { Booking } from "../types/bookings";
 import { Payment } from "../types/Payment";
 import { Review } from "../types/review";
 import { BookingUnauth } from "../types/BookingUnauth";
-import { allFilterPsychologist } from "../types/allFilterPsychologist";
 
 //затримка
 const delay = () => new Promise((resolve) => setTimeout(resolve, 500));
@@ -55,11 +54,10 @@ export const getPsychologist = async () => {
 
 //отримую психологів з філтрами
 export const getFilterPsychologist = async (
-  filter: allFilterPsychologist[]
 ) => {
   await delay();
   try {
-    const response = await apiClient.get("psychologists/filter", { params: filter });
+    const response = await apiClient.get("psychologists/filter");
     return response.data;
   } catch (error) {
     console.log("GetFilter Error ", error);

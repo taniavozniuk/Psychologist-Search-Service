@@ -27,10 +27,10 @@ export const APPROACHES_LIST = [
 ];
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export const useModalLogicHook = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false); // concerns dropdown
   const [isOpenApproaches, setIsOpenApproaches] = useState(false); // approaches dropdown
@@ -70,11 +70,6 @@ export const useModalLogicHook = () => {
     setSelectedAppr([]);
   };
 
-  const handleApply = () => {
-    navigate("/psychologist", {
-      state: { formApplyButton: true, forceRefresh: Date.now() },
-    });
-  };
 
   return {
     isOpen,
@@ -94,6 +89,5 @@ export const useModalLogicHook = () => {
     handleConSelection,
     handleAprrSelection,
     handleReset,
-    handleApply,
   };
 };

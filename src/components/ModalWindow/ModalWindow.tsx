@@ -14,37 +14,23 @@ import {
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { useOutsideClick } from "../../hooks";
 import { useNavigate } from "react-router-dom";
+import { getFilterPsychologist } from "../../api/api";
+import { allFilterPsychologist } from "../../types/allFilterPsychologist";
 
 interface ModalProps {
-  // selectedSex: string | null;
-  // selectedSpec: string | null;
-  // selectedCon: string[];
-  // selectedAppr: string[];
-  // setSelectedSex: (val: string | null) => void;
-  // setSelectedSpec: (val: string | null) => void;
-  // setSelectedCon: (val: string[]) => void;
-  // setSelectedAppr: (val: string[]) => void;
-  // onReset: () => void;
   onClose: () => void;
 }
 
 export const ModalWindow: React.FC<ModalProps> = ({
   onClose,
-  // selectedSex,
-  // selectedSpec,
-  // selectedCon,
-  // selectedAppr,
-  // setSelectedSex,
-  // setSelectedSpec,
-  // setSelectedCon,
-  // setSelectedAppr,
-  // onReset,
 }) => {
   const [selectedSex, setSelectedSex] = useState<string | null>(null); //збереження Sex
   const [selectedSpec, setSelectedSpec] = useState<string | null>(null); //збереження спеціалізації
   const [selectedCon, setSelectedCon] = useState<string[]>([]); //збереження чекбоксів Concerns
   const [selectedAppr, setSelectedAppr] = useState<string[]>([]); //збереження чекбоксів Approaches
-
+  const [psychologists, setPsychologists] = useState<allFilterPsychologist[]>(
+    []
+  );
   const navigate = useNavigate();
   const modalRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -92,26 +78,29 @@ export const ModalWindow: React.FC<ModalProps> = ({
   };
 
   const handleApply = () => {
+    const fetchData = async () => {
+      try {
+        const data = await getFilterPsychologist();
+        console.log("Fetched data:", data);
+        setPsychologists(data);
+      } catch (error) {
+        console.log("error", error);
+      } finally {
+        // setLoading(false);
+        console.log("Loading finished");
+      }
+    };
+
+    fetchData();
+
     navigate("/psychologist", {
       state: { formApplyButton: true },
     });
 
-    setTimeout(() => {
-      navigate("/psychologist", {
-        state: {
-          formApplyButton: true,
-          selectedSex,
-          selectedSpec,
-          selectedCon,
-          selectedAppr,
-          forceRefresh: Date.now(),
-        },
-      });
-    }, 200);
+    
   };
 
-
-   const handleResetFilters = () => {
+  const handleResetFilters = () => {
     setSelectedSex(null);
     setSelectedSpec(null);
     setSelectedCon([]);
