@@ -21,6 +21,18 @@ function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // const [selectedSex, setSelectedSex] = useState<string | null>(null); //збереження Sex
+  // const [selectedSpec, setSelectedSpec] = useState<string | null>(null); //збереження спеціалізації
+  // const [selectedCon, setSelectedCon] = useState<string[]>([]); //збереження чекбоксів Concerns
+  // const [selectedAppr, setSelectedAppr] = useState<string[]>([]); //збереження чекбоксів Approaches
+
+  // const handleResetFilters = () => {
+  //   setSelectedSex(null);
+  //   setSelectedSpec(null);
+  //   setSelectedCon([]);
+  //   setSelectedAppr([]);
+  // };
+
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const isAbout = location.pathname === "/about";
@@ -55,7 +67,18 @@ function App() {
 
       {isModalOpen && (
         <div className="filter__modal">
-          <ModalWindow onClose={() => setIsModalOpen(false)} />
+          <ModalWindow
+            onClose={() => setIsModalOpen(false)}
+            selectedSex={selectedSex}
+            selectedSpec={selectedSpec}
+            selectedCon={selectedCon}
+            selectedAppr={selectedAppr}
+            setSelectedSex={setSelectedSex}
+            setSelectedSpec={setSelectedSpec}
+            setSelectedCon={setSelectedCon}
+            setSelectedAppr={setSelectedAppr}
+            onReset={handleResetFilters}
+          />
         </div>
       )}
 
@@ -67,8 +90,6 @@ function App() {
           <Registration
             onClose={() => setIsModalOpenRegistration(false)}
             onNextStep={handleNextStep}
-            isHomePage={isHomePage}
-            isAbout={isAbout}
             openLoginModal={() => {
               setIsModalOpenRegistration(false);
               setIsModalLogIn(true);

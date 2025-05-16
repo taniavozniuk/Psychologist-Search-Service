@@ -5,10 +5,14 @@ import Defolt from "../../image/Profile/defalt.jpg";
 import edit from "../../image/Profile/edit.svg";
 import { useUserPageHook } from "./useUserPageHook";
 import { Loader } from "../Loader/Loader";
+import { useState } from "react";
+import { deleteUser } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 export const UserPage = () => {
   const {
     user,
+    logout,
     profilePhoto,
     firstName,
     hasFirstNameError,
@@ -37,6 +41,21 @@ export const UserPage = () => {
     handleYearChange,
     handleSave,
   } = useUserPageHook();
+  const navigate = useNavigate();
+
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
+  const handleDeleteButton = async () => {
+    try {
+
+      await deleteUser();
+      localStorage.clear()
+      logout();
+      navigate("/");
+    } catch (error) {
+      console.error("Failed to fetch bookings:", error);
+    }
+  };
 
   if (!user)
     return (
@@ -46,7 +65,6 @@ export const UserPage = () => {
     );
 
   return (
-    
     <div className="UserPage">
       <div className="profileConteiner">
         <h1 className="profileTitle">Profile information</h1>
@@ -207,10 +225,42 @@ export const UserPage = () => {
             </p>
           </div>
           <div className="btBox">
-            <button className="BtDelete">Delete My Profile</button>
+            <button
+              className="BtDelete"
+              onClick={() => {
+                setOpenDeleteModal(true);
+              }}
+            >
+              Delete My Profile
+            </button>
           </div>
         </div>
       </div>
+
+      {openDeleteModal && (
+        <div className="modal-backdropDelete">
+          <div className="modalDelete">
+            <p className="deleteDes">
+              Are you sure you want to delete your profile? This action is
+              permanent.
+            </p>
+
+            <div className="warpperBtDelete">
+              <button className="deteleBt" onClick={handleDeleteButton}>
+                Delete Profile
+              </button>
+              <button
+                className="deleteCancelBt"
+                onClick={() => {
+                  setOpenDeleteModal(false);
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

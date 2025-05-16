@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "./ModalWindow.scss";
 import ModalCloce from "../../image/modalClose.svg";
 import ConcernsBtClose from "../../image/ConcernsBtClose.svg";
@@ -10,37 +10,124 @@ import {
   CONCERNS_LIST2,
   sexOptions,
   specOptions,
-  useModalLogicHook,
 } from "./useHookModal";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { useOutsideClick } from "../../hooks";
+import { useNavigate } from "react-router-dom";
 
 interface ModalProps {
+  selectedSex: string | null;
+  selectedSpec: string | null;
+  selectedCon: string[];
+  selectedAppr: string[];
+  setSelectedSex: (val: string | null) => void;
+  setSelectedSpec: (val: string | null) => void;
+  setSelectedCon: (val: string[]) => void;
+  setSelectedAppr: (val: string[]) => void;
+  onReset: () => void;
   onClose: () => void;
 }
 
-export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
-  const {
-    isOpen,
-    isOpenApproaches,
-    selectedSex,
-    selectedSpec,
-    selectedCon,
-    selectedAppr,
-    handleConcernsList,
-    handleApproachesList,
-    handleSexSelection,
-    handleSpexSelection,
-    handleConSelection,
-    handleAprrSelection,
-    handleReset,
-    handleApply,
-  } = useModalLogicHook();
-
+export const ModalWindow: React.FC<ModalProps> = ({
+  onClose,
+  selectedSex,
+  selectedSpec,
+  selectedCon,
+  selectedAppr,
+  setSelectedSex,
+  setSelectedSpec,
+  setSelectedCon,
+  setSelectedAppr,
+  onReset,
+}) => {
+  const navigate = useNavigate();
   const modalRef = useRef<HTMLDivElement>(null);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   useOutsideClick(modalRef, onClose);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenApproaches, setIsOpenApproaches] = useState(false); //відкриття Approaches
+
+  const handleConcernsList = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  // відкриття approaches
+  const handleApproachesList = () => {
+    setIsOpenApproaches((prev) => !prev);
+  };
+
+  // збереження статі
+  const handleSexSelection = (sex: string | null) => {
+    setSelectedSex(sex);
+  };
+
+  //збереження стпеціалізації
+  const handleSpexSelection = (spec: string | null) => {
+    setSelectedSpec(spec);
+  };
+
+  // збереження чекбоксів занепокоїнь(Concerns)
+const handleConSelection = (con: string) => {
+  const newSelectedCon = selectedCon.includes(con)
+    ? selectedCon.filter((item) => item !== con)
+    : [...selectedCon, con];
+
+  setSelectedCon(newSelectedCon);
+};
+
+  // збереження чекбоксів Approaches
+const handleAprrSelection = (appr: string) => {
+  const newSelectedAppr = selectedAppr.includes(appr)
+    ? selectedAppr.filter((item) => item !== appr)
+    : [...selectedAppr, appr];
+
+  setSelectedAppr(newSelectedAppr);
+};
+
+  const handleApply = () => {
+    navigate("/psychologist", {
+      state: { formApplyButton: true },
+    });
+
+    setTimeout(() => {
+      navigate("/psychologist", {
+        state: {
+          formApplyButton: true,
+          selectedSex,
+          selectedSpec,
+          selectedCon,
+          selectedAppr,
+          forceRefresh: Date.now(),
+        },
+      });
+    }, 200);
+  };
+
+  // useEffect(() => {
+  //   const storedSex = localStorage.getItem("selectedSex");
+
+  //   if (storedSex) {
+  //     setSelectedSex(storedSex);
+  //   }
+
+  //   const storedSpec = localStorage.getItem("selectedSpec");
+
+  //   if (storedSpec) {
+  //     setSelectedSpec(storedSpec);
+  //   }
+
+  //   const storedConcerns = localStorage.getItem("selectedCon");
+  //   if (storedConcerns) {
+  //     setSelectedCon(JSON.parse(storedConcerns));
+  //   }
+
+  //   const storedApproaches = localStorage.getItem("selectedAppr");
+  //   if (storedApproaches) {
+  //     setSelectedAppr(JSON.parse(storedApproaches));
+  //   }
+  // }, []);
 
   return (
     <div
@@ -259,7 +346,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
         <span className="modal__lineBt"></span>
 
         <div className="Wrapper__button">
-          <button className="Bt__Reset" onClick={handleReset}>
+          <button className="Bt__Reset" onClick={onReset}>
             Reset
           </button>
           <button

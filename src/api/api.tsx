@@ -26,7 +26,6 @@ const apiClientUnauth = axios.create({
   },
 });
 
-
 //додаю токен до кожного запиту
 apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
@@ -67,7 +66,7 @@ export const getFilterPsychologist = async () => {
 
 //отримую психолога за id
 export const getPsychologistId = async (id: string) => {
-    await delay();
+  await delay();
   try {
     const response = await apiClient.get(`/psychologists/${id}`);
     return response.data;
@@ -116,13 +115,13 @@ export const addBooking = async (book: Booking) => {
 
 export const addBookingUnauth = async (book: BookingUnauth) => {
   try {
-    const response = await apiClientUnauth.post('/bookings/unauthorized', book);
-    return response.data
-  }catch (error) {
+    const response = await apiClientUnauth.post("/bookings/unauthorized", book);
+    return response.data;
+  } catch (error) {
     console.log("addBookingUnauth Error: ", error);
     throw error;
   }
-}
+};
 
 //payment
 export const addPayment = async (pay: Payment) => {
@@ -187,15 +186,15 @@ export const getUser = async () => {
   }
 };
 
-export const deleteUser = async (id: number) => {
+export const deleteUser = async () => {
   try {
-    const response = await apiClient.delete(`/user/remove-user/${id}`)
-    return response.data
-  }catch (error) {
+    const response = await apiClient.delete("/users/remove-user");
+    return response.data;
+  } catch (error) {
     console.log("deleteUser Error: ", error);
     throw error;
   }
-}
+};
 
 //дадаю додаткового психолога до бази якщо треба
 export const addPsychologist = async (newPsychologist: postPsychologist) => {

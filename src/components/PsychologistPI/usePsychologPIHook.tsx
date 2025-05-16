@@ -47,24 +47,24 @@ export const usePsychologPIHook = () => {
     // return () => clearTimeout(timeout);
   }, []);
 
-  useEffect(() => {
-    const storedSex = localStorage.getItem("selectedSex");
-    const storedSpec = localStorage.getItem("selectedSpec");
-    const storedConcerns = localStorage.getItem("selectedCon");
-    const storedApproaches = localStorage.getItem("selectedAppr");
+  // useEffect(() => {
+  //   const storedSex = localStorage.getItem("selectedSex");
+  //   const storedSpec = localStorage.getItem("selectedSpec");
+  //   const storedConcerns = localStorage.getItem("selectedCon");
+  //   const storedApproaches = localStorage.getItem("selectedAppr");
     
-    if (storedSex) setSelectedSex(storedSex);
-    else setSelectedSex(null);
+  //   if (storedSex) setSelectedSex(storedSex);
+  //   else setSelectedSex(null);
 
-    if (storedSpec) setSelectedSpec(storedSpec);
-    else setSelectedSpec(null);
+  //   if (storedSpec) setSelectedSpec(storedSpec);
+  //   else setSelectedSpec(null);
 
-    if (storedConcerns) setSelectedCon(JSON.parse(storedConcerns));
-    else setSelectedCon([]);
+  //   if (storedConcerns) setSelectedCon(JSON.parse(storedConcerns));
+  //   else setSelectedCon([]);
 
-    if (storedApproaches) setSelectedAppr(JSON.parse(storedApproaches));
-    else setSelectedAppr([]);
-  }, [location.state?.formApplyButton, location.state?.forceRefresh]);
+  //   if (storedApproaches) setSelectedAppr(JSON.parse(storedApproaches));
+  //   else setSelectedAppr([]);
+  // }, [location.state?.formApplyButton, location.state?.forceRefresh]);
 
   //   if (storedSex) setSelectedSex(storedSex);
   //   if (storedSpec) setSelectedSpec(storedSpec);

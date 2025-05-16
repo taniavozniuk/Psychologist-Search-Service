@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/AuthContext";
 
 export const useUserPageHook = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
 
@@ -186,6 +186,7 @@ export const useUserPageHook = () => {
 
   return {
     user,
+    logout,
     profilePhoto,
     firstName,
     hasFirstNameError,
