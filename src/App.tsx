@@ -69,15 +69,15 @@ function App() {
         <div className="filter__modal">
           <ModalWindow
             onClose={() => setIsModalOpen(false)}
-            selectedSex={selectedSex}
-            selectedSpec={selectedSpec}
-            selectedCon={selectedCon}
-            selectedAppr={selectedAppr}
-            setSelectedSex={setSelectedSex}
-            setSelectedSpec={setSelectedSpec}
-            setSelectedCon={setSelectedCon}
-            setSelectedAppr={setSelectedAppr}
-            onReset={handleResetFilters}
+            // selectedSex={selectedSex}
+            // selectedSpec={selectedSpec}
+            // selectedCon={selectedCon}
+            // selectedAppr={selectedAppr}
+            // setSelectedSex={setSelectedSex}
+            // setSelectedSpec={setSelectedSpec}
+            // setSelectedCon={setSelectedCon}
+            // setSelectedAppr={setSelectedAppr}
+            // onReset={handleResetFilters}
           />
         </div>
       )}

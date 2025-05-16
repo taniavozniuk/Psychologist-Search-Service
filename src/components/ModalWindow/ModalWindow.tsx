@@ -16,30 +16,35 @@ import { useOutsideClick } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 
 interface ModalProps {
-  selectedSex: string | null;
-  selectedSpec: string | null;
-  selectedCon: string[];
-  selectedAppr: string[];
-  setSelectedSex: (val: string | null) => void;
-  setSelectedSpec: (val: string | null) => void;
-  setSelectedCon: (val: string[]) => void;
-  setSelectedAppr: (val: string[]) => void;
-  onReset: () => void;
+  // selectedSex: string | null;
+  // selectedSpec: string | null;
+  // selectedCon: string[];
+  // selectedAppr: string[];
+  // setSelectedSex: (val: string | null) => void;
+  // setSelectedSpec: (val: string | null) => void;
+  // setSelectedCon: (val: string[]) => void;
+  // setSelectedAppr: (val: string[]) => void;
+  // onReset: () => void;
   onClose: () => void;
 }
 
 export const ModalWindow: React.FC<ModalProps> = ({
   onClose,
-  selectedSex,
-  selectedSpec,
-  selectedCon,
-  selectedAppr,
-  setSelectedSex,
-  setSelectedSpec,
-  setSelectedCon,
-  setSelectedAppr,
-  onReset,
+  // selectedSex,
+  // selectedSpec,
+  // selectedCon,
+  // selectedAppr,
+  // setSelectedSex,
+  // setSelectedSpec,
+  // setSelectedCon,
+  // setSelectedAppr,
+  // onReset,
 }) => {
+  const [selectedSex, setSelectedSex] = useState<string | null>(null); //збереження Sex
+  const [selectedSpec, setSelectedSpec] = useState<string | null>(null); //збереження спеціалізації
+  const [selectedCon, setSelectedCon] = useState<string[]>([]); //збереження чекбоксів Concerns
+  const [selectedAppr, setSelectedAppr] = useState<string[]>([]); //збереження чекбоксів Approaches
+
   const navigate = useNavigate();
   const modalRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -69,22 +74,22 @@ export const ModalWindow: React.FC<ModalProps> = ({
   };
 
   // збереження чекбоксів занепокоїнь(Concerns)
-const handleConSelection = (con: string) => {
-  const newSelectedCon = selectedCon.includes(con)
-    ? selectedCon.filter((item) => item !== con)
-    : [...selectedCon, con];
+  const handleConSelection = (con: string) => {
+    const newSelectedCon = selectedCon.includes(con)
+      ? selectedCon.filter((item) => item !== con)
+      : [...selectedCon, con];
 
-  setSelectedCon(newSelectedCon);
-};
+    setSelectedCon(newSelectedCon);
+  };
 
   // збереження чекбоксів Approaches
-const handleAprrSelection = (appr: string) => {
-  const newSelectedAppr = selectedAppr.includes(appr)
-    ? selectedAppr.filter((item) => item !== appr)
-    : [...selectedAppr, appr];
+  const handleAprrSelection = (appr: string) => {
+    const newSelectedAppr = selectedAppr.includes(appr)
+      ? selectedAppr.filter((item) => item !== appr)
+      : [...selectedAppr, appr];
 
-  setSelectedAppr(newSelectedAppr);
-};
+    setSelectedAppr(newSelectedAppr);
+  };
 
   const handleApply = () => {
     navigate("/psychologist", {
@@ -105,6 +110,13 @@ const handleAprrSelection = (appr: string) => {
     }, 200);
   };
 
+
+   const handleResetFilters = () => {
+    setSelectedSex(null);
+    setSelectedSpec(null);
+    setSelectedCon([]);
+    setSelectedAppr([]);
+  };
   // useEffect(() => {
   //   const storedSex = localStorage.getItem("selectedSex");
 
@@ -346,7 +358,7 @@ const handleAprrSelection = (appr: string) => {
         <span className="modal__lineBt"></span>
 
         <div className="Wrapper__button">
-          <button className="Bt__Reset" onClick={onReset}>
+          <button className="Bt__Reset" onClick={handleResetFilters}>
             Reset
           </button>
           <button
