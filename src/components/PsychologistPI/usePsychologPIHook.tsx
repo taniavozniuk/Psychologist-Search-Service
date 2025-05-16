@@ -1,20 +1,20 @@
 import { useLocation, useSearchParams } from "react-router-dom";
-// import { useModalLogicHook } from "../ModalWindow/useHookModal";
-import { useEffect, useMemo, useState } from "react";
+import { useModalLogicHook } from "../ModalWindow/useHookModal";
+import { useEffect, useState } from "react";
 import { allFilterPsychologist } from "../../types/allFilterPsychologist";
 import { getFilterPsychologist } from "../../api/api";
 
 export const usePsychologPIHook = () => {
-  // const {
-  //   selectedSex,
-  //   selectedSpec,
-  //   selectedCon,
-  //   selectedAppr,
-  //   setSelectedSex,
-  //   setSelectedSpec,
-  //   setSelectedCon,
-  //   setSelectedAppr,
-  // } = useModalLogicHook();
+  const {
+    selectedSex,
+    selectedSpec,
+    selectedCon,
+    selectedAppr,
+    setSelectedSex,
+    setSelectedSpec,
+    setSelectedCon,
+    setSelectedAppr,
+  } = useModalLogicHook();
   const location = useLocation();
   const [psychologists, setPsychologists] = useState<allFilterPsychologist[]>(
     []
@@ -29,7 +29,12 @@ export const usePsychologPIHook = () => {
     // setLoading(true);
     const fetchData = async () => {
       try {
-        const data = await getFilterPsychologist();
+        const data = await getFilterPsychologist({
+          gender: selectedSex,
+          spec: selectedSpec,
+          concerns: selectedCon,
+          approaches: selectedAppr,
+        });
         console.log("Fetched data:", data);
         setPsychologists(data);
       } catch (error) {
@@ -42,17 +47,24 @@ export const usePsychologPIHook = () => {
 
     fetchData();
 
-    // const timeout = setTimeout(fetchData, 1000);
-
-    // return () => clearTimeout(timeout);
-  }, []);
+    if (location.state?.formApplyButton) {
+      fetchData();
+    }
+  }, [
+    location.state?.formApplyButton,
+    location.state?.forceRefresh,
+    selectedSex,
+    selectedSpec,
+    selectedCon,
+    selectedAppr,
+  ]);
 
   // useEffect(() => {
   //   const storedSex = localStorage.getItem("selectedSex");
   //   const storedSpec = localStorage.getItem("selectedSpec");
   //   const storedConcerns = localStorage.getItem("selectedCon");
   //   const storedApproaches = localStorage.getItem("selectedAppr");
-    
+
   //   if (storedSex) setSelectedSex(storedSex);
   //   else setSelectedSex(null);
 

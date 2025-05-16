@@ -26,142 +26,74 @@ export const APPROACHES_LIST = [
   "Narrative Therapy",
 ];
 
-// export const useModalLogicHook = () => {
-//   // const navigate = useNavigate();
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-//   // const [isOpen, setIsOpen] = useState(false); //відкриття Concerns
-//   // const [isOpenApproaches, setIsOpenApproaches] = useState(false); //відкриття Approaches
-//   // // const [selectedSex, setSelectedSex] = useState<string | null>(
-//   //   localStorage.getItem("selectedSex")
-//   // ); //збереження Sex
-//   // const [selectedSpec, setSelectedSpec] = useState<string | null>(
-//   //   localStorage.getItem("selectedSpec")
-//   // ); //збереження спеціалізації
-//   // const [selectedCon, setSelectedCon] = useState<string[]>(
-//   //   JSON.parse(localStorage.getItem("selectedCon") || "[]")
-//   // ); //збереження чекбоксів Concerns
-//   // const [selectedAppr, setSelectedAppr] = useState<string[]>(
-//   //   JSON.parse(localStorage.getItem("selectedAppr") || "[]")
-//   // ); //збереження чекбоксів Approaches
+export const useModalLogicHook = () => {
+  const navigate = useNavigate();
 
-//   // відкриття concerns
-//   const handleConcernsList = () => {
-//     setIsOpen((prev) => !prev);
-//   };
+  const [isOpen, setIsOpen] = useState(false); // concerns dropdown
+  const [isOpenApproaches, setIsOpenApproaches] = useState(false); // approaches dropdown
 
-//   // відкриття approaches
-//   const handleApproachesList = () => {
-//     setIsOpenApproaches((prev) => !prev);
-//   };
+  const [selectedSex, setSelectedSex] = useState<string | null>(null);
+  const [selectedSpec, setSelectedSpec] = useState<string | null>(null);
+  const [selectedCon, setSelectedCon] = useState<string[]>([]);
+  const [selectedAppr, setSelectedAppr] = useState<string[]>([]);
 
-//   // збереження статі
-//   const handleSexSelection = (sex: string | null) => {
-//     setSelectedSex(sex);
-//     localStorage.setItem("selectedSex", sex || "");
-//   };
+  const handleConcernsList = () => setIsOpen((prev) => !prev);
+  const handleApproachesList = () => setIsOpenApproaches((prev) => !prev);
 
-//   //збереження стпеціалізації
-//   const handleSpexSelection = (spec: string | null) => {
-//     setSelectedSpec(spec);
-//     localStorage.setItem("selectedSpec", spec || "");
-//   };
+  const handleSexSelection = (sex: string | null) => {
+    setSelectedSex(sex);
+  };
 
-//   // збереження чекбоксів занепокоїнь(Concerns)
-//   const handleConSelection = (con: string) => {
-//     setSelectedCon((prevSelectedCon) => {
-//       const newSelectedCon = prevSelectedCon.includes(con)
-//         ? prevSelectedCon.filter((item) => item !== con) // Deselect
-//         : [...prevSelectedCon, con]; // Select
+  const handleSpexSelection = (spec: string | null) => {
+    setSelectedSpec(spec);
+  };
 
-//       localStorage.setItem("selectedCon", JSON.stringify(newSelectedCon));
-//       return newSelectedCon;
-//     });
-//   };
+  const handleConSelection = (con: string) => {
+    setSelectedCon((prev) =>
+      prev.includes(con) ? prev.filter((c) => c !== con) : [...prev, con]
+    );
+  };
 
-//   // збереження чекбоксів Approaches
-//   const handleAprrSelection = (appr: string) => {
-//     setSelectedAppr((prevSelectedAppr) => {
-//       const newSelectedAprr = prevSelectedAppr.includes(appr)
-//         ? prevSelectedAppr.filter((item) => item !== appr)
-//         : [...prevSelectedAppr, appr];
+  const handleAprrSelection = (appr: string) => {
+    setSelectedAppr((prev) =>
+      prev.includes(appr) ? prev.filter((a) => a !== appr) : [...prev, appr]
+    );
+  };
 
-//       localStorage.setItem("selectedAppr", JSON.stringify(newSelectedAprr));
-//       return newSelectedAprr;
-//     });
-//   };
+  const handleReset = () => {
+    setSelectedSex(null);
+    setSelectedSpec(null);
+    setSelectedCon([]);
+    setSelectedAppr([]);
+  };
 
-//   // const handleReset = () => {
-//   //   setSelectedSex(null);
-//   //   setSelectedSpec(null);
-//   //   setSelectedCon([]);
-//   //   setSelectedAppr([]);
+  const handleApply = () => {
+    navigate("/psychologist", {
+      state: { formApplyButton: true, forceRefresh: Date.now() },
+    });
+  };
 
-//   //   //очищую localstoreg
-//   //   localStorage.removeItem("selectedCon");
-//   //   localStorage.removeItem("selectedAppr");
-//   //   localStorage.removeItem("selectedSex");
-//   //   localStorage.removeItem("selectedSpec");
-//   // };
-
-//   const handleApply = () => {
-//     navigate("/psychologist", {
-//       state: { formApplyButton: true },
-//     });
-
-//     localStorage.setItem("selectedCon", JSON.stringify(selectedCon));
-//     localStorage.setItem("selectedAppr", JSON.stringify(selectedAppr));
-//     localStorage.setItem("selectedSex", selectedSex || "");
-//     localStorage.setItem("selectedSpec", selectedSpec || "");
-
-//     setTimeout(() => {
-//       navigate("/psychologist", {
-//         state: { formApplyButton: true, forceRefresh: Date.now() }, // додаю унікальний ключ щоб useEffect спрацював
-//       });
-//     }, 200);
-//   };
-
-//   useEffect(() => {
-//     const storedSex = localStorage.getItem("selectedSex");
-
-//     if (storedSex) {
-//       setSelectedSex(storedSex);
-//     }
-
-//     const storedSpec = localStorage.getItem("selectedSpec");
-
-//     if (storedSpec) {
-//       setSelectedSpec(storedSpec);
-//     }
-
-//     const storedConcerns = localStorage.getItem("selectedCon");
-//     if (storedConcerns) {
-//       setSelectedCon(JSON.parse(storedConcerns));
-//     }
-
-//     const storedApproaches = localStorage.getItem("selectedAppr");
-//     if (storedApproaches) {
-//       setSelectedAppr(JSON.parse(storedApproaches));
-//     }
-//   }, []);
-
-//   return {
-//     isOpen,
-//     isOpenApproaches,
-//     selectedSex,
-//     selectedSpec,
-//     selectedCon,
-//     selectedAppr,
-//     setSelectedSex,
-//     setSelectedSpec,
-//     setSelectedCon,
-//     setSelectedAppr,
-//     handleConcernsList,
-//     handleApproachesList,
-//     handleSexSelection,
-//     handleSpexSelection,
-//     handleConSelection,
-//     handleAprrSelection,
-//     handleReset,
-//     handleApply,
-//   };
-// };
+  return {
+    isOpen,
+    isOpenApproaches,
+    selectedSex,
+    selectedSpec,
+    selectedCon,
+    selectedAppr,
+    setSelectedSex,
+    setSelectedSpec,
+    setSelectedCon,
+    setSelectedAppr,
+    handleConcernsList,
+    handleApproachesList,
+    handleSexSelection,
+    handleSpexSelection,
+    handleConSelection,
+    handleAprrSelection,
+    handleReset,
+    handleApply,
+  };
+};
