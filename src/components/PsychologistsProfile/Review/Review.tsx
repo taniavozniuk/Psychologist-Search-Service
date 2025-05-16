@@ -35,6 +35,7 @@ export const Review: React.FC<ReviewProps> = ({
   useOutsideClick(modalRef, onClose);
   const [, setPay] = useState<Payment | null>(null);
 
+
   const handlePayment = async () => {
     try {
       const paymentData: Payment = {
@@ -113,7 +114,7 @@ export const Review: React.FC<ReviewProps> = ({
               </div>
 
               <div className="boxsesInfo2">
-                <h2 className="boxsesTitle">Patient</h2>
+                <h2 className="boxsesTitle">Psychologist</h2>
                 <h2 className="boxsesDes">
                   Dr.{psycholog.firstName} {psycholog.lastName}
                 </h2>

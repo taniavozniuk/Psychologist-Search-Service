@@ -7,8 +7,8 @@ import calendar from "../../../image/Calendar/calendar-month.svg";
 import { Review } from "../Review/Review";
 import { useOutsideClick } from "../../../hooks";
 import { Booking } from "../../../types/bookings";
-import { useAuth } from "../../../hooks/AuthContext";
-import { addBooking } from "../../../api/api";
+import { addBookingUnauth } from "../../../api/api";
+import { BookingUnauth } from "../../../types/BookingUnauth";
 
 interface FillingInfoProps {
   onClose: () => void;
@@ -51,7 +51,7 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
   useOutsideClick(modalRef, onClose);
 
   const [booking, setBooking] = useState<Booking | null>(null);
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
   const handleFirtsNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -106,20 +106,18 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
     setHasFirtsNameError(false);
     setHasLastNameError(false);
 
-    const newBooking: Booking = {
-      id: booking?.id ?? 0,
+    const newBookingUnauth: BookingUnauth = {
       startTime: chooseHour,
-      endTime: "",
-      meetingUrl: "",
       psychologistId: psycholog.id,
-      userId: user?.id ?? 0,
-      status: "PENDING",
+      email: email,
+      firstName: firtsName,
+      lastName: lastName,
     };
 
     try {
-      // відправляю бронювання на сервер
-      const response = await addBooking(newBooking);
-
+      // відправляю бронювання на сервер не залогіненого
+      const response = await addBookingUnauth(newBookingUnauth);
+      console.log("Booking response:", response);
       setBooking(response);
 
       handleReview(email, firtsName, lastName);
@@ -128,8 +126,6 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
       console.error("Booking creation failed:", error);
     }
   };
-
-
 
   const isValidEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

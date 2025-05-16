@@ -2,16 +2,22 @@ import React, { useEffect, useState } from "react";
 import "./Calendar.scss";
 import nextBt from "../../../image/nextBt.svg";
 import prevBt from "../../../image/prevBt.svg";
-import { getDateBokkingId, getLokedDates } from "../../../api/api";
+import { addBooking, getDateBokkingId, getLokedDates } from "../../../api/api";
 import { useParams } from "react-router-dom";
 import { FillingInfo } from "../FillingInfo/FillingInfo";
 import { PsychologId } from "../../../types/psychologId";
+import { Booking } from "../../../types/bookings";
+import { useAuth } from "../../../hooks/AuthContext";
+import { Review } from "../Review/Review";
 
 interface CalendarProps {
   psycholog: PsychologId;
 }
 
 const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
+  const [booking, setBooking] = useState<Booking | null>(null);
+  const { user } = useAuth();
+
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [chooseHour, setChooseHour] = useState<string | null>(null);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -129,13 +135,39 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
 
   const daysInMonth = getDaysInMonth(currentDate);
 
+  const handleBookSesion = async () => {
+    if (!chooseHour) return;
+    if (user) {
+      const newBooking: Booking = {
+        id: booking?.id ?? 0,
+        startTime: chooseHour,
+        endTime: "",
+        meetingUrl: "",
+        psychologistId: psycholog.id,
+        userId: user?.id ?? 0,
+        status: "PENDING",
+      };
+
+      try {
+        // відправляю бронювання на сервер
+        const response = await addBooking(newBooking);
+        setBooking(response);
+        setOnOpneReview(true);
+      } catch (error) {
+        console.error("Booking creation failed:", error);
+      }
+    } else {
+      setOnOpenFillingInfo(true);
+    }
+  };
+
   //фільтрую години
   const availableTimes = selectHour?.filter((hour: string) => {
     if (!selectedDate) return false;
 
     const hourDate = new Date(hour);
 
-        const isToday =
+    const isToday =
       selectedDate.getFullYear() === today.getFullYear() &&
       selectedDate.getMonth() === today.getMonth() &&
       selectedDate.getDate() === today.getDate();
@@ -146,6 +178,24 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
   });
 
   console.log("availableTimes", availableTimes);
+
+  const formattedDate =
+    selectedDate?.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }) ?? "";
+
+  const formattedTime = chooseHour
+    ? new Date(chooseHour).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : "";
+
+  const firstName = user?.firstName || "";
+  const lastName = user?.lastName || "";
+  const email = user?.email || "";
 
   return (
     <div className="wrapperCalendar">
@@ -230,12 +280,7 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
               ))}
             </div>
             {chooseHour && (
-              <button
-                className="Book fade-in"
-                onClick={() => {
-                  setOnOpenFillingInfo(true);
-                }}
-              >
+              <button className="Book fade-in" onClick={handleBookSesion}>
                 Book a Session{" "}
               </button>
             )}
@@ -251,6 +296,20 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
           chooseHour={chooseHour}
           onOpneReview={onOpneReview}
           setOnOpneReview={setOnOpneReview}
+        />
+      )}
+
+      {onOpneReview && booking && (
+        <Review
+          onClose={() => setOnOpneReview(false)}
+          formattedDate={formattedDate}
+          formattedTime={formattedTime}
+          firtsName={firstName}
+          lastName={lastName}
+          email={email}
+          psycholog={psycholog}
+          booking={booking}
+          setBooking={setBooking}
         />
       )}
     </div>

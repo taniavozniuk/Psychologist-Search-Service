@@ -5,6 +5,7 @@ import { LogInType } from "../types/LogIn";
 import { Booking } from "../types/bookings";
 import { Payment } from "../types/Payment";
 import { Review } from "../types/review";
+import { BookingUnauth } from "../types/BookingUnauth";
 
 //затримка
 const delay = () => new Promise((resolve) => setTimeout(resolve, 500));
@@ -17,6 +18,14 @@ const apiClient = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+const apiClientUnauth = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 
 //додаю токен до кожного запиту
 apiClient.interceptors.request.use((config) => {
@@ -105,6 +114,16 @@ export const addBooking = async (book: Booking) => {
   }
 };
 
+export const addBookingUnauth = async (book: BookingUnauth) => {
+  try {
+    const response = await apiClientUnauth.post('/bookings/unauthorized', book);
+    return response.data
+  }catch (error) {
+    console.log("addBookingUnauth Error: ", error);
+    throw error;
+  }
+}
+
 //payment
 export const addPayment = async (pay: Payment) => {
   try {
@@ -131,7 +150,7 @@ export const addPayment = async (pay: Payment) => {
 //   }
 // };
 
-//скасування оплати
+//скасування оплати/броні
 export const canceledPaymnt = async (bookingId: number) => {
   try {
     const response = await apiClient.delete(`/bookings/${bookingId}`, {
@@ -167,6 +186,16 @@ export const getUser = async () => {
     throw error;
   }
 };
+
+export const deleteUser = async (id: number) => {
+  try {
+    const response = await apiClient.delete(`/user/remove-user/${id}`)
+    return response.data
+  }catch (error) {
+    console.log("deleteUser Error: ", error);
+    throw error;
+  }
+}
 
 //дадаю додаткового психолога до бази якщо треба
 export const addPsychologist = async (newPsychologist: postPsychologist) => {

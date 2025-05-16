@@ -4,13 +4,14 @@ import { MyBokking } from "../../types/MyBooking";
 import { canceledPaymnt, getBookingUser } from "../../api/api";
 
 export const useMySesionHook = () => {
-    const [booking, setBooking] = useState<MyBokking[]>([]);
+  const [booking, setBooking] = useState<MyBokking[]>([]);
   const { user } = useAuth();
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
   const [viewDeteilsCancelModalOpen, setViewDeteilsCancelModalOpen] =
     useState(false);
   const [viewDeteilsConfirmedModal, setViewDeteilsConfirmedModal] =
     useState(false);
+  const [viewExpiredModal, setviewExpiredModal] = useState(false);
   const [selectedBookingId, setSelectedBookingId] = useState<number | null>(
     null
   );
@@ -43,11 +44,16 @@ export const useMySesionHook = () => {
     setViewDeteilsConfirmedModal(true);
   };
 
+  const handleViewExpired = (bookingId: number) => {
+    setSelectedBookingId(bookingId);
+    setviewExpiredModal(true)
+  }
+
   const handleCancel = async (bookingId: number) => {
     console.log("Cancel booking:", bookingId);
 
     try {
-      //скасовуємо саму бронь
+      //скасовуємо саму бронь/броні
       await canceledPaymnt(bookingId);
       console.log("Бронювання скасовано");
 
@@ -82,13 +88,16 @@ export const useMySesionHook = () => {
     viewDeteilsCancelModalOpen,
     booking,
     viewDeteilsConfirmedModal,
+    viewExpiredModal,
     selectBookink,
     handleViewDetails,
     handleViewConfirmedDetails,
+    handleViewExpired,
     openCancelModal,
     confirmCancel,
     setCancelModalOpen,
     setViewDeteilsCancelModalOpen,
     setViewDeteilsConfirmedModal,
-  }
-}
+    setviewExpiredModal,
+  };
+};

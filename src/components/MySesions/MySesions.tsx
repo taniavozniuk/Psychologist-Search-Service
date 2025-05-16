@@ -9,14 +9,17 @@ export const MySesions = () => {
     viewDeteilsCancelModalOpen,
     booking,
     viewDeteilsConfirmedModal,
+    viewExpiredModal,
     selectBookink,
     handleViewDetails,
     handleViewConfirmedDetails,
+    handleViewExpired,
     openCancelModal,
     confirmCancel,
     setCancelModalOpen,
     setViewDeteilsCancelModalOpen,
     setViewDeteilsConfirmedModal,
+    setviewExpiredModal,
   } = useMySesionHook();
 
   return (
@@ -98,6 +101,15 @@ export const MySesions = () => {
                               onClick={() =>
                                 handleViewConfirmedDetails(bookings.id)
                               }
+                            >
+                              View Details
+                            </button>
+                          )}
+
+                          {bookings.status.toLowerCase() === "expired" && (
+                            <button
+                              className="action-button expired-button"
+                              onClick={() => handleViewExpired(bookings.id)}
                             >
                               View Details
                             </button>
@@ -220,6 +232,52 @@ export const MySesions = () => {
             <div className="modal-actions">
               <button
                 onClick={() => setViewDeteilsConfirmedModal(false)}
+                className="cancel-button"
+              >
+                Close
+              </button>
+              <NavLink
+                to={`/psychologist/${selectBookink.psychologistDto.id}`}
+                className="reschedule-button"
+              >
+                Book Next
+              </NavLink>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {viewExpiredModal && selectBookink && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <h2 className="modalTitleDeteils">Session Details</h2>
+            <p className="modalDesDeteils">
+              This session with Dr. {selectBookink.psychologistDto.firstName}
+              {selectBookink.psychologistDto.lastName} has expired.
+            </p>
+            <p className="modalCancelOn">
+              Confirmed on:{" "}
+              <span className="cancelDate">
+                {new Date(selectBookink.startTime).toLocaleString("en-US", {
+                  weekday: "short",
+                  month: "short",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                  hour12: true,
+                })}
+              </span>
+            </p>
+            <p className="sessionSumary">
+              This session expired and can’t be accessed.
+            </p>
+            <p className="discussed">
+              If you still need support, feel free to book a new session with
+              the same specialist or explore other available professionals.
+            </p>
+            <div className="modal-actions">
+              <button
+                onClick={() => setviewExpiredModal(false)}
                 className="cancel-button"
               >
                 Close
