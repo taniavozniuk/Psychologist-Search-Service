@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 // import { useModalLogicHook } from "../ModalWindow/useHookModal";
 import { useEffect, useState } from "react";
 import { allFilterPsychologist } from "../../types/allFilterPsychologist";
@@ -13,12 +13,18 @@ export const usePsychologPIHook = () => {
   const pageFromParams = Number(searchParams.get("page")) || 1; // стосується url сторінки
   const [currentPage, setCurrentPage] = useState(pageFromParams); // url сторінки
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  console.log('location', location)
+
+  
 
   useEffect(() => {
     // setLoading(true);
     const fetchData = async () => {
+
       try {
-        const data = await getFilterPsychologist()
+        const data = await getFilterPsychologist(searchParams.toString());
+        console.log('searchParams',searchParams.toString());
         console.log("Fetched data:", data);
         setPsychologists(data);
       } catch (error) {
@@ -30,8 +36,7 @@ export const usePsychologPIHook = () => {
     };
 
     fetchData();
-
-  }, []);
+  }, [searchParams]);
 
   //погінації
   const totalPages = Math.ceil(psychologists.length / itemPrePage);
@@ -45,14 +50,16 @@ export const usePsychologPIHook = () => {
   //url сторінки
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    setSearchParams({ page: String(page) });
+    searchParams.set('page', page.toString())
+    setSearchParams(searchParams);
   };
 
-  useEffect(() => {
-    if (!searchParams.get("page")) {
-      setSearchParams({ page: String(currentPage) });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!searchParams.get("page")) {
+  //     searchParams.set('page', currentPage.toString())
+  //     setSearchParams(searchParams);
+  //   }
+  // }, []);
 
   return {
     totalPages,

@@ -53,11 +53,11 @@ export const getPsychologist = async () => {
 };
 
 //отримую психологів з філтрами
-export const getFilterPsychologist = async (
-) => {
+export const getFilterPsychologist = async (searchParams?: string) => {
   await delay();
   try {
-    const response = await apiClient.get("psychologists/filter");
+    const URL = searchParams?`psychologists/filter?${searchParams}` : `psychologists/filter`
+    const response = await apiClient.get(URL);
     return response.data;
   } catch (error) {
     console.log("GetFilter Error ", error);

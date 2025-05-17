@@ -1,3 +1,5 @@
+// type Gender = "Male" | "Female" | "Other";
+
 export interface allFilterPsychologist {
   id: number;
   firstName: string;
@@ -12,14 +14,18 @@ export interface allFilterPsychologist {
   };
   sessionPrice: number;
   gender: string;
-  experience: number,
-  imageUrl: string,
-  concerns: [{
-    id: number;
-    name: string;
-  }];
-  approaches: [{
-    id: number;
-    name: string;
-  }];
+  experience: number;
+  imageUrl: string;
+  concerns: [
+    {
+      id: number;
+      name: string;
+    }
+  ];
+  approaches: [
+    {
+      id: number;
+      name: string;
+    }
+  ];
 }

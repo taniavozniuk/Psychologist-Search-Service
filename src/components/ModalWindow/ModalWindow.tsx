@@ -13,30 +13,29 @@ import {
 } from "./useHookModal";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { useOutsideClick } from "../../hooks";
-import { useNavigate } from "react-router-dom";
-import { getFilterPsychologist } from "../../api/api";
-import { allFilterPsychologist } from "../../types/allFilterPsychologist";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { SearchLink } from "../../utils/SearchLink";
 
 interface ModalProps {
   onClose: () => void;
 }
 
-export const ModalWindow: React.FC<ModalProps> = ({
-  onClose,
-}) => {
+export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
   const [selectedSex, setSelectedSex] = useState<string | null>(null); //збереження Sex
   const [selectedSpec, setSelectedSpec] = useState<string | null>(null); //збереження спеціалізації
   const [selectedCon, setSelectedCon] = useState<string[]>([]); //збереження чекбоксів Concerns
   const [selectedAppr, setSelectedAppr] = useState<string[]>([]); //збереження чекбоксів Approaches
-  const [psychologists, setPsychologists] = useState<allFilterPsychologist[]>(
-    []
-  );
+  // const [psychologists, setPsychologists] = useState<allFilterPsychologist[]>(
+  //   []
+  // );
   const navigate = useNavigate();
   const modalRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   useOutsideClick(modalRef, onClose);
+  const [searchParams, setSearchParams] = useSearchParams(); // url сторінки
 
+  console.log("searchParams", searchParams.toString());
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenApproaches, setIsOpenApproaches] = useState(false); //відкриття Approaches
 
@@ -51,12 +50,12 @@ export const ModalWindow: React.FC<ModalProps> = ({
 
   // збереження статі
   const handleSexSelection = (sex: string | null) => {
-    setSelectedSex(sex);
+    setSelectedSex((prevSex) => (prevSex === sex ? null : sex));
   };
 
   //збереження стпеціалізації
   const handleSpexSelection = (spec: string | null) => {
-    setSelectedSpec(spec);
+    setSelectedSpec((prevSpec) => (prevSpec === spec ? null : spec));
   };
 
   // збереження чекбоксів занепокоїнь(Concerns)
@@ -68,6 +67,37 @@ export const ModalWindow: React.FC<ModalProps> = ({
     setSelectedCon(newSelectedCon);
   };
 
+  const selectedCons = searchParams.getAll('concerns');
+  console.log('selectedCons',selectedCons)
+
+  // useEffect(() => {
+  //   // Синхронізую selectedCon з URL параметром concerns
+  //   const concernsParam = searchParams.get("concerns");
+  //   if (concernsParam) {
+  //     const concernsFromUrl = concernsParam.split(",").map((item) =>
+  //       CONCERNS_LIST1.concat(CONCERNS_LIST2).find((label) =>
+  //         label.replace(/\s/g, "") === item
+  //       ) || item
+  //     );
+  //     setSelectedCon(concernsFromUrl);
+  //   } else {
+  //     setSelectedCon([]);
+  //   }
+
+  //   // Синхронізую selectedAppr з URL параметром approaches
+  //   const approachesParam = searchParams.get("approaches");
+  //   if (approachesParam) {
+  //     const approachesFromUrl = approachesParam.split(",").map((item) =>
+  //       APPROACHES_LIST.find((label) => label.replace(/\s/g, "") === item) || item
+  //     );
+  //     setSelectedAppr(approachesFromUrl);
+  //   } else {
+  //     setSelectedAppr([]);
+  //   }
+
+  // }, [searchParams]);
+
+
   // збереження чекбоксів Approaches
   const handleAprrSelection = (appr: string) => {
     const newSelectedAppr = selectedAppr.includes(appr)
@@ -78,26 +108,14 @@ export const ModalWindow: React.FC<ModalProps> = ({
   };
 
   const handleApply = () => {
-    const fetchData = async () => {
-      try {
-        const data = await getFilterPsychologist();
-        console.log("Fetched data:", data);
-        setPsychologists(data);
-      } catch (error) {
-        console.log("error", error);
-      } finally {
-        // setLoading(false);
-        console.log("Loading finished");
-      }
-    };
+    const currentSearchParams = searchParams.toString();
 
-    fetchData();
-
-    navigate("/psychologist", {
-      state: { formApplyButton: true },
-    });
-
-    
+    navigate(
+      currentSearchParams
+        ? `/psychologist?${currentSearchParams}`
+        : `/psychologist`,
+      { state: { shouldFetch: false } }
+    );
   };
 
   const handleResetFilters = () => {
@@ -105,30 +123,9 @@ export const ModalWindow: React.FC<ModalProps> = ({
     setSelectedSpec(null);
     setSelectedCon([]);
     setSelectedAppr([]);
+
+    setSearchParams({})
   };
-  // useEffect(() => {
-  //   const storedSex = localStorage.getItem("selectedSex");
-
-  //   if (storedSex) {
-  //     setSelectedSex(storedSex);
-  //   }
-
-  //   const storedSpec = localStorage.getItem("selectedSpec");
-
-  //   if (storedSpec) {
-  //     setSelectedSpec(storedSpec);
-  //   }
-
-  //   const storedConcerns = localStorage.getItem("selectedCon");
-  //   if (storedConcerns) {
-  //     setSelectedCon(JSON.parse(storedConcerns));
-  //   }
-
-  //   const storedApproaches = localStorage.getItem("selectedAppr");
-  //   if (storedApproaches) {
-  //     setSelectedAppr(JSON.parse(storedApproaches));
-  //   }
-  // }, []);
 
   return (
     <div
@@ -154,25 +151,34 @@ export const ModalWindow: React.FC<ModalProps> = ({
 
             <div className="modal__button">
               {sexOptions.map((sex) => (
-                <button
-                  key={sex}
-                  className={`button__name ${
-                    selectedSex === sex ? "selected" : ""
-                  }`}
-                  onClick={() => {
-                    if (selectedSex === sex) {
-                      handleSexSelection(null);
+                <SearchLink
+                  params={(prev) => {
+                    const current = new URLSearchParams(prev);
+                    const isSelected = selectedSex === sex;
+
+                    if (isSelected) {
+                      current.delete("gender"); // прибираю якщо вже вибраний
                     } else {
-                      handleSexSelection(sex);
+                      current.set("gender", sex.toUpperCase()); // додаю новий
                     }
-                  }}
-                  style={{
-                    backgroundColor: selectedSex === sex ? "#9B6A00" : "",
-                    color: selectedSex === sex ? "#f1efe9" : "",
+
+                    return Object.fromEntries(current.entries());
                   }}
                 >
-                  {sex}
-                </button>
+                  <button
+                    key={sex}
+                    className={`button__name ${
+                      selectedSex === sex ? "selected" : ""
+                    }`}
+                    style={{
+                      backgroundColor: selectedSex === sex ? "#9B6A00" : "",
+                      color: selectedSex === sex ? "#f1efe9" : "",
+                    }}
+                    onClick={() => handleSexSelection(sex)}
+                  >
+                    {sex}
+                  </button>
+                </SearchLink>
               ))}
             </div>
           </div>
@@ -183,25 +189,34 @@ export const ModalWindow: React.FC<ModalProps> = ({
 
             <div className="modal__button">
               {specOptions.map((spec) => (
-                <button
-                  key={spec}
-                  className={`button__SpecName ${
-                    selectedSpec === spec ? "selected" : ""
-                  }`}
-                  onClick={() => {
-                    if (selectedSpec === spec) {
-                      handleSpexSelection(null);
+                <SearchLink
+                  params={(prev) => {
+                    const current = new URLSearchParams(prev);
+                    const isSelected = selectedSpec === spec;
+
+                    if (isSelected) {
+                      current.delete("speciality"); // прибираю якщо вже вибраний
                     } else {
-                      handleSpexSelection(spec);
+                      current.set("speciality", spec); // додаю новий
                     }
-                  }}
-                  style={{
-                    backgroundColor: selectedSpec === spec ? "#9B6A00" : "",
-                    color: selectedSpec === spec ? "#f1efe9" : "",
+
+                    return Object.fromEntries(current.entries());
                   }}
                 >
-                  {spec}
-                </button>
+                  <button
+                    key={spec}
+                    className={`button__SpecName ${
+                      selectedSpec === spec ? "selected" : ""
+                    }`}
+                    style={{
+                      backgroundColor: selectedSpec === spec ? "#9B6A00" : "",
+                      color: selectedSpec === spec ? "#f1efe9" : "",
+                    }}
+                    onClick={() => handleSpexSelection(spec)}
+                  >
+                    {spec}
+                  </button>
+                </SearchLink>
               ))}
             </div>
           </div>
@@ -236,25 +251,56 @@ export const ModalWindow: React.FC<ModalProps> = ({
                   <ul className="model__concernsDrop">
                     {CONCERNS_LIST1.map((label, index) => (
                       <li key={index} className="model__concernsItem">
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              className="model__concernsList"
-                              sx={{
-                                color: "#0C0B09",
-                                "&.Mui-checked": {
-                                  color: "#9B6A00",
-                                },
-                                "&:hover": {
-                                  color: "#7C746A",
-                                },
-                              }}
-                              checked={selectedCon.includes(label)}
-                              onChange={() => handleConSelection(label)}
-                            />
-                          }
-                          label={label}
-                        />
+                        <SearchLink
+                          params={(prev) => {
+                            const current = new URLSearchParams(prev);
+
+                            const normalize = (str: string) =>
+                              str.replace(/\s/g, "");
+
+                            const existing =
+                              current
+                                .get("concerns")
+                                ?.split(",")
+                                .map(normalize) || [];
+
+                            const normalizedLabel = normalize(label);
+
+                            const updated = existing.includes(normalizedLabel)
+                              ? existing.filter(
+                                  (item) => item !== normalizedLabel
+                                )
+                              : [...existing, normalizedLabel];
+
+                            if (updated.length === 0) {
+                              current.delete("concerns");
+                            } else {
+                              current.set("concerns", updated.join(","));
+                            }
+
+                            return Object.fromEntries(current.entries());
+                          }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                className="model__concernsList"
+                                sx={{
+                                  color: "#0C0B09",
+                                  "&.Mui-checked": {
+                                    color: "#9B6A00",
+                                  },
+                                  "&:hover": {
+                                    color: "#7C746A",
+                                  },
+                                }}
+                                checked={selectedCon.includes(label)}
+                                onChange={() => handleConSelection(label)}
+                              />
+                            }
+                            label={label}
+                          />
+                        </SearchLink>
                       </li>
                     ))}
                   </ul>
@@ -263,25 +309,56 @@ export const ModalWindow: React.FC<ModalProps> = ({
                   <ul className="model__concernsDrop">
                     {CONCERNS_LIST2.map((label, index) => (
                       <li key={index} className="model__concernsItem">
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              className="model__concernsList"
-                              sx={{
-                                color: "#0C0B09",
-                                "&.Mui-checked": {
-                                  color: "#9B6A00",
-                                },
-                                "&:hover": {
-                                  color: "#7C746A",
-                                },
-                              }}
-                              checked={selectedCon.includes(label)}
-                              onChange={() => handleConSelection(label)}
-                            />
-                          }
-                          label={label}
-                        />
+                        <SearchLink
+                          params={(prev) => {
+                            const current = new URLSearchParams(prev);
+
+                            const normalize = (str: string) =>
+                              str.replace(/\s/g, "");
+
+                            const existing =
+                              current
+                                .get("concerns")
+                                ?.split(",")
+                                .map(normalize) || [];
+
+                            const normalizedLabel = normalize(label);
+
+                            const updated = existing.includes(normalizedLabel)
+                              ? existing.filter(
+                                  (item) => item !== normalizedLabel
+                                )
+                              : [...existing, normalizedLabel];
+
+                            if (updated.length === 0) {
+                              current.delete("concerns");
+                            } else {
+                              current.set("concerns", updated.join(","));
+                            }
+
+                            return Object.fromEntries(current.entries());
+                          }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                className="model__concernsList"
+                                sx={{
+                                  color: "#0C0B09",
+                                  "&.Mui-checked": {
+                                    color: "#9B6A00",
+                                  },
+                                  "&:hover": {
+                                    color: "#7C746A",
+                                  },
+                                }}
+                                checked={selectedCons.includes(label)}
+                                onChange={() => handleConSelection(label)}
+                              />
+                            }
+                            label={label}
+                          />
+                        </SearchLink>
                       </li>
                     ))}
                   </ul>
@@ -315,25 +392,56 @@ export const ModalWindow: React.FC<ModalProps> = ({
                   <ul className="model__concernsDrop">
                     {APPROACHES_LIST.map((label, index) => (
                       <li key={index} className="model__concernsItem">
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              className="model__concernsList"
-                              sx={{
-                                color: "#0C0B09",
-                                "&.Mui-checked": {
-                                  color: "#9B6A00",
-                                },
-                                "&:hover": {
-                                  color: "#7C746A",
-                                },
-                              }}
-                              checked={selectedAppr.includes(label)}
-                              onChange={() => handleAprrSelection(label)}
-                            />
-                          }
-                          label={label}
-                        />
+                        <SearchLink
+                          params={(prev) => {
+                            const current = new URLSearchParams(prev);
+
+                            const normalize = (str: string) =>
+                              str.replace(/\s/g, ""); // прибираю всі пробіли
+
+                            const existing =
+                              current
+                                .get("approaches")
+                                ?.split(",")
+                                .map(normalize) || [];
+
+                            const normalizedLabel = normalize(label);
+
+                            const updated = existing.includes(normalizedLabel)
+                              ? existing.filter(
+                                  (item) => item !== normalizedLabel
+                                )
+                              : [...existing, normalizedLabel];
+
+                            if (updated.length === 0) {
+                              current.delete("approaches");
+                            } else {
+                              current.set("approaches", updated.join(","));
+                            }
+
+                            return Object.fromEntries(current.entries());
+                          }}
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                className="model__concernsList"
+                                sx={{
+                                  color: "#0C0B09",
+                                  "&.Mui-checked": {
+                                    color: "#9B6A00",
+                                  },
+                                  "&:hover": {
+                                    color: "#7C746A",
+                                  },
+                                }}
+                                checked={selectedAppr.includes(label)}
+                                onChange={() => handleAprrSelection(label)}
+                              />
+                            }
+                            label={label}
+                          />
+                        </SearchLink>
                       </li>
                     ))}
                   </ul>
