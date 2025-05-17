@@ -25,9 +25,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
   const [selectedSpec, setSelectedSpec] = useState<string | null>(null); //збереження спеціалізації
   const [selectedCon, setSelectedCon] = useState<string[]>([]); //збереження чекбоксів Concerns
   const [selectedAppr, setSelectedAppr] = useState<string[]>([]); //збереження чекбоксів Approaches
-  // const [psychologists, setPsychologists] = useState<allFilterPsychologist[]>(
-  //   []
-  // );
+  // const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000])
   const navigate = useNavigate();
   const modalRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -39,6 +37,24 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenApproaches, setIsOpenApproaches] = useState(false); //відкриття Approaches
 
+  const minPriceFromUrl = searchParams.get("minPrice");
+  const maxPriceFromUrl = searchParams.get("maxPrice");
+
+  const [priceRange, setPriceRange] = useState<[number, number]>([
+    minPriceFromUrl ? Number(minPriceFromUrl) : 0,
+    maxPriceFromUrl ? Number(maxPriceFromUrl) : 1000,
+  ]);
+
+  const handlePriceChange = (newRange: [number, number]) => {
+    setPriceRange(newRange);
+
+    const current = new URLSearchParams(searchParams);
+
+    current.set("minPrice", newRange[0].toFixed(2).toString());
+    current.set("maxPrice", newRange[1].toFixed(2).toString());
+
+    setSearchParams(current);
+  };
   const handleConcernsList = () => {
     setIsOpen((prev) => !prev);
   };
@@ -67,36 +83,9 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
     setSelectedCon(newSelectedCon);
   };
 
-  const selectedCons = searchParams.getAll('concerns');
-  console.log('selectedCons',selectedCons)
-
-  // useEffect(() => {
-  //   // Синхронізую selectedCon з URL параметром concerns
-  //   const concernsParam = searchParams.get("concerns");
-  //   if (concernsParam) {
-  //     const concernsFromUrl = concernsParam.split(",").map((item) =>
-  //       CONCERNS_LIST1.concat(CONCERNS_LIST2).find((label) =>
-  //         label.replace(/\s/g, "") === item
-  //       ) || item
-  //     );
-  //     setSelectedCon(concernsFromUrl);
-  //   } else {
-  //     setSelectedCon([]);
-  //   }
-
-  //   // Синхронізую selectedAppr з URL параметром approaches
-  //   const approachesParam = searchParams.get("approaches");
-  //   if (approachesParam) {
-  //     const approachesFromUrl = approachesParam.split(",").map((item) =>
-  //       APPROACHES_LIST.find((label) => label.replace(/\s/g, "") === item) || item
-  //     );
-  //     setSelectedAppr(approachesFromUrl);
-  //   } else {
-  //     setSelectedAppr([]);
-  //   }
-
-  // }, [searchParams]);
-
+  const selectedCons = searchParams.getAll("concernsId");
+  const selectedApprs = searchParams.getAll("approachIds");
+  console.log("selectedCons", selectedCons);
 
   // збереження чекбоксів Approaches
   const handleAprrSelection = (appr: string) => {
@@ -124,7 +113,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
     setSelectedCon([]);
     setSelectedAppr([]);
 
-    setSearchParams({})
+    setSearchParams({});
   };
 
   return (
@@ -188,33 +177,33 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
             <h2 className="modal__TitleName">Specialization</h2>
 
             <div className="modal__button">
-              {specOptions.map((spec) => (
+              {specOptions.map(({ id, label }) => (
                 <SearchLink
+                  key={id}
                   params={(prev) => {
                     const current = new URLSearchParams(prev);
-                    const isSelected = selectedSpec === spec;
+                    const isSelected = selectedSpec === id;
 
                     if (isSelected) {
-                      current.delete("speciality"); // прибираю якщо вже вибраний
+                      current.delete("specialityId");
                     } else {
-                      current.set("speciality", spec); // додаю новий
+                      current.set("specialityId", id);
                     }
 
                     return Object.fromEntries(current.entries());
                   }}
                 >
                   <button
-                    key={spec}
                     className={`button__SpecName ${
-                      selectedSpec === spec ? "selected" : ""
+                      selectedSpec === id ? "selected" : ""
                     }`}
                     style={{
-                      backgroundColor: selectedSpec === spec ? "#9B6A00" : "",
-                      color: selectedSpec === spec ? "#f1efe9" : "",
+                      backgroundColor: selectedSpec === id ? "#9B6A00" : "",
+                      color: selectedSpec === id ? "#f1efe9" : "",
                     }}
-                    onClick={() => handleSpexSelection(spec)}
+                    onClick={() => handleSpexSelection(id)}
                   >
-                    {spec}
+                    {label}
                   </button>
                 </SearchLink>
               ))}
@@ -224,7 +213,10 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
 
           <div className="modal__WrapperPrice">
             <h2 className="modal__TitlePrice">Price range</h2>
-            <PriceSlider />
+            <PriceSlider
+              priceRange={priceRange}
+              setPriceRange={handlePriceChange}
+            />
             <span className="modal__line"></span>
           </div>
 
@@ -249,33 +241,23 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
               <div className="modal__checkbox">
                 <div className="model__concernsDropWrapper1">
                   <ul className="model__concernsDrop">
-                    {CONCERNS_LIST1.map((label, index) => (
-                      <li key={index} className="model__concernsItem">
+                    {CONCERNS_LIST1.map(({ id, label }) => (
+                      <li key={id} className="model__concernsItem">
                         <SearchLink
                           params={(prev) => {
                             const current = new URLSearchParams(prev);
-
-                            const normalize = (str: string) =>
-                              str.replace(/\s/g, "");
-
-                            const existing =
-                              current
-                                .get("concerns")
-                                ?.split(",")
-                                .map(normalize) || [];
-
-                            const normalizedLabel = normalize(label);
-
-                            const updated = existing.includes(normalizedLabel)
-                              ? existing.filter(
-                                  (item) => item !== normalizedLabel
-                                )
-                              : [...existing, normalizedLabel];
+                            const existing = current.getAll("concernsId");
+                            const updated = existing.includes(id)
+                              ? existing.filter((val) => val !== id)
+                              : [...existing, id];
 
                             if (updated.length === 0) {
-                              current.delete("concerns");
+                              current.delete("concernsId");
                             } else {
-                              current.set("concerns", updated.join(","));
+                              current.delete("concernsId");
+                              updated.forEach((val) =>
+                                current.append("concernsId", val)
+                              );
                             }
 
                             return Object.fromEntries(current.entries());
@@ -287,15 +269,11 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                                 className="model__concernsList"
                                 sx={{
                                   color: "#0C0B09",
-                                  "&.Mui-checked": {
-                                    color: "#9B6A00",
-                                  },
-                                  "&:hover": {
-                                    color: "#7C746A",
-                                  },
+                                  "&.Mui-checked": { color: "#9B6A00" },
+                                  "&:hover": { color: "#7C746A" },
                                 }}
-                                checked={selectedCon.includes(label)}
-                                onChange={() => handleConSelection(label)}
+                                checked={selectedCons.includes(id)}
+                                onChange={() => handleConSelection(id)}
                               />
                             }
                             label={label}
@@ -307,34 +285,22 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                 </div>
                 <div className="model__concernsDropWrapper2">
                   <ul className="model__concernsDrop">
-                    {CONCERNS_LIST2.map((label, index) => (
-                      <li key={index} className="model__concernsItem">
+                    {CONCERNS_LIST2.map(({ id, label }) => (
+                      <li key={id} className="model__concernsItem">
                         <SearchLink
                           params={(prev) => {
                             const current = new URLSearchParams(prev);
 
-                            const normalize = (str: string) =>
-                              str.replace(/\s/g, "");
+                            const existing = current.getAll("concernsId");
 
-                            const existing =
-                              current
-                                .get("concerns")
-                                ?.split(",")
-                                .map(normalize) || [];
+                            const updated = existing.includes(id)
+                              ? existing.filter((val) => val !== id)
+                              : [...existing, id];
 
-                            const normalizedLabel = normalize(label);
-
-                            const updated = existing.includes(normalizedLabel)
-                              ? existing.filter(
-                                  (item) => item !== normalizedLabel
-                                )
-                              : [...existing, normalizedLabel];
-
-                            if (updated.length === 0) {
-                              current.delete("concerns");
-                            } else {
-                              current.set("concerns", updated.join(","));
-                            }
+                            current.delete("concernsId");
+                            updated.forEach((val) =>
+                              current.append("concernsId", val)
+                            );
 
                             return Object.fromEntries(current.entries());
                           }}
@@ -345,15 +311,11 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                                 className="model__concernsList"
                                 sx={{
                                   color: "#0C0B09",
-                                  "&.Mui-checked": {
-                                    color: "#9B6A00",
-                                  },
-                                  "&:hover": {
-                                    color: "#7C746A",
-                                  },
+                                  "&.Mui-checked": { color: "#9B6A00" },
+                                  "&:hover": { color: "#7C746A" },
                                 }}
-                                checked={selectedCons.includes(label)}
-                                onChange={() => handleConSelection(label)}
+                                checked={selectedCons.includes(id)}
+                                onChange={() => handleConSelection(id)}
                               />
                             }
                             label={label}
@@ -390,34 +352,22 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
               <div className="modal__checkbox">
                 <div className="model__concernsDropWrapper1">
                   <ul className="model__concernsDrop">
-                    {APPROACHES_LIST.map((label, index) => (
-                      <li key={index} className="model__concernsItem">
+                    {APPROACHES_LIST.map(({ id, label }) => (
+                      <li key={id} className="model__concernsItem">
                         <SearchLink
                           params={(prev) => {
                             const current = new URLSearchParams(prev);
 
-                            const normalize = (str: string) =>
-                              str.replace(/\s/g, ""); // прибираю всі пробіли
+                            const existing = current.getAll("approachIds");
 
-                            const existing =
-                              current
-                                .get("approaches")
-                                ?.split(",")
-                                .map(normalize) || [];
+                            const updated = existing.includes(id)
+                              ? existing.filter((val) => val !== id)
+                              : [...existing, id];
 
-                            const normalizedLabel = normalize(label);
-
-                            const updated = existing.includes(normalizedLabel)
-                              ? existing.filter(
-                                  (item) => item !== normalizedLabel
-                                )
-                              : [...existing, normalizedLabel];
-
-                            if (updated.length === 0) {
-                              current.delete("approaches");
-                            } else {
-                              current.set("approaches", updated.join(","));
-                            }
+                            current.delete("approachIds");
+                            updated.forEach((val) =>
+                              current.append("approachIds", val)
+                            );
 
                             return Object.fromEntries(current.entries());
                           }}
@@ -435,8 +385,8 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                                     color: "#7C746A",
                                   },
                                 }}
-                                checked={selectedAppr.includes(label)}
-                                onChange={() => handleAprrSelection(label)}
+                                checked={selectedApprs.includes(id)}
+                                onChange={() => handleAprrSelection(id)}
                               />
                             }
                             label={label}

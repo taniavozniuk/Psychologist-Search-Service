@@ -14,17 +14,14 @@ export const usePsychologPIHook = () => {
   const [currentPage, setCurrentPage] = useState(pageFromParams); // url сторінки
   const [loading, setLoading] = useState(true);
   const location = useLocation();
-  console.log('location', location)
-
-  
+  console.log("location", location);
 
   useEffect(() => {
     // setLoading(true);
     const fetchData = async () => {
-
       try {
         const data = await getFilterPsychologist(searchParams.toString());
-        console.log('searchParams',searchParams.toString());
+        console.log("searchParams", searchParams.toString());
         console.log("Fetched data:", data);
         setPsychologists(data);
       } catch (error) {
@@ -50,16 +47,9 @@ export const usePsychologPIHook = () => {
   //url сторінки
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    searchParams.set('page', page.toString())
+    searchParams.set("page", page.toString());
     setSearchParams(searchParams);
   };
-
-  // useEffect(() => {
-  //   if (!searchParams.get("page")) {
-  //     searchParams.set('page', currentPage.toString())
-  //     setSearchParams(searchParams);
-  //   }
-  // }, []);
 
   return {
     totalPages,

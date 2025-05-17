@@ -2,23 +2,27 @@ import { Box, Slider, Typography } from "@mui/material";
 import { useState } from "react";
 import "./PriceSlider.scss";
 
-export const PriceSlider = () => {
-  const [value, setValue] = useState([200, 800]);
+interface PriceSliderProps {
+  priceRange: [number, number];
+  setPriceRange: (newRange: [number, number]) => void;
+}
+
+export const PriceSlider: React.FC<PriceSliderProps> = ({ priceRange, setPriceRange }) => {
 
   const handleChangePrice = (_: unknown, newValue: number | number[]) => {
-    setValue(newValue as number[]);
+    setPriceRange(newValue as [number, number]);
   };
 
   return (
     <Box>
       <Slider
-        value={value}
+        value={priceRange}
         onChange={handleChangePrice}
         valueLabelDisplay="on" // <-- це тултіп над кнопками
-        valueLabelFormat={(value: number) => `$${value}`}
+        valueLabelFormat={(value: number) => `$${value.toFixed(2)}`}
         min={0}
         max={1000}
-        step={10}
+        step={0.01}
         sx={{
           // Стилізація треку
           fontFamily: "'Aileron', sans-serif",
@@ -55,14 +59,14 @@ export const PriceSlider = () => {
         <div className="box__title">
           <h2 className="title__maxMin">Min</h2>
           <button className="box__price">
-            <Typography variant="body2">${value[0]}</Typography>
+            <Typography variant="body2">${priceRange[0]}</Typography>
           </button>
         </div>
 
         <div className="box__title">
           <h2 className="title__maxMin">Max</h2>
           <button className="box__price">
-            <Typography variant="body2">${value[1]}</Typography>
+            <Typography variant="body2">${priceRange[1]}</Typography>
           </button>
         </div>
       </Box>
