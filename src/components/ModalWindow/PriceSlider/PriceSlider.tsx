@@ -1,5 +1,4 @@
 import { Box, Slider, Typography } from "@mui/material";
-import { useState } from "react";
 import "./PriceSlider.scss";
 
 interface PriceSliderProps {
@@ -20,8 +19,8 @@ export const PriceSlider: React.FC<PriceSliderProps> = ({ priceRange, setPriceRa
         onChange={handleChangePrice}
         valueLabelDisplay="on" // <-- це тултіп над кнопками
         valueLabelFormat={(value: number) => `$${value.toFixed(2)}`}
-        min={0}
-        max={1000}
+        min={100}
+        max={900}
         step={0.01}
         sx={{
           // Стилізація треку

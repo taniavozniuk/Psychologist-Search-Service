@@ -20,6 +20,7 @@ export const usePsychologPIHook = () => {
     // setLoading(true);
     const fetchData = async () => {
       try {
+        // searchParams.set("size", itemPrePage.toString());
         const data = await getFilterPsychologist(searchParams.toString());
         console.log("searchParams", searchParams.toString());
         console.log("Fetched data:", data);
@@ -47,7 +48,7 @@ export const usePsychologPIHook = () => {
   //url сторінки
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    searchParams.set("page", page.toString());
+    searchParams.set("page", page.toString(),);
     setSearchParams(searchParams);
   };
 
