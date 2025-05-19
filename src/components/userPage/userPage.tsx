@@ -5,8 +5,8 @@ import Defolt from "../../image/Profile/defalt.jpg";
 import edit from "../../image/Profile/edit.svg";
 import { useUserPageHook } from "./useUserPageHook";
 import { Loader } from "../Loader/Loader";
-import { useState } from "react";
-import { deleteUser } from "../../api/api";
+import { useEffect, useState } from "react";
+import { deleteUser, getBookingUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { Booking } from "../../types/bookings";
 import { FeetbackForm } from "../FeedbackForm/FeedbackForm";
@@ -47,6 +47,21 @@ export const UserPage = () => {
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [bookink, setBooking] = useState<Booking[]>([]);
+  const [onOpenFeedback, setonOpenFeedback] = useState(false);
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const data = await getBookingUser();
+        console.log("Bookings received:", data);
+        setBooking(data);
+      } catch (error) {
+        console.error("Failed to fetch bookings:", error);
+      }
+    };
+
+    fetchBookings();
+  }, []);
 
   const handleDeleteButton = async () => {
     try {
@@ -72,10 +87,6 @@ export const UserPage = () => {
     const endTime = new Date(boog.endTime);
     return endTime < now && !boog.feedbackForm;
   });
-
-  {
-    showFeatbackForm && <FeetbackForm />;
-  }
 
   return (
     <div className="UserPage">
@@ -249,7 +260,6 @@ export const UserPage = () => {
           </div>
         </div>
       </div>
-
       {openDeleteModal && (
         <div className="modal-backdropDelete">
           <div className="modalDelete">
@@ -273,6 +283,12 @@ export const UserPage = () => {
             </div>
           </div>
         </div>
+      )}
+      {showFeatbackForm && onOpenFeedback &&(
+        <FeetbackForm
+          onClose={() => setonOpenFeedback(false)}
+          psychologistId={showFeatbackForm.psychologistId}
+        />
       )}
     </div>
   );

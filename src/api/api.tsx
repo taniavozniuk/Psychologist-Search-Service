@@ -56,7 +56,9 @@ export const getPsychologist = async () => {
 export const getFilterPsychologist = async (searchParams?: string) => {
   await delay();
   try {
-    const URL = searchParams?`psychologists/filter?${searchParams}size=3&` : `psychologists/filter`
+    const URL = searchParams
+      ? `psychologists/filter?${searchParams}size=3`
+      : `psychologists/filter`;
     const response = await apiClient.get(URL);
     return response.data;
   } catch (error) {
@@ -232,9 +234,12 @@ export const logInUser = async (formData: LogInType) => {
 };
 
 //відгук
-export const postReview = async (review: Review) => {
+export const postReview = async (review: Review, psychologistId: number) => {
   try {
-    const response = await apiClient.post("/reviews", review);
+    const response = await apiClient.post(
+      `/reviews?psychologistId=${psychologistId}`,
+      review
+    );
     return response.data;
   } catch (error) {
     console.log("postReview error", error);
