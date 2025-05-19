@@ -56,7 +56,7 @@ export const getPsychologist = async () => {
 export const getFilterPsychologist = async (searchParams?: string) => {
   await delay();
   try {
-    const URL = searchParams?`psychologists/filter?${searchParams}` : `psychologists/filter`
+    const URL = searchParams?`psychologists/filter?${searchParams}size=3&` : `psychologists/filter`
     const response = await apiClient.get(URL);
     return response.data;
   } catch (error) {

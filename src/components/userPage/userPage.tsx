@@ -8,6 +8,8 @@ import { Loader } from "../Loader/Loader";
 import { useState } from "react";
 import { deleteUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import { Booking } from "../../types/bookings";
+import { FeetbackForm } from "../FeedbackForm/FeedbackForm";
 
 export const UserPage = () => {
   const {
@@ -44,12 +46,12 @@ export const UserPage = () => {
   const navigate = useNavigate();
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [bookink, setBooking] = useState<Booking[]>([]);
 
   const handleDeleteButton = async () => {
     try {
-
       await deleteUser();
-      localStorage.clear()
+      localStorage.clear();
       logout();
       navigate("/");
     } catch (error) {
@@ -63,6 +65,17 @@ export const UserPage = () => {
         <Loader />
       </div>
     );
+
+  const now = new Date();
+
+  const showFeatbackForm = bookink.find((boog) => {
+    const endTime = new Date(boog.endTime);
+    return endTime < now && !boog.feedbackForm;
+  });
+
+  {
+    showFeatbackForm && <FeetbackForm />;
+  }
 
   return (
     <div className="UserPage">

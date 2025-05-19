@@ -48,7 +48,7 @@ export const usePsychologPIHook = () => {
   //url сторінки
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    searchParams.set("page", page.toString(),);
+    searchParams.set("page", (page).toString());
     setSearchParams(searchParams);
   };
 

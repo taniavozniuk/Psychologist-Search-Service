@@ -6,4 +6,5 @@ export type Booking = {
   psychologistId: number;
   userId: number;
   status: "PENDING" | "CONFIRMED" | "CANCELLED" | "EXPIRED";
+  feedbackForm?: boolean;
 };
