@@ -5,7 +5,7 @@ import Defolt from "../../image/Profile/defalt.jpg";
 import edit from "../../image/Profile/edit.svg";
 import { useUserPageHook } from "./useUserPageHook";
 import { Loader } from "../Loader/Loader";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { deleteUser, getBookingUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { Booking } from "../../types/bookings";
@@ -63,6 +63,24 @@ export const UserPage = () => {
     fetchBookings();
   }, []);
 
+  const showFeatbackForm = useMemo(() => {
+    // const now = new Date();
+
+    return bookink.find((boog) => {
+      return boog.status === "EXPIRED";
+
+      // const endTime = new Date(boog.status = 'EXPIRED');
+      // return endTime < now && !boog.feedbackForm;
+    });
+  }, [bookink]);
+
+  useEffect(() => {
+    console.log({ showFeatbackForm });
+    if (showFeatbackForm) {
+      setonOpenFeedback(true);
+    }
+  }, [showFeatbackForm]);
+
   const handleDeleteButton = async () => {
     try {
       await deleteUser();
@@ -80,13 +98,6 @@ export const UserPage = () => {
         <Loader />
       </div>
     );
-
-  const now = new Date();
-
-  const showFeatbackForm = bookink.find((boog) => {
-    const endTime = new Date(boog.endTime);
-    return endTime < now && !boog.feedbackForm;
-  });
 
   return (
     <div className="UserPage">
@@ -284,10 +295,10 @@ export const UserPage = () => {
           </div>
         </div>
       )}
-      {showFeatbackForm && onOpenFeedback &&(
+      {showFeatbackForm && onOpenFeedback && (
         <FeetbackForm
           onClose={() => setonOpenFeedback(false)}
-          psychologistId={showFeatbackForm.psychologistId}
+          psychologistId={showFeatbackForm.psychologistDto.id}
         />
       )}
     </div>

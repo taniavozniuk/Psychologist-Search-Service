@@ -29,3 +29,8 @@ export interface allFilterPsychologist {
     }
   ];
 }
+
+// interface FilteredPsychologistResponse {
+//   results: allFilterPsychologist[];
+//   count: number;
+// }

@@ -49,6 +49,7 @@ export const FeetbackForm: React.FC<FeetbackProps> = ({ onClose, psychologistId 
     if (hasError) return;
 
     const newReviews: Review = {
+      psychologistId,
       reviewText: text,
       rate: rating,
     };

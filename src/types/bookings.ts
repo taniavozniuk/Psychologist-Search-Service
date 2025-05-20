@@ -7,4 +7,7 @@ export type Booking = {
   userId: number;
   status: "PENDING" | "CONFIRMED" | "CANCELLED" | "EXPIRED";
   feedbackForm?: boolean;
+  psychologistDto: {
+    id: number,
+  }
 };

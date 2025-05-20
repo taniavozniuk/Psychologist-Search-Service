@@ -41,8 +41,8 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
   const maxPriceFromUrl = searchParams.get("maxPrice");
 
   const [priceRange, setPriceRange] = useState<[number, number]>([
-    minPriceFromUrl ? Number(minPriceFromUrl) : 0,
-    maxPriceFromUrl ? Number(maxPriceFromUrl) : 1000,
+    minPriceFromUrl ? Number(minPriceFromUrl) : 100,
+    maxPriceFromUrl ? Number(maxPriceFromUrl) : 9000,
   ]);
 
   const handlePriceChange = (newRange: [number, number]) => {

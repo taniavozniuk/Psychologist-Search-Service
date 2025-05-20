@@ -4,10 +4,21 @@ import { useEffect, useState } from "react";
 import { allFilterPsychologist } from "../../types/allFilterPsychologist";
 import { getFilterPsychologist } from "../../api/api";
 
+interface ApiResponse {
+  count: number;
+  pageNumber: number;
+  pageSize: number;
+  psychologists: allFilterPsychologist[];
+  totalPages: number;
+}
+
 export const usePsychologPIHook = () => {
   const [psychologists, setPsychologists] = useState<allFilterPsychologist[]>(
     []
   );
+  const [totalPages, setTotalPages] = useState(1);
+
+  // const [totalCount, setTotalCount] = useState(0);
   const itemPrePage = 3;
   const [searchParams, setSearchParams] = useSearchParams(); // url сторінки
   const pageFromParams = Number(searchParams.get("page")) || 1; // стосується url сторінки
@@ -20,11 +31,16 @@ export const usePsychologPIHook = () => {
     // setLoading(true);
     const fetchData = async () => {
       try {
-        // searchParams.set("size", itemPrePage.toString());
-        const data = await getFilterPsychologist(searchParams.toString());
+        searchParams.set("page", currentPage.toString());
+        searchParams.set("size", itemPrePage.toString());
+
+        const data: ApiResponse = await getFilterPsychologist(
+          searchParams.toString()
+        );
         console.log("searchParams", searchParams.toString());
         console.log("Fetched data:", data);
-        setPsychologists(data);
+        setPsychologists(data.psychologists);
+        setTotalPages(data.totalPages);
       } catch (error) {
         console.log("error", error);
       } finally {
@@ -34,27 +50,33 @@ export const usePsychologPIHook = () => {
     };
 
     fetchData();
-  }, [searchParams]);
+  }, [searchParams, currentPage]);
 
   //погінації
-  const totalPages = Math.ceil(psychologists.length / itemPrePage);
-  const indexOfLastItem = currentPage * itemPrePage;
-  const indexOfFirstItem = (currentPage - 1) * itemPrePage;
-  const currentPsychologists = psychologists.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  // const totalPages = Math.ceil(psychologists.length / itemPrePage);
+  // console.log({
+  //   length: psychologists.length,
+  //   totalPages,
+  //   currentPage,
+  //   itemPrePage,
+  // });
+  // const indexOfLastItem = currentPage * itemPrePage;
+  // const indexOfFirstItem = (currentPage - 1) * itemPrePage;
+  // const currentPsychologists = psychologists.slice(
+  //   indexOfFirstItem,
+  //   indexOfLastItem
+  // );
 
   //url сторінки
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    searchParams.set("page", (page).toString());
+    searchParams.set("page", page.toString());
     setSearchParams(searchParams);
   };
 
   return {
     totalPages,
-    currentPsychologists,
+    currentPsychologists: psychologists,
     handlePageChange,
     psychologists,
     currentPage,
