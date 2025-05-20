@@ -4,7 +4,7 @@ import { SingUp } from "../types/singUp";
 import { LogInType } from "../types/LogIn";
 import { Booking } from "../types/bookings";
 import { Payment } from "../types/Payment";
-import { Review } from "../types/review";
+import { Review } from "../types/Postreview";
 import { BookingUnauth } from "../types/BookingUnauth";
 
 //затримка
@@ -52,14 +52,59 @@ export const getPsychologist = async () => {
   }
 };
 
-//отримую психологів з філтрами
-export const getFilterPsychologist = async (searchParams?: string) => {
+// export const getFilterPsychologist = async (searchParams?: string) => {
+//   await delay();
+//   try {
+//     const URL = searchParams
+//       ? `psychologists/filter?${searchParams.toString()}`
+//       : `psychologists/filter`;
+//     const response = await apiClient.get(URL);
+//     return response.data;
+//   } catch (error) {
+//     console.log("GetFilter Error ", error);
+//     throw error;
+//   }
+// };
+
+//отримую психологів з філтрами розпарений
+export const getFilterPsychologist = async (
+  searchParams?: URLSearchParams | string
+) => {
   await delay();
   try {
-    const URL = searchParams
-      ? `psychologists/filter?${searchParams.toString()}`
-      : `psychologists/filter`;
-    const response = await apiClient.get(URL);
+    const params =
+      typeof searchParams === "string"
+        ? new URLSearchParams(searchParams)
+        : searchParams || new URLSearchParams();
+
+    console.log("Params:", params.toString());
+
+    const page = Number(params.get("page")) - 1;
+    const size = params.get("size");
+    const gender = params.get("gender");
+    const speciality = params.get("specialityId");
+    const minPrice = params.get("minPrice");
+    const maxPrice = params.get("maxPrice");
+    const concerns = params.get("concernIds");
+    const approaches = params.get("approachIds");
+
+    const queryParams = new URLSearchParams();
+    if (!isNaN(page) && page >= 0) queryParams.append("page", page.toString());
+    if (size) queryParams.append("size", size);
+    if (gender) queryParams.append("gender", gender);
+    if (speciality) queryParams.append("specialityId", speciality);
+    if (minPrice) queryParams.append("minPrice", minPrice);
+    if (maxPrice) queryParams.append("maxPrice", maxPrice);
+    if (concerns) queryParams.append("concernIds", concerns);
+    if (approaches) queryParams.append("approachIds", approaches);
+
+    console.log("Query Params:", queryParams.toString());
+
+    const url = queryParams.toString()
+      ? `psychologists/filter?${queryParams.toString()}`
+      : "psychologists/filter";
+
+    const response = await apiClient.get(url);
     return response.data;
   } catch (error) {
     console.log("GetFilter Error ", error);
@@ -243,6 +288,17 @@ export const postReview = async (review: Review, psychologistId: number) => {
     return response.data;
   } catch (error) {
     console.log("postReview error", error);
+    throw error;
+  }
+};
+
+// ортимую відкгуки
+export const getReview = async (psychologistId: number) => {
+  try {
+    const response = await apiClient.get(`/reviews/specialist${psychologistId}`);
+    return response.data;
+  } catch (error) {
+    console.log("getReview error", error);
     throw error;
   }
 };

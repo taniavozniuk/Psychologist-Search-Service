@@ -3,7 +3,7 @@ import "./FeedbackForm.scss";
 import ModalCloce from "../../image/modalClose.svg";
 import starts from "../../image/Profile/StartsGray.svg";
 import startsActive from "../../image/Profile/StartsActive.svg";
-import { Review } from "../../types/review";
+import { Review } from "../../types/Postreview";
 import { postReview } from "../../api/api";
 
 interface FeetbackProps {
@@ -11,7 +11,10 @@ interface FeetbackProps {
   psychologistId: number;
 }
 
-export const FeetbackForm: React.FC<FeetbackProps> = ({ onClose, psychologistId }) => {
+export const FeetbackForm: React.FC<FeetbackProps> = ({
+  onClose,
+  psychologistId,
+}) => {
   const [text, setText] = useState("");
   const [hasTextError, setHasTextError] = useState(false);
   const [errorText, setErrorText] = useState("");

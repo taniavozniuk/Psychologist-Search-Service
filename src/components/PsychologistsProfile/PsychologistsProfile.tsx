@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PsychologId } from "../../types/psychologId";
-import { getPsychologistId } from "../../api/api";
+import { getPsychologistId, getReview } from "../../api/api";
 import "./PsychologistsProfile.scss";
 import Price from "../../image/Profile/price.svg";
 import Experience from "../../image/Profile/Experience.svg";
@@ -11,9 +11,11 @@ import education from "../../image/Profile/education-filled.svg";
 import { USE, WORKWITH } from "./workWith";
 import Calendar from "./Calendar/Calendar";
 import { Loader } from "../Loader/Loader";
+import { GetReviews } from "../../types/GetReviews";
 
 export const PsychologistProfile = () => {
   const [psycholog, setPsycholog] = useState<PsychologId | null>(null);
+  const [review, setReview] = useState<GetReviews[]>([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -25,6 +27,23 @@ export const PsychologistProfile = () => {
         setPsycholog(data);
       } catch (error) {
         console.error("Failed to fetch psychologist by ID:", error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  //відгуки
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!id) return;
+
+      const psychologistId = Number(id);
+      try {
+        const data = await getReview(psychologistId);
+        setReview(data);
+      } catch (error) {
+        console.error("fetchData getReview:", error);
       }
     };
 
@@ -147,11 +166,7 @@ export const PsychologistProfile = () => {
             <div className="profileMainCalendar">
               <h2 className="planAppointment">Schedule Your Appointment</h2>
               <div className="calendarWrapper">
-                {psycholog && (
-                  <Calendar
-                    psycholog={psycholog}
-                  />
-                )}
+                {psycholog && <Calendar psycholog={psycholog} />}
               </div>
             </div>
           </div>
@@ -161,6 +176,22 @@ export const PsychologistProfile = () => {
           <Loader />
         </div>
       )}
+
+      <div className="lastReviews">
+        <h2 className="titleReviews">Last Reviews</h2>
+
+        <div className="reviewsCard">
+          {review.length > 0 ? (
+            review.map((item) => (
+              <div className="reviewItem" key={id}>
+                <p>{item.reviewText}</p>
+              </div>
+            ))
+          ) : (
+            <p className="noReviews">No reviews yet.</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

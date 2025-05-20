@@ -5,10 +5,12 @@ import user from "../../../image/user.svg";
 import { useAuth } from "../../../hooks/AuthContext";
 import likeProfile from "../../../image/profileLike.svg";
 import logOut from "../../../image/logOut.svg";
+import { useState } from "react";
 
 export const SideBar = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const [modalLogOut, setModalLogOut] = useState(false);
 
   const handleLogOut = () => {
     console.log("Token removed:", localStorage.getItem("accessToken"));
@@ -41,13 +43,34 @@ export const SideBar = () => {
 
         <span className="sidebarLine"></span>
 
-        <div className="sidebarIl" onClick={handleLogOut}>
+        <div className="sidebarIl" onClick={() => setModalLogOut(true)}>
           <img src={logOut} alt="like" className="sidebarIcon" />
-          <span className="sidebarText" >
-            Log Out
-          </span>
+          <span className="sidebarText">Log Out</span>
         </div>
       </ul>
+
+      {modalLogOut && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <h2 className="modalTitleDeteils">Log out of your account?</h2>
+            <p className="modalDesDeteils">
+              You’ll need to sign in again to access your account.
+            </p>
+
+            <div className="modal-actions">
+              <button onClick={handleLogOut} className="cancel-button">
+                Log Out
+              </button>
+              <button
+                onClick={() => setModalLogOut(false)}
+                className="confirm-button"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

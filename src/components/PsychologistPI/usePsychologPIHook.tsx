@@ -52,21 +52,6 @@ export const usePsychologPIHook = () => {
     fetchData();
   }, [searchParams, currentPage]);
 
-  //погінації
-  // const totalPages = Math.ceil(psychologists.length / itemPrePage);
-  // console.log({
-  //   length: psychologists.length,
-  //   totalPages,
-  //   currentPage,
-  //   itemPrePage,
-  // });
-  // const indexOfLastItem = currentPage * itemPrePage;
-  // const indexOfFirstItem = (currentPage - 1) * itemPrePage;
-  // const currentPsychologists = psychologists.slice(
-  //   indexOfFirstItem,
-  //   indexOfLastItem
-  // );
-
   //url сторінки
   const handlePageChange = (page: number) => {
     setCurrentPage(page);

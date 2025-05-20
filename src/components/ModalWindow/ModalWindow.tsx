@@ -83,7 +83,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
     setSelectedCon(newSelectedCon);
   };
 
-  const selectedCons = searchParams.getAll("concernsId");
+  const selectedCons = searchParams.getAll("concernIds");
   const selectedApprs = searchParams.getAll("approachIds");
   console.log("selectedCons", selectedCons);
 
@@ -246,17 +246,17 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                         <SearchLink
                           params={(prev) => {
                             const current = new URLSearchParams(prev);
-                            const existing = current.getAll("concernsId");
+                            const existing = current.getAll("concernIds");
                             const updated = existing.includes(id)
                               ? existing.filter((val) => val !== id)
                               : [...existing, id];
 
                             if (updated.length === 0) {
-                              current.delete("concernsId");
+                              current.delete("concernIds");
                             } else {
-                              current.delete("concernsId");
+                              current.delete("concernIds");
                               updated.forEach((val) =>
-                                current.append("concernsId", val)
+                                current.append("concernIds", val)
                               );
                             }
 
@@ -297,9 +297,9 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                               ? existing.filter((val) => val !== id)
                               : [...existing, id];
 
-                            current.delete("concernsId");
+                            current.delete("concernIds");
                             updated.forEach((val) =>
-                              current.append("concernsId", val)
+                              current.append("concernIds", val)
                             );
 
                             return Object.fromEntries(current.entries());

@@ -67,7 +67,8 @@ export const UserPage = () => {
     // const now = new Date();
 
     return bookink.find((boog) => {
-      return boog.status === "EXPIRED";
+      // return boog.status === "EXPIRED";
+      return boog.endTime
 
       // const endTime = new Date(boog.status = 'EXPIRED');
       // return endTime < now && !boog.feedbackForm;
