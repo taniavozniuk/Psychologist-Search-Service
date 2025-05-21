@@ -29,68 +29,68 @@ export const APPROACHES_LIST = [
   { id: "5", label: "Narrative Therapy" },
 ];
 
-import { useState } from "react";
+// import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 
-export const useModalLogicHook = () => {
-  // const navigate = useNavigate();
+// export const useModalLogicHook = () => {
+//   // const navigate = useNavigate();
 
-  const [isOpen, setIsOpen] = useState(false); // concerns dropdown
-  const [isOpenApproaches, setIsOpenApproaches] = useState(false); // approaches dropdown
+//   const [isOpen, setIsOpen] = useState(false); // concerns dropdown
+//   const [isOpenApproaches, setIsOpenApproaches] = useState(false); // approaches dropdown
 
-  const [selectedSex, setSelectedSex] = useState<string | null>(null);
-  const [selectedSpec, setSelectedSpec] = useState<string | null>(null);
-  const [selectedCon, setSelectedCon] = useState<string[]>([]);
-  const [selectedAppr, setSelectedAppr] = useState<string[]>([]);
+//   const [selectedSex, setSelectedSex] = useState<string | null>(null);
+//   const [selectedSpec, setSelectedSpec] = useState<string | null>(null);
+//   const [selectedCon, setSelectedCon] = useState<string[]>([]);
+//   const [selectedAppr, setSelectedAppr] = useState<string[]>([]);
 
-  const handleConcernsList = () => setIsOpen((prev) => !prev);
-  const handleApproachesList = () => setIsOpenApproaches((prev) => !prev);
+//   const handleConcernsList = () => setIsOpen((prev) => !prev);
+//   const handleApproachesList = () => setIsOpenApproaches((prev) => !prev);
 
-  const handleSexSelection = (sex: string | null) => {
-    setSelectedSex(sex);
-  };
+//   const handleSexSelection = (sex: string | null) => {
+//     setSelectedSex(sex);
+//   };
 
-  const handleSpexSelection = (spec: string | null) => {
-    setSelectedSpec(spec);
-  };
+//   const handleSpexSelection = (spec: string | null) => {
+//     setSelectedSpec(spec);
+//   };
 
-  const handleConSelection = (con: string) => {
-    setSelectedCon((prev) =>
-      prev.includes(con) ? prev.filter((c) => c !== con) : [...prev, con]
-    );
-  };
+//   const handleConSelection = (con: string) => {
+//     setSelectedCon((prev) =>
+//       prev.includes(con) ? prev.filter((c) => c !== con) : [...prev, con]
+//     );
+//   };
 
-  const handleAprrSelection = (appr: string) => {
-    setSelectedAppr((prev) =>
-      prev.includes(appr) ? prev.filter((a) => a !== appr) : [...prev, appr]
-    );
-  };
+//   const handleAprrSelection = (appr: string) => {
+//     setSelectedAppr((prev) =>
+//       prev.includes(appr) ? prev.filter((a) => a !== appr) : [...prev, appr]
+//     );
+//   };
 
-  const handleReset = () => {
-    setSelectedSex(null);
-    setSelectedSpec(null);
-    setSelectedCon([]);
-    setSelectedAppr([]);
-  };
+//   const handleReset = () => {
+//     setSelectedSex(null);
+//     setSelectedSpec(null);
+//     setSelectedCon([]);
+//     setSelectedAppr([]);
+//   };
 
 
-  return {
-    isOpen,
-    isOpenApproaches,
-    selectedSex,
-    selectedSpec,
-    selectedCon,
-    selectedAppr,
-    setSelectedSex,
-    setSelectedSpec,
-    setSelectedCon,
-    setSelectedAppr,
-    handleConcernsList,
-    handleApproachesList,
-    handleSexSelection,
-    handleSpexSelection,
-    handleConSelection,
-    handleAprrSelection,
-    handleReset,
-  };
-};
+//   return {
+//     isOpen,
+//     isOpenApproaches,
+//     selectedSex,
+//     selectedSpec,
+//     selectedCon,
+//     selectedAppr,
+//     setSelectedSex,
+//     setSelectedSpec,
+//     setSelectedCon,
+//     setSelectedAppr,
+//     handleConcernsList,
+//     handleApproachesList,
+//     handleSexSelection,
+//     handleSpexSelection,
+//     handleConSelection,
+//     handleAprrSelection,
+//     handleReset,
+//   };
+// };

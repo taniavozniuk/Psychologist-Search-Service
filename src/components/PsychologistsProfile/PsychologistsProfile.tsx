@@ -7,6 +7,8 @@ import Price from "../../image/Profile/price.svg";
 import Experience from "../../image/Profile/Experience.svg";
 import Languages from "../../image/Profile/Languages.svg";
 import education from "../../image/Profile/education-filled.svg";
+import activeStarts from "../../image/Profile/StartsActive.svg";
+import Starts from "../../image/Profile/StartsGray.svg";
 
 import { USE, WORKWITH } from "./workWith";
 import Calendar from "./Calendar/Calendar";
@@ -39,6 +41,7 @@ export const PsychologistProfile = () => {
       try {
         const data = await getReview(psychologistId);
         setReview(data);
+        console.log({ data });
       } catch (error) {
         console.error("fetchData getReview:", error);
       }
@@ -79,7 +82,7 @@ export const PsychologistProfile = () => {
                   </div>
                   <div className="boxDescription">
                     <p className="profileDescription">
-                      ${psycholog.sessionPrice} . 50 min
+                      ${psycholog.sessionPrice} • 50 min
                     </p>
                   </div>
                 </div>
@@ -181,7 +184,37 @@ export const PsychologistProfile = () => {
               {review.length > 0 ? (
                 review.map((item) => (
                   <div className="reviewItem" key={item.id}>
-                    <p className="reviewAuthor">{item.reviewText}</p>
+                    <div className="reviewUser">
+                      <h2 className="reviewNameAgeUser">
+                        {item.reviewerName},
+                      </h2>
+                      <p className="reviewNameAgeUser">{item.reviewerAge}</p>
+                    </div>
+                    <div className="reviewStarts">
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <img
+                          key={i}
+                          src={i < item.rate ? activeStarts : Starts}
+                          alt={i < item.rate ? "active star" : "inactive star"}
+                          className="reviewStarIcon"
+                        />
+                      ))}
+                    </div>
+                    <p className="reviewText">{item.reviewText}</p>
+
+                    <span className="reviewLine"></span>
+                    <div className="reviewWrapperDateSesion">
+                      <p className="reviewDateSesions">
+                        {item.sessionsCount} sessions
+                      </p>
+                      <p className="reviewDateSesions">
+                        {new Date(item.reviewDate).toLocaleDateString("uk-UA", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                        })}
+                      </p>
+                    </div>
                   </div>
                 ))
               ) : (

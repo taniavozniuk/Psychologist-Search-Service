@@ -160,6 +160,12 @@
   margin-top: 96px;
 }
 
+.reviewsCard {
+  display: grid;
+  grid-template-columns: repeat(3, 2fr);
+  gap: 32px;
+}
+
 .titleReviews {
   font-family: "Aileron", sans-serif;
   font-weight: 700;
@@ -176,4 +182,64 @@
   line-height: 24px;
   margin: 40px 0 0 0;
   color: #0c0b09;
+}
+
+.reviewItem {
+  border: 1px solid #d6cdc0;
+  border-radius: 16px;
+  padding: 40px;
+}
+
+.reviewUser {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.reviewNameAgeUser {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 100%;
+  color: #0c0b09;
+  margin: 0 0 16px 0;
+}
+
+.reviewText {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #0c0b09;
+  margin: 0;
+}
+
+.reviewLine {
+  display: flex;
+  border: 1px solid #d6cdc0;
+  margin: 32px 0 16px 0;
+}
+
+.reviewWrapperDateSesion{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reviewDateSesions {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #615B52;
+  margin: 0;
+}
+
+.reviewStarts{
+  margin-bottom: 32px;
+}
+
+.reviewStarIcon{
+  width: 20px;
+  height: 19px;
 }

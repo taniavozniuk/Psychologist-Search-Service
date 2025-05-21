@@ -1,32 +1,38 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import React from "react";
 
 interface ToggleSelectedIdLinkProps {
   idToToggle: string;
+  paramName: string;
   children: React.ReactNode;
 }
 
-const ToggleSelectedIdLink: React.FC<ToggleSelectedIdLinkProps> = ({ idToToggle, children }) => {
+const ToggleSelectedIdLink: React.FC<ToggleSelectedIdLinkProps> = ({
+  idToToggle,
+  paramName,
+  children,
+}) => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 
-    const url = new URL(window.location.href);
-    const allParams = new URLSearchParams(url.search);
+    const currentParams = new URLSearchParams(location.search);
     const idStr = String(idToToggle);
 
-    const selectedIds = allParams.getAll("selectedIds");
+    const selectedIds = currentParams.getAll(paramName);
 
     const updatedIds = selectedIds.includes(idStr)
       ? selectedIds.filter((id) => id !== idStr)
       : [...selectedIds, idStr];
 
-    allParams.delete("selectedIds");
-    updatedIds.forEach((id) => allParams.append("selectedIds", id));
+    currentParams.delete(paramName);
+    updatedIds.forEach((id) => currentParams.append(paramName, id));
 
-    const newUrl = `${location.pathname}?${allParams.toString()}`;
-    window.history.pushState({}, "", newUrl);
+    navigate(`${location.pathname}?${currentParams.toString()}`, {
+      replace: false,
+    });
   };
 
   return (

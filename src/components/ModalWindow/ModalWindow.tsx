@@ -77,9 +77,9 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
 
   // збереження чекбоксів занепокоїнь(Concerns)
   const handleConSelection = (con: string) => {
-    const newSelectedCons = selectedCons.includes(con)
-      ? selectedCons.filter((item) => item !== con)
-      : [...selectedCons, con];
+    const newSelectedCons = selectedCon.includes(con)
+      ? selectedCon.filter((item) => item !== con)
+      : [...selectedCon, con];
 
     console.log({ newSelectedCons });
     setSelectedCon(newSelectedCons);
@@ -245,7 +245,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                   <ul className="model__concernsDrop">
                     {CONCERNS_LIST1.map(({ id, label }) => (
                       <li key={id} className="model__concernsItem">
-                        <ToggleSelectedIdLink idToToggle={id}>
+                        <ToggleSelectedIdLink idToToggle={id} paramName="concernIds">
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -255,9 +255,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                                   "&.Mui-checked": { color: "#9B6A00" },
                                   "&:hover": { color: "#7C746A" },
                                 }}
-                                checked={searchParams
-                                  .getAll("selectedIds")
-                                  .includes(id)}
+                                checked={selectedCons.includes(id)}
                                 onChange={() => {}} 
                               />
                             }
@@ -272,24 +270,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                   <ul className="model__concernsDrop">
                     {CONCERNS_LIST2.map(({ id, label }) => (
                       <li key={id} className="model__concernsItem">
-                        <SearchLink
-                          params={(prev) => {
-                            const current = new URLSearchParams(prev);
-
-                            const existing = current.getAll("concernsId");
-
-                            const updated = existing.includes(id)
-                              ? existing.filter((val) => val !== id)
-                              : [...existing, id];
-
-                            current.delete("concernIds");
-                            updated.forEach((val) =>
-                              current.append("concernIds", val)
-                            );
-
-                            return Object.fromEntries(current.entries());
-                          }}
-                        >
+                        <ToggleSelectedIdLink idToToggle={id} paramName="concernIds">
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -305,7 +286,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                             }
                             label={label}
                           />
-                        </SearchLink>
+                        </ToggleSelectedIdLink>
                       </li>
                     ))}
                   </ul>
@@ -339,24 +320,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                   <ul className="model__concernsDrop">
                     {APPROACHES_LIST.map(({ id, label }) => (
                       <li key={id} className="model__concernsItem">
-                        <SearchLink
-                          params={(prev) => {
-                            const current = new URLSearchParams(prev);
-
-                            const existing = current.getAll("approachIds");
-
-                            const updated = existing.includes(id)
-                              ? existing.filter((val) => val !== id)
-                              : [...existing, id];
-
-                            current.delete("approachIds");
-                            updated.forEach((val) =>
-                              current.append("approachIds", val)
-                            );
-
-                            return Object.fromEntries(current.entries());
-                          }}
-                        >
+                        <ToggleSelectedIdLink idToToggle={id} paramName="approachIds">
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -376,7 +340,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                             }
                             label={label}
                           />
-                        </SearchLink>
+                        </ToggleSelectedIdLink>
                       </li>
                     ))}
                   </ul>
