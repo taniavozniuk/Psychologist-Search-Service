@@ -22,7 +22,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
+  height: 33vh;
+  width: 100vw;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
 }
 
 .smallloader {

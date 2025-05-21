@@ -33,7 +33,7 @@ export const FeelHeard = () => {
               support.
             </p>
           </div>
-          <NavLink to="/find" className="feel__findButton">
+          <NavLink to="/psychologist" className="feel__findButton">
             Find therapist
           </NavLink>
         </div>

@@ -19,6 +19,7 @@
     "@mui/material": "^7.1.0",
     "@mui/x-date-pickers": "^8.2.0",
     "axios": "^1.8.4",
+    "framer-motion": "^12.12.1",
     "gh-pages": "^6.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

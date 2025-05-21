@@ -274,3 +274,17 @@
   color: #0C0B09;
   margin: 8px 0 0 0;
 }
+
+.feetbackConteiner{
+  display: flex;
+  border: 1px solid #D6CDC0;
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 48px;
+  position: relative;
+  justify-content: space-between;
+}
+
+.feedbackImg{
+  margin: 224px 0 0 86px;
+}

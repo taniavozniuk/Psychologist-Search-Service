@@ -1,24 +1,33 @@
-import React, { useState } from "react";
-import "./FeedbackForm.scss";
-import ModalCloce from "../../image/modalClose.svg";
+import { useState } from "react";
 import starts from "../../image/Profile/StartsGray.svg";
 import startsActive from "../../image/Profile/StartsActive.svg";
-import { Review } from "../../types/Postreview";
+import ConcernsBtClose from "../../image/ConcernsBtClose.svg";
+import ConcernsBtOpen from "../../image/ConcernsBtOpen.svg";
+import user from "../../image/user.svg";
+import "./FeedbackForm.scss";
+import { MyBokking } from "../../types/MyBooking";
 import { postReview } from "../../api/api";
+import { Review } from "../../types/Postreview";
 
-interface FeetbackProps {
-  onClose: () => void;
-  psychologistId: number;
+interface FeetbackFormProps {
+  showFeatbackForm: () => MyBokking[];
 }
 
-export const FeetbackForm: React.FC<FeetbackProps> = ({
-  onClose,
-  psychologistId,
+export const FeetbackForm: React.FC<FeetbackFormProps> = ({
+  showFeatbackForm,
 }) => {
+  const [selectedPsychologistId, setSelectedPsychologistId] = useState<number | null>(null);
+
   const [text, setText] = useState("");
   const [hasTextError, setHasTextError] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
   const [errorText, setErrorText] = useState("");
   const [rating, setRating] = useState(0);
+
+  const handleConcernsList = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = event.target.value;
@@ -35,8 +44,19 @@ export const FeetbackForm: React.FC<FeetbackProps> = ({
     }
   };
 
+  const handlePsychologistSelect = (id: number) => {
+    setSelectedPsychologistId(id);
+      console.log("Selected psychologistId:", id);
+  };
+
+
   const handleSubmit = async () => {
     let hasError = false;
+
+    if (!selectedPsychologistId) {
+      alert("Please select a specialist");
+      hasError = true;
+    }
 
     if (!text.trim()) {
       setHasTextError(true);
@@ -52,77 +72,130 @@ export const FeetbackForm: React.FC<FeetbackProps> = ({
     if (hasError) return;
 
     const newReviews: Review = {
-      psychologistId,
+      psychologistId: selectedPsychologistId!,
       reviewText: text,
       rate: rating,
     };
 
     try {
-      const response = await postReview(newReviews, psychologistId);
+      const response = await postReview(newReviews, selectedPsychologistId!);
       console.log("Review response:", response);
     } catch (error) {
       console.error("Error submitting review:", error);
     }
   };
 
+  const confirmedBookings = showFeatbackForm();
+
+//   const uniquePsychologists = confirmedBookings.reduce((acc: MyBokking[], current) => {
+//   const exists = acc.find(
+//     (booking) => booking.psychologistDto.id === current.psychologistDto.id
+//   );
+//   if (!exists) {
+//     acc.push(current);
+//   }
+//   return acc;
+// }, []);
+
   return (
-    <div className="modal-feetbak">
-      <div className="feetback-content">
-        <button className="closeModal" onClick={onClose}>
-          <img src={ModalCloce} alt="close" />
-        </button>
+    <div className="feetbackForm">
+      <div className="feetbackText">
+        <h2 className="feetbackTitle">Your opinion matters to us</h2>
+        <p className="feetbackDes">
+          We’re always working to make things better.Let us know what you think
+          — your feedback helps us improve.
+        </p>
+      </div>
 
-        <div className="feetbackText">
-          <h2 className="feetbackTitle">Your opinion matters to us</h2>
-          <p className="feetbackDes">
-            We’re always working to make things better.Let us know what you
-            think — your feedback helps us improve.
-          </p>
-        </div>
+      <span className="feetbackLine"></span>
 
-        <span className="feetbackLine"></span>
-
-        <div className="wrapperStarsForm">
-          <div className="stars stars--5">
-            {[...Array(5)].map((_, index) => (
-              <img
-                key={index}
-                src={index < rating ? startsActive : starts}
-                alt="star"
-                className="star"
-                onClick={() => handleClickStarts(index)}
-              />
-            ))}
-          </div>
-
-          <div className="starDes">
-            <p className="text Hated">Hated it</p>
-            <p className="text Loved">Loved it</p>
-          </div>
-
-          <form className="feetbackForm">
-            <div className="textFeetback">
-              <label className="labetFeetback" htmlFor="Feetback">
-                What’s on your mind?
-              </label>
-              <div className="feetbackBox">
-                <textarea
-                  id="Feetback"
-                  className={`inputFeetback ${hasTextError ? "is-danger" : ""}`}
-                  value={text}
-                  onChange={handleTextChange} // ← правильно
-                  placeholder="Share your thoughts, suggestions, or anything you think we should know"
-                  required
-                />
-                {hasTextError && <p className="help is-danger">{errorText}</p>}
-              </div>
-            </div>
-          </form>
-
-          <button className="feetbackSub" onClick={handleSubmit}>
-            Submit
+      <div className="listPsychologist">
+        <div className="wrapperList">
+          <h2 className="titleList">Choose a specialist</h2>
+          <button className="model__concernsBt" onClick={handleConcernsList}>
+            <img
+              src={isOpen ? ConcernsBtOpen : ConcernsBtClose}
+              alt="Toggle concerns"
+            />
           </button>
         </div>
+        {isOpen && (
+          <div className="itemFeed">
+            <ul className="ulFeed">
+              {confirmedBookings.map((psychologist) => (
+                <li
+                  className={`feedItem psyWrapper ${
+                    selectedPsychologistId === psychologist.psychologistDto.id ? "selected" : ""
+                  }`}
+                  onClick={() => handlePsychologistSelect(psychologist.psychologistDto.id)}
+                >
+                  <img src={user} alt="iconPsy" />
+                  Dr. {psychologist.psychologistDto.fatherName}{" "}
+                  {psychologist.psychologistDto.lastName} &#183;{" "}
+                  {`${new Date(psychologist.startTime).toLocaleDateString(
+                    "en-US",
+                    {
+                      month: "short",
+                      day: "numeric",
+                    }
+                  )} · ${new Date(psychologist.startTime).toLocaleTimeString(
+                    "en-US",
+                    {
+                      hour: "numeric",
+                      minute: "2-digit",
+                      hour12: true,
+                    }
+                  )}`}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      <span className="feetbackLine"></span>
+
+      <div className="wrapperStarsForm">
+        <div className="stars stars--5">
+          {[...Array(5)].map((_, index) => (
+            <img
+              key={index}
+              src={index < rating ? startsActive : starts}
+              alt="star"
+              className="star"
+              onClick={() => handleClickStarts(index)}
+              style={{ cursor: "pointer" }}
+            />
+          ))}
+        </div>
+
+        <div className="starDes">
+          <p className="text Hated">Hated it</p>
+          <p className="text Loved">Loved it</p>
+        </div>
+
+        <form className="feetbackForm" onSubmit={(e) => e.preventDefault()}>
+          <div className="textFeetback">
+            <label className="labetFeetback" htmlFor="Feetback">
+              What’s on your mind?
+            </label>
+            <div className="feetbackBox">
+              <textarea
+                id="Feetback"
+                className={`inputFeetback ${hasTextError ? "is-danger" : ""}`}
+                value={text}
+                onChange={handleTextChange}
+                placeholder="Share your thoughts, suggestions, or anything you think we should know"
+                required
+              />
+              {hasTextError && <p className="help is-danger">{errorText}</p>}
+            </div>
+          </div>
+        </form>
+
+        <button className="feetbackSub" onClick={handleSubmit}>
+          Submit
+        </button>
       </div>
     </div>
   );

@@ -2,8 +2,14 @@ import "./MySesions.scss";
 import bookNotYet from "../../image/Profile/bookNotYet.svg";
 import { NavLink } from "react-router-dom";
 import { useMySesionHook } from "./useMySesionsHook";
+import { FeetbackForm } from "../FeedbackForm/FeedbackForm";
+import feedback from "../../image/Profile/feedback.svg";
+import modalCloce from "../../image/modalClose.svg";
+import { useState } from "react";
 
 export const MySesions = () => {
+  const [, setonOpenFeedback] = useState(false);
+
   const {
     cancelModalOpen,
     viewDeteilsCancelModalOpen,
@@ -22,10 +28,29 @@ export const MySesions = () => {
     setviewExpiredModal,
   } = useMySesionHook();
 
+  const showFeatbackForm = () => {
+    return booking.filter((book) => {
+      return book.status === "CONFIRMED";
+    });
+  };
+
   return (
     <div className="UserPage">
       <div className="profilePage">
         <div className="bookConteiner">
+          <div className="feetbackConteiner">
+            <FeetbackForm showFeatbackForm={showFeatbackForm} />
+            <div className="wrapperClose">
+              <button
+                className="closeFeetback"
+                onClick={() => setonOpenFeedback(false)}
+              >
+                <img src={modalCloce} alt="close" />
+              </button>
+              <img src={feedback} alt="feedbackImg" className="feedbackImg" />
+            </div>
+          </div>
+
           {booking.length > 0 ? (
             <>
               <h1 className="profileTitle">Your Appointments & Payments</h1>

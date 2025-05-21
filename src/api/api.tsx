@@ -2,7 +2,7 @@ import axios from "axios";
 import { postPsychologist } from "../types/post";
 import { SingUp } from "../types/singUp";
 import { LogInType } from "../types/LogIn";
-import { Booking } from "../types/bookings";
+import { BookingCalendar } from "../types/bookingsCalendar";
 import { Payment } from "../types/Payment";
 import { Review } from "../types/Postreview";
 import { BookingUnauth } from "../types/BookingUnauth";
@@ -151,7 +151,7 @@ export const getLokedDates = async (id: string, selectedDate: string) => {
 };
 
 //booking
-export const addBooking = async (book: Booking) => {
+export const addBooking = async (book: BookingCalendar) => {
   try {
     const response = await apiClient.post("/bookings", book);
     return response.data;
@@ -295,7 +295,9 @@ export const postReview = async (review: Review, psychologistId: number) => {
 // ортимую відкгуки
 export const getReview = async (psychologistId: number) => {
   try {
-    const response = await apiClient.get(`/reviews/specialist${psychologistId}`);
+    const response = await apiClient.get(
+      `/reviews/specialist${psychologistId}`
+    );
     return response.data;
   } catch (error) {
     console.log("getReview error", error);

@@ -6,7 +6,7 @@ import time from "../../../image/Calendar/time.svg";
 import calendar from "../../../image/Calendar/calendar-month.svg";
 import { Review } from "../Review/Review";
 import { useOutsideClick } from "../../../hooks";
-import { Booking } from "../../../types/bookings";
+import { BookingCalendar } from "../../../types/bookingsCalendar";
 import { addBookingUnauth } from "../../../api/api";
 import { BookingUnauth } from "../../../types/BookingUnauth";
 
@@ -50,7 +50,7 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
   // @ts-expect-error
   useOutsideClick(modalRef, onClose);
 
-  const [booking, setBooking] = useState<Booking | null>(null);
+  const [booking, setBooking] = useState<BookingCalendar | null>(null);
   // const { user } = useAuth();
 
   const handleFirtsNameChange = (

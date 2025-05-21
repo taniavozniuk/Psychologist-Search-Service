@@ -1,4 +1,4 @@
-export type Booking = {
+export type BookingCalendar = {
   id?: number;
   startTime: string;
   endTime: string;
@@ -6,8 +6,4 @@ export type Booking = {
   psychologistId: number;
   userId: number;
   status: "PENDING" | "CONFIRMED" | "CANCELLED" | "EXPIRED";
-  feedbackForm?: boolean;
-  psychologistDto: {
-    id: number,
-  }
 };

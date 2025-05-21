@@ -9,7 +9,7 @@ import { Blog } from "./components/Blog/Blog";
 import { HomePage } from "./components/HomePage/HomePage";
 import App from "./App";
 import { StartTest } from "./components/StartTest/StartTest";
-import { FindTherapist } from "./components/FindTherapist/FindTherapist";
+// import { FindTherapist } from "./components/FindTherapist/FindTherapist";
 import { PsychologistPageAll } from "./components/PsychologistPI/PsychologistPI";
 import { PsychologistProfile } from "./components/PsychologistsProfile/PsychologistsProfile";
 import { useEffect, useState } from "react";
@@ -25,7 +25,7 @@ import { FavoritesProvider } from "./hooks/FavouritesContext";
 // import { Registration } from "./components/Registration/Registration";
 
 export const Root = () => {
-  const [psychologists, setPsychologists] = useState<allFilterPsychologist[]>(
+  const [, setPsychologists] = useState<allFilterPsychologist[]>(
     []
   );
   const { isLoggedIn } = useAuth();
@@ -53,10 +53,10 @@ export const Root = () => {
             <Route path="about" element={<About />} />
             <Route path="blog" element={<Blog />} />
             <Route path="test" element={<StartTest />} />
-            <Route
+            {/* <Route
               path="find"
               element={<FindTherapist psychologists={psychologists} />}
-            />
+            /> */}
             <Route path="/psychologist" element={<PsychologistPageAll />} />
             <Route path="/psychologist/:id" element={<PsychologistProfile />} />
             <Route

@@ -3,7 +3,8 @@ import { Header } from "../Header/Header";
 import OurServices from "../OurServices/OurServices";
 import { WhyUs } from "../WhyUs/WhyUs";
 import { useOutletContext } from "react-router-dom";
-import './HomePage.scss'
+import "./HomePage.scss";
+import { FadeInSection } from "../../utils/useInViewAnimation";
 
 type OutletContextType = {
   isModalOpen: boolean;
@@ -13,8 +14,12 @@ type OutletContextType = {
 };
 
 export const HomePage = () => {
-  const { isModalOpen, isModalOpenRegistration, isModalLogIn, isCongratulationsOpen } =
-    useOutletContext<OutletContextType>();
+  const {
+    isModalOpen,
+    isModalOpenRegistration,
+    isModalLogIn,
+    isCongratulationsOpen,
+  } = useOutletContext<OutletContextType>();
 
   return (
     <>
@@ -28,17 +33,17 @@ export const HomePage = () => {
 
       {!isModalOpen && !isModalOpenRegistration && (
         <div className="main">
-          <div className="conteiner__section">
+          <FadeInSection>
             <OurServices />
-          </div>
+          </FadeInSection>
 
-          <div className="conteiner__section">
+          <FadeInSection>
             <WhyUs />
-          </div>
+          </FadeInSection>
 
-          <div className="conteiner__section">
+          <FadeInSection>
             <FeelHeard />
-          </div>
+          </FadeInSection>
         </div>
       )}
     </>

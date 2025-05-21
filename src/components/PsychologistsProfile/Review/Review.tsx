@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import ModalCloce from "../../../image/modalClose.svg";
 import "./Review.scss";
 import { PsychologId } from "../../../types/psychologId";
-import { Booking } from "../../../types/bookings";
+import { Booking } from "../../../types/bookingsCalendar";
 import { addPayment } from "../../../api/api";
 import { Payment } from "../../../types/Payment";
 import { useOutsideClick } from "../../../hooks";
@@ -34,7 +34,6 @@ export const Review: React.FC<ReviewProps> = ({
   // @ts-expect-error
   useOutsideClick(modalRef, onClose);
   const [, setPay] = useState<Payment | null>(null);
-
 
   const handlePayment = async () => {
     try {

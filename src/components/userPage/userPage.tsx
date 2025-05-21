@@ -5,11 +5,11 @@ import Defolt from "../../image/Profile/defalt.jpg";
 import edit from "../../image/Profile/edit.svg";
 import { useUserPageHook } from "./useUserPageHook";
 import { Loader } from "../Loader/Loader";
-import { useEffect, useMemo, useState } from "react";
-import { deleteUser, getBookingUser } from "../../api/api";
+import { useState } from "react";
+import { deleteUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
-import { Booking } from "../../types/bookings";
-import { FeetbackForm } from "../FeedbackForm/FeedbackForm";
+// import { FeetbackForm } from "../FeedbackForm/FeedbackForm";
+// import { Booking } from "../../types/Booking";
 
 export const UserPage = () => {
   const {
@@ -46,41 +46,41 @@ export const UserPage = () => {
   const navigate = useNavigate();
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [bookink, setBooking] = useState<Booking[]>([]);
-  const [onOpenFeedback, setonOpenFeedback] = useState(false);
+  // const [bookink, setBooking] = useState<Booking[]>([]);
+  // const [onOpenFeedback, setonOpenFeedback] = useState(false);
 
-  useEffect(() => {
-    const fetchBookings = async () => {
-      try {
-        const data = await getBookingUser();
-        console.log("Bookings received:", data);
-        setBooking(data);
-      } catch (error) {
-        console.error("Failed to fetch bookings:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchBookings = async () => {
+  //     try {
+  //       const data = await getBookingUser();
+  //       console.log("Bookings received:", data);
+  //       setBooking(data);
+  //     } catch (error) {
+  //       console.error("Failed to fetch bookings:", error);
+  //     }
+  //   };
 
-    fetchBookings();
-  }, []);
+  //   fetchBookings();
+  // }, []);
 
-  const showFeatbackForm = useMemo(() => {
-    // const now = new Date();
+  // const showFeatbackForm = useMemo(() => {
+  //   // const now = new Date();
 
-    return bookink.find((boog) => {
-      // return boog.status === "EXPIRED";
-      return boog.endTime
+  //   return bookink.find((boog) => {
+  //     // return boog.status === "EXPIRED";
+  //     return boog.endTime;
 
-      // const endTime = new Date(boog.status = 'EXPIRED');
-      // return endTime < now && !boog.feedbackForm;
-    });
-  }, [bookink]);
+  //     // const endTime = new Date(boog.status = 'EXPIRED');
+  //     // return endTime < now && !boog.feedbackForm;
+  //   });
+  // }, [bookink]);
 
-  useEffect(() => {
-    console.log({ showFeatbackForm });
-    if (showFeatbackForm) {
-      setonOpenFeedback(true);
-    }
-  }, [showFeatbackForm]);
+  // useEffect(() => {
+  //   console.log({ showFeatbackForm });
+  //   if (showFeatbackForm) {
+  //     setonOpenFeedback(true);
+  //   }
+  // }, [showFeatbackForm]);
 
   const handleDeleteButton = async () => {
     try {
@@ -296,12 +296,12 @@ export const UserPage = () => {
           </div>
         </div>
       )}
-      {showFeatbackForm && onOpenFeedback && (
+      {/* {showFeatbackForm && onOpenFeedback && (
         <FeetbackForm
           onClose={() => setonOpenFeedback(false)}
           psychologistId={showFeatbackForm.psychologistDto.id}
         />
-      )}
+      )} */}
     </div>
   );
 };

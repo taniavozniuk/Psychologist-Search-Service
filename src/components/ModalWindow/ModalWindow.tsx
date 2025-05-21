@@ -15,6 +15,7 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 import { useOutsideClick } from "../../hooks";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { SearchLink } from "../../utils/SearchLink";
+import ToggleSelectedIdLink from "../../utils/ToggleSelectedIdLink";
 
 interface ModalProps {
   onClose: () => void;
@@ -76,11 +77,12 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
 
   // збереження чекбоксів занепокоїнь(Concerns)
   const handleConSelection = (con: string) => {
-    const newSelectedCon = selectedCon.includes(con)
-      ? selectedCon.filter((item) => item !== con)
-      : [...selectedCon, con];
+    const newSelectedCons = selectedCons.includes(con)
+      ? selectedCons.filter((item) => item !== con)
+      : [...selectedCons, con];
 
-    setSelectedCon(newSelectedCon);
+    console.log({ newSelectedCons });
+    setSelectedCon(newSelectedCons);
   };
 
   const selectedCons = searchParams.getAll("concernIds");
@@ -243,26 +245,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                   <ul className="model__concernsDrop">
                     {CONCERNS_LIST1.map(({ id, label }) => (
                       <li key={id} className="model__concernsItem">
-                        <SearchLink
-                          params={(prev) => {
-                            const current = new URLSearchParams(prev);
-                            const existing = current.getAll("concernIds");
-                            const updated = existing.includes(id)
-                              ? existing.filter((val) => val !== id)
-                              : [...existing, id];
-
-                            if (updated.length === 0) {
-                              current.delete("concernIds");
-                            } else {
-                              current.delete("concernIds");
-                              updated.forEach((val) =>
-                                current.append("concernIds", val)
-                              );
-                            }
-
-                            return Object.fromEntries(current.entries());
-                          }}
-                        >
+                        <ToggleSelectedIdLink idToToggle={id}>
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -272,13 +255,15 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                                   "&.Mui-checked": { color: "#9B6A00" },
                                   "&:hover": { color: "#7C746A" },
                                 }}
-                                checked={selectedCons.includes(id)}
-                                onChange={() => handleConSelection(id)}
+                                checked={searchParams
+                                  .getAll("selectedIds")
+                                  .includes(id)}
+                                onChange={() => {}} 
                               />
                             }
                             label={label}
                           />
-                        </SearchLink>
+                        </ToggleSelectedIdLink>
                       </li>
                     ))}
                   </ul>

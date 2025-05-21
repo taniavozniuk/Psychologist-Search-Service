@@ -6,7 +6,7 @@ import { addBooking, getDateBokkingId, getLokedDates } from "../../../api/api";
 import { useParams } from "react-router-dom";
 import { FillingInfo } from "../FillingInfo/FillingInfo";
 import { PsychologId } from "../../../types/psychologId";
-import { Booking } from "../../../types/bookings";
+import { BookingCalendar } from "../../../types/bookingsCalendar";
 import { useAuth } from "../../../hooks/AuthContext";
 import { Review } from "../Review/Review";
 
@@ -15,7 +15,7 @@ interface CalendarProps {
 }
 
 const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
-  const [booking, setBooking] = useState<Booking | null>(null);
+  const [booking, setBooking] = useState<BookingCalendar | null>(null);
   const { user } = useAuth();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -138,7 +138,7 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
   const handleBookSesion = async () => {
     if (!chooseHour) return;
     if (user) {
-      const newBooking: Booking = {
+      const newBooking: BookingCalendar = {
         id: booking?.id ?? 0,
         startTime: chooseHour,
         endTime: "",
@@ -176,6 +176,15 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
 
     // return hourDate;
   });
+
+  // const isToday = (date: Date) => {
+  //   const today = new Date();
+  //   return (
+  //     date.getFullYear() === today.getFullYear() &&
+  //     date.getMonth() === today.getMonth() &&
+  //     date.getDate() === today.getDate()
+  //   );
+  // };
 
   console.log("availableTimes", availableTimes);
 
@@ -250,7 +259,14 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
             <div
               key={index}
               className={`calendar-day ${day ? "" : "empty"} 
-        ${selectedDate?.getDate() === day ? "selected" : ""} 
+            ${
+              selectedDate?.getDate() === day &&
+              selectedDate?.getMonth() === currentDate.getMonth() &&
+              selectedDate?.getFullYear() === currentDate.getFullYear()
+                ? "selected"
+                : ""
+            }
+
         ${isDisabled ? "locked" : ""}`}
               onClick={() => !isDisabled && day && handleDayClick(day)}
             >
@@ -259,7 +275,7 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
           );
         })}
       </div>
-
+      {/* ${isToday(dateObj) ? "today" : ""} */}
       {selectedDate && (
         <>
           <span className="calendarLineSecond"></span>{" "}
