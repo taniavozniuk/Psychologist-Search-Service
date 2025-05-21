@@ -16,7 +16,9 @@ interface FeetbackFormProps {
 export const FeetbackForm: React.FC<FeetbackFormProps> = ({
   showFeatbackForm,
 }) => {
-  const [selectedPsychologistId, setSelectedPsychologistId] = useState<number | null>(null);
+  const [selectedPsychologistId, setSelectedPsychologistId] = useState<
+    number | null
+  >(null);
 
   const [text, setText] = useState("");
   const [hasTextError, setHasTextError] = useState(false);
@@ -46,9 +48,8 @@ export const FeetbackForm: React.FC<FeetbackFormProps> = ({
 
   const handlePsychologistSelect = (id: number) => {
     setSelectedPsychologistId(id);
-      console.log("Selected psychologistId:", id);
+    console.log("Selected psychologistId:", id);
   };
-
 
   const handleSubmit = async () => {
     let hasError = false;
@@ -87,23 +88,26 @@ export const FeetbackForm: React.FC<FeetbackFormProps> = ({
 
   const confirmedBookings = showFeatbackForm();
 
-  const uniquePsychologists = confirmedBookings.reduce((acc: MyBokking[], current) => {
-  const exists = acc.find(
-    (booking) => booking.psychologistDto.id === current.psychologistDto.id
+  const uniquePsychologists = confirmedBookings.reduce(
+    (acc: MyBokking[], current) => {
+      const exists = acc.find(
+        (booking) => booking.psychologistDto.id === current.psychologistDto.id
+      );
+      if (!exists) {
+        acc.push(current);
+      }
+      return acc;
+    },
+    []
   );
-  if (!exists) {
-    acc.push(current);
-  }
-  return acc;
-}, []);
 
   return (
     <div className="feetbackForm">
       <div className="feetbackText">
-        <h2 className="feetbackTitle">Your opinion matters to us</h2>
+        <h2 className="feetbackTitle">How was your session?</h2>
         <p className="feetbackDes">
-          We’re always working to make things better.Let us know what you think
-          — your feedback helps us improve.
+          We’d love to hear your thoughts. Your feedback helps us make your next
+          experience even better.
         </p>
       </div>
 
@@ -125,11 +129,15 @@ export const FeetbackForm: React.FC<FeetbackFormProps> = ({
               {uniquePsychologists.map((psychologist) => (
                 <li
                   className={`feedItem psyWrapper ${
-                    selectedPsychologistId === psychologist.psychologistDto.id ? "selected" : ""
+                    selectedPsychologistId === psychologist.psychologistDto.id
+                      ? "selected"
+                      : ""
                   }`}
-                  onClick={() => handlePsychologistSelect(psychologist.psychologistDto.id)}
+                  onClick={() =>
+                    handlePsychologistSelect(psychologist.psychologistDto.id)
+                  }
                 >
-                  <img src={user} alt="iconPsy" className="iconPsy"/>
+                  <img src={user} alt="iconPsy" className="iconPsy" />
                   Dr. {psychologist.psychologistDto.firstName}{" "}
                   {psychologist.psychologistDto.lastName}
                 </li>

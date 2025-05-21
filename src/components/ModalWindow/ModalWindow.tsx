@@ -22,7 +22,7 @@ interface ModalProps {
 }
 
 export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
-  const [selectedSex, setSelectedSex] = useState<string | null>(null); //збереження Sex
+  // const [selectedSex, setSelectedSex] = useState<string | null>(null); //збереження Sex
   const [selectedSpec, setSelectedSpec] = useState<string | null>(null); //збереження спеціалізації
   const [selectedCon, setSelectedCon] = useState<string[]>([]); //збереження чекбоксів Concerns
   const [selectedAppr, setSelectedAppr] = useState<string[]>([]); //збереження чекбоксів Approaches
@@ -84,7 +84,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
     console.log({ newSelectedCons });
     setSelectedCon(newSelectedCons);
   };
-
+  const selectedSex = searchParams.get('gender')?.toLowerCase();
   const selectedCons = searchParams.getAll("concernIds");
   const selectedApprs = searchParams.getAll("approachIds");
   console.log("selectedCons", selectedCons);
@@ -110,7 +110,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
   };
 
   const handleResetFilters = () => {
-    setSelectedSex(null);
+    // setSelectedSex(null);
     setSelectedSpec(null);
     setSelectedCon([]);
     setSelectedAppr([]);
@@ -141,36 +141,29 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
             <h2 className="modal__TitleName">Sex</h2>
 
             <div className="modal__button">
-              {sexOptions.map((sex) => (
+              {sexOptions.map((sex) => {
+                console.log({selectedSex, sex})
+
+                return(
                 <SearchLink
-                  params={(prev) => {
-                    const current = new URLSearchParams(prev);
-                    const isSelected = selectedSex === sex;
-
-                    if (isSelected) {
-                      current.delete("gender"); // прибираю якщо вже вибраний
-                    } else {
-                      current.set("gender", sex.toUpperCase()); // додаю новий
-                    }
-
-                    return Object.fromEntries(current.entries());
-                  }}
+                  params={{gender: sex.toUpperCase()}}
                 >
                   <button
                     key={sex}
                     className={`button__name ${
-                      selectedSex === sex ? "selected" : ""
+                      selectedSex === sex.toLowerCase() ? "selected" : ""
                     }`}
                     style={{
-                      backgroundColor: selectedSex === sex ? "#9B6A00" : "",
-                      color: selectedSex === sex ? "#f1efe9" : "",
+                      backgroundColor: selectedSex === sex.toLowerCase() ? "#9B6A00" : "",
+                      color: selectedSex === sex.toLowerCase() ? "#f1efe9" : "",
                     }}
-                    onClick={() => handleSexSelection(sex)}
+                    // onClick={() => handleSexSelection(sex)}
                   >
                     {sex}
                   </button>
+                  
                 </SearchLink>
-              ))}
+              )})}
             </div>
           </div>
           <span className="modal__line"></span>
@@ -245,7 +238,10 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                   <ul className="model__concernsDrop">
                     {CONCERNS_LIST1.map(({ id, label }) => (
                       <li key={id} className="model__concernsItem">
-                        <ToggleSelectedIdLink idToToggle={id} paramName="concernIds">
+                        <ToggleSelectedIdLink
+                          idToToggle={id}
+                          paramName="concernIds"
+                        >
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -256,7 +252,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                                   "&:hover": { color: "#7C746A" },
                                 }}
                                 checked={selectedCons.includes(id)}
-                                onChange={() => {}} 
+                                onChange={() => {}}
                               />
                             }
                             label={label}
@@ -270,7 +266,10 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                   <ul className="model__concernsDrop">
                     {CONCERNS_LIST2.map(({ id, label }) => (
                       <li key={id} className="model__concernsItem">
-                        <ToggleSelectedIdLink idToToggle={id} paramName="concernIds">
+                        <ToggleSelectedIdLink
+                          idToToggle={id}
+                          paramName="concernIds"
+                        >
                           <FormControlLabel
                             control={
                               <Checkbox
@@ -320,7 +319,10 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                   <ul className="model__concernsDrop">
                     {APPROACHES_LIST.map(({ id, label }) => (
                       <li key={id} className="model__concernsItem">
-                        <ToggleSelectedIdLink idToToggle={id} paramName="approachIds">
+                        <ToggleSelectedIdLink
+                          idToToggle={id}
+                          paramName="approachIds"
+                        >
                           <FormControlLabel
                             control={
                               <Checkbox

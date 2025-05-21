@@ -90,9 +90,9 @@ export const TopBar: React.FC<TopBarProps> = ({
               About
             </NavLink>
 
-            <NavLink to="/blog" className={getLinkClass}>
+            {/* <NavLink to="/blog" className={getLinkClass}>
               Blog
-            </NavLink>
+            </NavLink> */}
           </div>
 
           <div className="user">

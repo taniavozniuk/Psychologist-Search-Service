@@ -6,14 +6,16 @@ interface PriceSliderProps {
   setPriceRange: (newRange: [number, number]) => void;
 }
 
-export const PriceSlider: React.FC<PriceSliderProps> = ({ priceRange, setPriceRange }) => {
-
+export const PriceSlider: React.FC<PriceSliderProps> = ({
+  priceRange,
+  setPriceRange,
+}) => {
   const handleChangePrice = (_: unknown, newValue: number | number[]) => {
     setPriceRange(newValue as [number, number]);
   };
 
   return (
-    <Box>
+    <Box >
       <Slider
         value={priceRange}
         onChange={handleChangePrice}
@@ -23,6 +25,7 @@ export const PriceSlider: React.FC<PriceSliderProps> = ({ priceRange, setPriceRa
         max={900}
         step={0.01}
         sx={{
+
           // Стилізація треку
           fontFamily: "'Aileron', sans-serif",
           fontWeight: "400",

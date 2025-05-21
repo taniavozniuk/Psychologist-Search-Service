@@ -42,7 +42,7 @@ export const MySesions = () => {
     <div className="UserPage">
       <div className="profilePage">
         <div className="bookConteiner">
-          {isFeedbackOpen && (
+          {isFeedbackOpen && showFeatbackForm().length > 0 &&(
             <div className="feetbackConteiner">
               <FeetbackForm showFeatbackForm={showFeatbackForm} />
               <div className="wrapperClose">

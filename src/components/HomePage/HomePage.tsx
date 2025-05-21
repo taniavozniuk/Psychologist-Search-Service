@@ -33,9 +33,7 @@ export const HomePage = () => {
 
       {!isModalOpen && !isModalOpenRegistration && (
         <div className="main">
-          <FadeInSection>
-            <OurServices />
-          </FadeInSection>
+          <OurServices />
 
           <FadeInSection>
             <WhyUs />

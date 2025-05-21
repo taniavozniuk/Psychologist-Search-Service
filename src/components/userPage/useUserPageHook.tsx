@@ -42,9 +42,6 @@ export const useUserPageHook = () => {
   const saveUserData = () => {
     if (!userKey) return;
     const data = {
-      firstName,
-      lastName,
-      email,
       day,
       month,
       year,
@@ -110,7 +107,12 @@ export const useUserPageHook = () => {
       valid = false;
     }
 
-    if (!month || isNaN(Number(month)) || Number(month) < 1 || Number(month) > 12) {
+    if (
+      !month ||
+      isNaN(Number(month)) ||
+      Number(month) < 1 ||
+      Number(month) > 12
+    ) {
       setHasMonthError(true);
       setErrorMonth("Please enter a valid month between 1 and 12.");
       valid = false;
@@ -167,9 +169,9 @@ export const useUserPageHook = () => {
       reader.onloadend = () => {
         const base64 = reader.result as string;
         setProfilePhoto(base64);
-        if (photoKey) {
-          localStorage.setItem(photoKey, base64);
-        }
+        // if (photoKey) {
+        //   localStorage.setItem(photoKey, base64);
+        // }
       };
       reader.readAsDataURL(file);
     }

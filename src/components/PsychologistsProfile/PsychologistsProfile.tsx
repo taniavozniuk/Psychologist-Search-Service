@@ -53,37 +53,67 @@ export const PsychologistProfile = () => {
     <div className="profile">
       {psycholog ? (
         <>
-          <div className="wrapperProfile">
-            <img
-              src={psycholog.imageUrl}
-              className="profileImg"
-              alt="psychologist"
-            />
+          <FadeInSection>
+            <div className="wrapperProfile">
+              <img
+                src={psycholog.imageUrl}
+                className="profileImg"
+                alt="psychologist"
+              />
 
-            <div className="Information">
-              <div className="wrappeInfo">
-                <div className="profileWrapperName">
-                  <h2 className="profileName">
-                    {psycholog.firstName} {psycholog.lastName}
-                  </h2>
-                  <p className="profileIntroduction">
-                    {psycholog.introduction}
-                  </p>
-                </div>
-              </div>
-
-              <span className="prodileLine"></span>
-
-              <div className="ProfileBox">
-                <div className="wrapperBox">
-                  <div className="BoxTitle">
-                    <img src={Price} alt="price" />
-                    <h2 className="boxTitle">Price</h2>
-                  </div>
-                  <div className="boxDescription">
-                    <p className="profileDescription">
-                      ${psycholog.sessionPrice} • 50 min
+              <div className="Information">
+                <div className="wrappeInfo">
+                  <div className="profileWrapperName">
+                    <h2 className="profileName">
+                      {psycholog.firstName} {psycholog.lastName}
+                    </h2>
+                    <p className="profileIntroduction">
+                      {psycholog.introduction}
                     </p>
+                  </div>
+                </div>
+
+                <span className="prodileLine"></span>
+
+                <div className="ProfileBox">
+                  <div className="wrapperBox">
+                    <div className="BoxTitle">
+                      <img src={Price} alt="price" />
+                      <h2 className="boxTitle">Price</h2>
+                    </div>
+                    <div className="boxDescription">
+                      <p className="profileDescription">
+                        ${psycholog.sessionPrice} • 50 min
+                      </p>
+                    </div>
+                  </div>
+
+                  <span className="prodileLine"></span>
+
+                  <div className="wrapperBox">
+                    <div className="BoxTitle">
+                      <img src={Experience} alt="experience" />
+                      <h2 className="boxTitle">Experience</h2>
+                    </div>
+                    <div className="boxDescription">
+                      <p className="profileDescription">
+                        Helping clients for {psycholog.experience} years
+                      </p>
+                    </div>
+                  </div>
+
+                  <span className="prodileLine"></span>
+
+                  <div className="wrapperBox">
+                    <div className="BoxTitle">
+                      <img src={Languages} alt="languages" />
+                      <h2 className="boxTitle">Languages</h2>
+                    </div>
+                    <div className="boxDescription">
+                      <p className="profileDescription">
+                        {psycholog.languages}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -91,42 +121,16 @@ export const PsychologistProfile = () => {
 
                 <div className="wrapperBox">
                   <div className="BoxTitle">
-                    <img src={Experience} alt="experience" />
-                    <h2 className="boxTitle">Experience</h2>
+                    <img src={education} alt="education" />
+                    <h2 className="boxTitle">Education</h2>
                   </div>
                   <div className="boxDescription">
-                    <p className="profileDescription">
-                      Helping clients for {psycholog.experience} years
-                    </p>
+                    <p className="profileDescription">{psycholog.education}</p>
                   </div>
-                </div>
-
-                <span className="prodileLine"></span>
-
-                <div className="wrapperBox">
-                  <div className="BoxTitle">
-                    <img src={Languages} alt="languages" />
-                    <h2 className="boxTitle">Languages</h2>
-                  </div>
-                  <div className="boxDescription">
-                    <p className="profileDescription">{psycholog.languages}</p>
-                  </div>
-                </div>
-              </div>
-
-              <span className="prodileLine"></span>
-
-              <div className="wrapperBox">
-                <div className="BoxTitle">
-                  <img src={education} alt="education" />
-                  <h2 className="boxTitle">Education</h2>
-                </div>
-                <div className="boxDescription">
-                  <p className="profileDescription">{psycholog.education}</p>
                 </div>
               </div>
             </div>
-          </div>
+          </FadeInSection>
 
           <FadeInSection>
             <div className="profileAbout">
@@ -178,50 +182,57 @@ export const PsychologistProfile = () => {
           </FadeInSection>
 
           {/* ВІДГУКИ */}
-          <div className="lastReviews">
-            <h2 className="titleReviews">Last Reviews</h2>
-            <div className="reviewsCard">
-              {review.length > 0 ? (
-                review.map((item) => (
-                  <div className="reviewItem" key={item.id}>
-                    <div className="reviewUser">
-                      <h2 className="reviewNameAgeUser">
-                        {item.reviewerName},
-                      </h2>
-                      <p className="reviewNameAgeUser">{item.reviewerAge}</p>
-                    </div>
-                    <div className="reviewStarts">
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <img
-                          key={i}
-                          src={i < item.rate ? activeStarts : Starts}
-                          alt={i < item.rate ? "active star" : "inactive star"}
-                          className="reviewStarIcon"
-                        />
-                      ))}
-                    </div>
-                    <p className="reviewText">{item.reviewText}</p>
+          <FadeInSection>
+            <div className="lastReviews">
+              <h2 className="titleReviews">Last Reviews</h2>
+              <div className="reviewsCard">
+                {review.length > 0 ? (
+                  review.map((item) => (
+                    <div className="reviewItem" key={item.id}>
+                      <div className="reviewUser">
+                        <h2 className="reviewNameAgeUser">
+                          {item.reviewerName},
+                        </h2>
+                        <p className="reviewNameAgeUser">{item.reviewerAge}</p>
+                      </div>
+                      <div className="reviewStarts">
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <img
+                            key={i}
+                            src={i < item.rate ? activeStarts : Starts}
+                            alt={
+                              i < item.rate ? "active star" : "inactive star"
+                            }
+                            className="reviewStarIcon"
+                          />
+                        ))}
+                      </div>
+                      <p className="reviewText">{item.reviewText}</p>
 
-                    <span className="reviewLine"></span>
-                    <div className="reviewWrapperDateSesion">
-                      <p className="reviewDateSesions">
-                        {item.sessionsCount} sessions
-                      </p>
-                      <p className="reviewDateSesions">
-                        {new Date(item.reviewDate).toLocaleDateString("uk-UA", {
-                          day: "2-digit",
-                          month: "2-digit",
-                          year: "numeric",
-                        })}
-                      </p>
+                      <span className="reviewLine"></span>
+                      <div className="reviewWrapperDateSesion">
+                        <p className="reviewDateSesions">
+                          {item.sessionsCount} sessions
+                        </p>
+                        <p className="reviewDateSesions">
+                          {new Date(item.reviewDate).toLocaleDateString(
+                            "uk-UA",
+                            {
+                              day: "2-digit",
+                              month: "2-digit",
+                              year: "numeric",
+                            }
+                          )}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))
-              ) : (
-                <p className="noReviews">This psychologist has no reviews.</p>
-              )}
+                  ))
+                ) : (
+                  <p className="noReviews">This psychologist has no reviews.</p>
+                )}
+              </div>
             </div>
-          </div>
+          </FadeInSection>
         </>
       ) : (
         <div className="loader-container">
