@@ -87,15 +87,15 @@ export const FeetbackForm: React.FC<FeetbackFormProps> = ({
 
   const confirmedBookings = showFeatbackForm();
 
-//   const uniquePsychologists = confirmedBookings.reduce((acc: MyBokking[], current) => {
-//   const exists = acc.find(
-//     (booking) => booking.psychologistDto.id === current.psychologistDto.id
-//   );
-//   if (!exists) {
-//     acc.push(current);
-//   }
-//   return acc;
-// }, []);
+  const uniquePsychologists = confirmedBookings.reduce((acc: MyBokking[], current) => {
+  const exists = acc.find(
+    (booking) => booking.psychologistDto.id === current.psychologistDto.id
+  );
+  if (!exists) {
+    acc.push(current);
+  }
+  return acc;
+}, []);
 
   return (
     <div className="feetbackForm">
@@ -122,30 +122,16 @@ export const FeetbackForm: React.FC<FeetbackFormProps> = ({
         {isOpen && (
           <div className="itemFeed">
             <ul className="ulFeed">
-              {confirmedBookings.map((psychologist) => (
+              {uniquePsychologists.map((psychologist) => (
                 <li
                   className={`feedItem psyWrapper ${
                     selectedPsychologistId === psychologist.psychologistDto.id ? "selected" : ""
                   }`}
                   onClick={() => handlePsychologistSelect(psychologist.psychologistDto.id)}
                 >
-                  <img src={user} alt="iconPsy" />
-                  Dr. {psychologist.psychologistDto.fatherName}{" "}
-                  {psychologist.psychologistDto.lastName} &#183;{" "}
-                  {`${new Date(psychologist.startTime).toLocaleDateString(
-                    "en-US",
-                    {
-                      month: "short",
-                      day: "numeric",
-                    }
-                  )} · ${new Date(psychologist.startTime).toLocaleTimeString(
-                    "en-US",
-                    {
-                      hour: "numeric",
-                      minute: "2-digit",
-                      hour12: true,
-                    }
-                  )}`}
+                  <img src={user} alt="iconPsy" className="iconPsy"/>
+                  Dr. {psychologist.psychologistDto.firstName}{" "}
+                  {psychologist.psychologistDto.lastName}
                 </li>
               ))}
             </ul>

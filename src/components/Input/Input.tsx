@@ -23,6 +23,7 @@ export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
+
         const data = await getPsychologist();
         const filtered = data.filter(
           (psych: Psychologist) =>
@@ -51,8 +52,8 @@ export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
     }
   }, [searchText]);
 
-  const handleClickPsycholog = (psychologistName: string) => {
-    navigate(`/psychologist/${psychologistName}`);
+  const handleClickPsycholog = (psychologistId: number) => {
+    navigate(`/psychologist/${psychologistId}`);
   };
 
   // useEffect(() => {
@@ -122,7 +123,7 @@ export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
               key={phych.id}
               className="search__item"
               onClick={() => {
-                handleClickPsycholog(phych.firstName);
+                handleClickPsycholog(phych.id);
                 setSearchText("");
               }}
             >

@@ -5,4 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base:'/Psychologist-Search-Service/',
   plugins: [react()],
+  server: {
+    port: 5173,
+  },
 })

@@ -296,7 +296,7 @@ export const postReview = async (review: Review, psychologistId: number) => {
 export const getReview = async (psychologistId: number) => {
   try {
     const response = await apiClient.get(
-      `/reviews/specialist${psychologistId}`
+      `/reviews/review-page/${psychologistId}`
     );
     return response.data;
   } catch (error) {

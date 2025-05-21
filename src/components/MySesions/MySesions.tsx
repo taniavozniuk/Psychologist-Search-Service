@@ -5,10 +5,10 @@ import { useMySesionHook } from "./useMySesionsHook";
 import { FeetbackForm } from "../FeedbackForm/FeedbackForm";
 import feedback from "../../image/Profile/feedback.svg";
 import modalCloce from "../../image/modalClose.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const MySesions = () => {
-  const [, setonOpenFeedback] = useState(false);
+  const [isFeedbackOpen, setonOpenFeedback] = useState(false);
 
   const {
     cancelModalOpen,
@@ -34,22 +34,28 @@ export const MySesions = () => {
     });
   };
 
+  useEffect(() => {
+    setonOpenFeedback(true);
+  },[])
+
   return (
     <div className="UserPage">
       <div className="profilePage">
         <div className="bookConteiner">
-          <div className="feetbackConteiner">
-            <FeetbackForm showFeatbackForm={showFeatbackForm} />
-            <div className="wrapperClose">
-              <button
-                className="closeFeetback"
-                onClick={() => setonOpenFeedback(false)}
-              >
-                <img src={modalCloce} alt="close" />
-              </button>
-              <img src={feedback} alt="feedbackImg" className="feedbackImg" />
+          {isFeedbackOpen && (
+            <div className="feetbackConteiner">
+              <FeetbackForm showFeatbackForm={showFeatbackForm} />
+              <div className="wrapperClose">
+                <button
+                  className="closeFeetback"
+                  onClick={() => setonOpenFeedback(false)}
+                >
+                  <img src={modalCloce} alt="close" />
+                </button>
+                <img src={feedback} alt="feedbackImg" className="feedbackImg" />
+              </div>
             </div>
-          </div>
+          )}
 
           {booking.length > 0 ? (
             <>
