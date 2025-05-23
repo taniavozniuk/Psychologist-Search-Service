@@ -38,7 +38,7 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({
         searchParams.set("page", currentPage.toString());
         searchParams.set("size", itemPrePage.toString());
         const data = await getLikedPsychologist(searchParams);
-        setFavorites(data);
+        setFavorites(data.psychologists); //!!!!!!
         setTotalPages(data.totalPages);
       } catch (error) {
         console.log("Failed to load liked psychologists:", error);

@@ -1,6 +1,9 @@
 .Page {
   margin: 0 auto;
+  // max-height: calc(100vh - 86px - 182px);
+
   max-width: 1250px;
+  // position: relative;
 }
 
 .psychologist__card {

@@ -52,7 +52,7 @@ export const PsychologistPageAll = () => {
         <>
           <div className="page__psychologists">
             {currentPsychologists.map((psych) => {
-              const Favotire = Array.isArray(favorites)
+              const isFavotire = Array.isArray(favorites)
                 ? favorites.some((fav) => fav.id === psych.id)
                 : false;
               // const Favotire = favorites.some((p) => p.id === psych.id);
@@ -77,7 +77,7 @@ export const PsychologistPageAll = () => {
                       </div>
                       <button className="folow" onClick={handleToogleFavorite}>
                         <img
-                          src={Favotire ? liked : like}
+                          src={isFavotire ? liked : like}
                           alt="like"
                           className="like"
                         />
