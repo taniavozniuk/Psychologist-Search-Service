@@ -1,13 +1,23 @@
-import React, { createContext,  useState, ReactNode } from "react";
+import React, { createContext, useState, ReactNode, useEffect } from "react";
 // import { PsychologId } from "../types/psychologId";
-import {  patchLikedPsychologist } from "../api/api";
+import { getLikedPsychologist, patchLikedPsychologist } from "../api/api";
 import { allFilterPsychologist } from "../types/allFilterPsychologist";
+import { useSearchParams } from "react-router-dom";
 // import { useSearchParams } from "react-router-dom";
+import { NavigateOptions } from "react-router-dom";
 
 interface FavouritesProps {
   favorites: allFilterPsychologist[];
   toggleFavorite: (product: allFilterPsychologist) => void;
   setFavorites: React.Dispatch<React.SetStateAction<allFilterPsychologist[]>>;
+  totalPages: number;
+setSearchParams: (
+  nextInit: URLSearchParams | string,
+  navigateOptions?: NavigateOptions
+) => void;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+   searchParams: URLSearchParams;
 }
 
 const FavoritesContext = createContext<FavouritesProps | undefined>(undefined);
@@ -16,21 +26,27 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [favorites, setFavorites] = useState<allFilterPsychologist[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemPrePage = 3;
+  const [searchParams, setSearchParams] = useSearchParams(); // url сторінки
+  const pageFromParams = Number(searchParams.get("page")) || 1; // стосується url сторінки
+  const [currentPage, setCurrentPage] = useState(pageFromParams);
 
-  // useEffect(() => {
-  //   const fetchFavorites = async () => {
-  //     searchParams.set("page", currentPage.toString());
-  //     searchParams.set("size", itemPrePage.toString());
-  //     try {
-  //       const data = await getLikedPsychologist();
-  //       setFavorites(data);
-  //     } catch (error) {
-  //       console.log("Failed to load liked psychologists:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        searchParams.set("page", currentPage.toString());
+        searchParams.set("size", itemPrePage.toString());
+        const data = await getLikedPsychologist(searchParams);
+        setFavorites(data);
+        setTotalPages(data.totalPages);
+      } catch (error) {
+        console.log("Failed to load liked psychologists:", error);
+      }
+    };
 
-  //   fetchFavorites();
-  // }, []);
+    fetchFavorites();
+  }, [searchParams, currentPage]);
 
   const toggleFavorite = async (product: allFilterPsychologist) => {
     try {
@@ -50,7 +66,18 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <FavoritesContext.Provider value={{ favorites, toggleFavorite, setFavorites }}>
+    <FavoritesContext.Provider
+      value={{
+        searchParams,
+        favorites,
+        toggleFavorite,
+        setFavorites,
+        totalPages,
+        setSearchParams,
+        setCurrentPage,
+        currentPage,
+      }}
+    >
       {children}
     </FavoritesContext.Provider>
   );

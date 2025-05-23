@@ -344,3 +344,12 @@ export const getLikedPsychologist = async (
     throw error;
   }
 };
+// export const getLikedPsychologist = async () => {
+//   try {
+//     const response = await apiClient.get("/psychologists/liked");
+//     return response.data;
+//   } catch (error) {
+//     console.log("getLikedPsychologist error", error);
+//     throw error;
+//   }
+// };
