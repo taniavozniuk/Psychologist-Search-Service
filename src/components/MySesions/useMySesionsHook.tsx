@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/AuthContext";
 import { MyBokking } from "../../types/MyBooking";
 import { canceledPaymnt, getBookingUser } from "../../api/api";
+import { handleError } from "../../utils/Error";
 
 export const useMySesionHook = () => {
   const [booking, setBooking] = useState<MyBokking[]>([]);
@@ -15,6 +16,7 @@ export const useMySesionHook = () => {
   const [selectedBookingId, setSelectedBookingId] = useState<number | null>(
     null
   );
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchBooking = async () => {
@@ -22,8 +24,10 @@ export const useMySesionHook = () => {
         const data = await getBookingUser();
         console.log("Отримані бронювання:", data);
         setBooking(data);
+        setError(null);
       } catch (error) {
         console.error("Failed to fetch bookings:", error);
+        setError(handleError(error));
       }
     };
 
@@ -46,8 +50,8 @@ export const useMySesionHook = () => {
 
   const handleViewExpired = (bookingId: number) => {
     setSelectedBookingId(bookingId);
-    setviewExpiredModal(true)
-  }
+    setviewExpiredModal(true);
+  };
 
   const handleCancel = async (bookingId: number) => {
     console.log("Cancel booking:", bookingId);
@@ -90,6 +94,7 @@ export const useMySesionHook = () => {
     viewDeteilsConfirmedModal,
     viewExpiredModal,
     selectBookink,
+    error,
     handleViewDetails,
     handleViewConfirmedDetails,
     handleViewExpired,

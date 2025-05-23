@@ -1,0 +1,1 @@
+export const PageNotFound = () => <h1 className="profileName">Page not found</h1>;

@@ -16,6 +16,8 @@ export interface allFilterPsychologist {
   gender: string;
   experience: number;
   imageUrl: string;
+  meetingUrl: string;
+  isLiked: boolean;
   concerns: [
     {
       id: number;

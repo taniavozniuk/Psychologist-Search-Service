@@ -22,11 +22,6 @@ interface ModalProps {
 }
 
 export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
-  // const [selectedSex, setSelectedSex] = useState<string | null>(null); //збереження Sex
-  const [selectedSpec, setSelectedSpec] = useState<string | null>(null); //збереження спеціалізації
-  const [selectedCon, setSelectedCon] = useState<string[]>([]); //збереження чекбоксів Concerns
-  const [selectedAppr, setSelectedAppr] = useState<string[]>([]); //збереження чекбоксів Approaches
-  // const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000])
   const navigate = useNavigate();
   const modalRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -65,38 +60,11 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
     setIsOpenApproaches((prev) => !prev);
   };
 
-  // збереження статі
-  const handleSexSelection = (sex: string | null) => {
-    setSelectedSex((prevSex) => (prevSex === sex ? null : sex));
-  };
-
-  //збереження стпеціалізації
-  const handleSpexSelection = (spec: string | null) => {
-    setSelectedSpec((prevSpec) => (prevSpec === spec ? null : spec));
-  };
-
-  // збереження чекбоксів занепокоїнь(Concerns)
-  const handleConSelection = (con: string) => {
-    const newSelectedCons = selectedCon.includes(con)
-      ? selectedCon.filter((item) => item !== con)
-      : [...selectedCon, con];
-
-    console.log({ newSelectedCons });
-    setSelectedCon(newSelectedCons);
-  };
-  const selectedSex = searchParams.get('gender')?.toLowerCase();
+  const selectedSex = searchParams.get("gender")?.toLowerCase();
+  const selectedSpec = searchParams.get("specialityId");
   const selectedCons = searchParams.getAll("concernIds");
   const selectedApprs = searchParams.getAll("approachIds");
   console.log("selectedCons", selectedCons);
-
-  // збереження чекбоксів Approaches
-  const handleAprrSelection = (appr: string) => {
-    const newSelectedAppr = selectedAppr.includes(appr)
-      ? selectedAppr.filter((item) => item !== appr)
-      : [...selectedAppr, appr];
-
-    setSelectedAppr(newSelectedAppr);
-  };
 
   const handleApply = () => {
     const currentSearchParams = searchParams.toString();
@@ -110,10 +78,6 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
   };
 
   const handleResetFilters = () => {
-    // setSelectedSex(null);
-    setSelectedSpec(null);
-    setSelectedCon([]);
-    setSelectedAppr([]);
 
     setSearchParams({});
   };
@@ -142,52 +106,37 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
 
             <div className="modal__button">
               {sexOptions.map((sex) => {
-                console.log({selectedSex, sex})
+                console.log({ selectedSex, sex });
 
-                return(
-                <SearchLink
-                  params={{gender: sex.toUpperCase()}}
-                >
-                  <button
-                    key={sex}
-                    className={`button__name ${
-                      selectedSex === sex.toLowerCase() ? "selected" : ""
-                    }`}
-                    style={{
-                      backgroundColor: selectedSex === sex.toLowerCase() ? "#9B6A00" : "",
-                      color: selectedSex === sex.toLowerCase() ? "#f1efe9" : "",
-                    }}
-                    // onClick={() => handleSexSelection(sex)}
-                  >
-                    {sex}
-                  </button>
-                  
-                </SearchLink>
-              )})}
+                return (
+                  <SearchLink params={{ gender: sex.toUpperCase() }}>
+                    <button
+                      key={sex}
+                      className={`button__name ${
+                        selectedSex === sex.toLowerCase() ? "selected" : ""
+                      }`}
+                      style={{
+                        backgroundColor:
+                          selectedSex === sex.toLowerCase() ? "#9B6A00" : "",
+                        color:
+                          selectedSex === sex.toLowerCase() ? "#f1efe9" : "",
+                      }}
+                      // onClick={() => handleSexSelection(sex)}
+                    >
+                      {sex}
+                    </button>
+                  </SearchLink>
+                );
+              })}
             </div>
           </div>
           <span className="modal__line"></span>
 
           <div className="modal__WrapperSpecialization">
             <h2 className="modal__TitleName">Specialization</h2>
-
             <div className="modal__button">
               {specOptions.map(({ id, label }) => (
-                <SearchLink
-                  key={id}
-                  params={(prev) => {
-                    const current = new URLSearchParams(prev);
-                    const isSelected = selectedSpec === id;
-
-                    if (isSelected) {
-                      current.delete("specialityId");
-                    } else {
-                      current.set("specialityId", id);
-                    }
-
-                    return Object.fromEntries(current.entries());
-                  }}
-                >
+                <SearchLink params={{ specialityId: id }}>
                   <button
                     className={`button__SpecName ${
                       selectedSpec === id ? "selected" : ""
@@ -196,7 +145,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                       backgroundColor: selectedSpec === id ? "#9B6A00" : "",
                       color: selectedSpec === id ? "#f1efe9" : "",
                     }}
-                    onClick={() => handleSpexSelection(id)}
+                    // onClick={() => handleSpexSelection(id)}
                   >
                     {label}
                   </button>
@@ -280,7 +229,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                                   "&:hover": { color: "#7C746A" },
                                 }}
                                 checked={selectedCons.includes(id)}
-                                onChange={() => handleConSelection(id)}
+                                // onChange={() => handleConSelection(id)}
                               />
                             }
                             label={label}
@@ -337,7 +286,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                                   },
                                 }}
                                 checked={selectedApprs.includes(id)}
-                                onChange={() => handleAprrSelection(id)}
+                                // onChange={() => handleAprrSelection(id)}
                               />
                             }
                             label={label}

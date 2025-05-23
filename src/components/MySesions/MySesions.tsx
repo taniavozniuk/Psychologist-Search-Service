@@ -17,6 +17,7 @@ export const MySesions = () => {
     viewDeteilsConfirmedModal,
     viewExpiredModal,
     selectBookink,
+    error,
     handleViewDetails,
     handleViewConfirmedDetails,
     handleViewExpired,
@@ -36,7 +37,15 @@ export const MySesions = () => {
 
   useEffect(() => {
     setonOpenFeedback(true);
-  },[])
+  }, [])
+  
+    if (error) {
+    return (
+      <div className="error__container">
+        <p className="error-message">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="UserPage">

@@ -3,6 +3,8 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { allFilterPsychologist } from "../../types/allFilterPsychologist";
 import { getFilterPsychologist } from "../../api/api";
+import { useModalContext } from "../../utils/ModalContext";
+import { handleError } from "../../utils/Error";
 
 interface ApiResponse {
   count: number;
@@ -26,9 +28,12 @@ export const usePsychologPIHook = () => {
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   console.log("location", location);
+  const { isModalOpen } = useModalContext();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // setLoading(true);
+    setLoading(true);
+    if (isModalOpen) return;
     const fetchData = async () => {
       try {
         searchParams.set("page", currentPage.toString());
@@ -41,8 +46,10 @@ export const usePsychologPIHook = () => {
         console.log("Fetched data:", data);
         setPsychologists(data.psychologists);
         setTotalPages(data.totalPages);
+        setError(null);
       } catch (error) {
         console.log("error", error);
+        setError(handleError(error));
       } finally {
         setLoading(false);
         console.log("Loading finished");
@@ -50,7 +57,7 @@ export const usePsychologPIHook = () => {
     };
 
     fetchData();
-  }, [searchParams, currentPage]);
+  }, [searchParams, currentPage, isModalOpen]);
 
   //url сторінки
   const handlePageChange = (page: number) => {
@@ -59,6 +66,8 @@ export const usePsychologPIHook = () => {
     setSearchParams(searchParams);
   };
 
+
+
   return {
     totalPages,
     currentPsychologists: psychologists,
@@ -66,5 +75,6 @@ export const usePsychologPIHook = () => {
     psychologists,
     currentPage,
     loading,
+    error,
   };
 };

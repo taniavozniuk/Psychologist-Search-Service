@@ -6,19 +6,18 @@ import CloseEye from "../../../image/Resitration/closeEye.svg";
 import OpneEye from "../../../image/Resitration/openEye.svg";
 import Google from "../../../image/Resitration/google.svg";
 import Apple from "../../../image/Resitration/iphone.svg";
+import ErrorIcon from '../../../image/Error.svg'
 
 interface RegistrationProps {
   onClose: () => void;
   onNextStep: (email: string, password: string) => void;
   openLoginModal: () => void;
-
 }
 
 export const Registration: React.FC<RegistrationProps> = ({
   onClose,
   onNextStep,
   openLoginModal,
-
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -88,7 +87,7 @@ export const Registration: React.FC<RegistrationProps> = ({
   return (
     <div
       ref={modalRef}
-      className='Registration__content'
+      className="Registration__content"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="registrationTitle__wrapper">
@@ -136,6 +135,9 @@ export const Registration: React.FC<RegistrationProps> = ({
                 value={email}
                 onChange={handleEmailChange}
               />
+              {hasEmailError && (
+                <img src={ErrorIcon} alt="error" className="error__icon" />
+              )}
             </div>
             {hasEmailError && <p className="help is-danger">{errorEmail}</p>}
           </div>

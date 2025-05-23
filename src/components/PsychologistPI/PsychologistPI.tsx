@@ -20,8 +20,17 @@ export const PsychologistPageAll = () => {
     handlePageChange,
     currentPage,
     loading,
+    error,
   } = usePsychologPIHook();
   const { favorites, toggleFavorite } = useFavourites();
+
+  if (error) {
+    return (
+      <div className="error__container">
+        <p className="error-message">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="Page">
@@ -43,12 +52,15 @@ export const PsychologistPageAll = () => {
         <>
           <div className="page__psychologists">
             {currentPsychologists.map((psych) => {
-              const isFavorite = favorites.some((fav) => fav.id === psych.id);
+              const Favotire = Array.isArray(favorites)
+                ? favorites.some((fav) => fav.id === psych.id)
+                : false;
+              // const Favotire = favorites.some((p) => p.id === psych.id);
 
               const handleToogleFavorite = (e: React.MouseEvent) => {
                 e.stopPropagation();
                 toggleFavorite(psych);
-                console.log('favorite click');
+                console.log("favorite click");
               };
               return (
                 <div key={psych.id} className="psychologist__card">
@@ -63,7 +75,11 @@ export const PsychologistPageAll = () => {
                         {psych.experience} years' experience
                       </div>
                       <button className="folow" onClick={handleToogleFavorite}>
-                        <img src={isFavorite ? liked : like} alt="like" className="like" />
+                        <img
+                          src={Favotire ? liked : like}
+                          alt="like"
+                          className="like"
+                        />
                       </button>
                     </div>
                     <div className="warapperNamePrice">

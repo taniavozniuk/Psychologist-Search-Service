@@ -9,6 +9,8 @@ import Google from "../../../image/Resitration/google.svg";
 import Apple from "../../../image/Resitration/iphone.svg";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/AuthContext";
+import { handleError } from "../../../utils/Error";
+import ErrorIcon from "../../../image/Error.svg";
 
 interface LogInProps {
   onClose: () => void;
@@ -29,6 +31,9 @@ export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
   const [hasPasswordError, setHasPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [errorPassword, setErrorPassword] = useState("");
+
+  const [error, setError] = useState<string | null>(null);
+
   const navigate = useNavigate();
 
   const { login: onSuccessLogin } = useAuth();
@@ -81,8 +86,10 @@ export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
       }
 
       onClose(); // закрити модалку
+      setError(null);
     } catch (err) {
       console.error("Login failed", err);
+      setError(handleError(error));
       // setError("Login failed. Please check your credentials and try again.");
     }
 
@@ -105,6 +112,15 @@ export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
       document.body.classList.remove("no-scroll");
     };
   }, []);
+
+  if (error) {
+    return (
+      <div className="error__container">
+        <p className="error-message">{error}</p>
+      </div>
+    );
+  }
+
   return (
     <div
       ref={modalRef}
@@ -149,6 +165,9 @@ export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
                 value={email}
                 onChange={handleEmailChange}
               />
+              {hasEmailError && (
+                <img src={ErrorIcon} alt="error" className="error__icon" />
+              )}
             </div>
             {hasEmailError && <p className="help is-danger">{errorEmail}</p>}
           </div>

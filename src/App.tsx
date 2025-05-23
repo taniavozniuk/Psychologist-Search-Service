@@ -9,6 +9,7 @@ import { Congratulations } from "./components/Ragistration/Congratulations/Congr
 import { Registration } from "./components/Ragistration/SingUp/Ragistration";
 import { Footer } from "./components/Footer/Footer";
 import { SideBar } from "./components/userPage/SideBar/SideBar";
+import { ModalContext } from "./utils/ModalContext";
 // import { Footer } from "./components/Footer/Footer";
 
 function App() {
@@ -21,18 +22,6 @@ function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // const [selectedSex, setSelectedSex] = useState<string | null>(null); //збереження Sex
-  // const [selectedSpec, setSelectedSpec] = useState<string | null>(null); //збереження спеціалізації
-  // const [selectedCon, setSelectedCon] = useState<string[]>([]); //збереження чекбоксів Concerns
-  // const [selectedAppr, setSelectedAppr] = useState<string[]>([]); //збереження чекбоксів Approaches
-
-  // const handleResetFilters = () => {
-  //   setSelectedSex(null);
-  //   setSelectedSpec(null);
-  //   setSelectedCon([]);
-  //   setSelectedAppr([]);
-  // };
-
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const isAbout = location.pathname === "/about";
@@ -41,6 +30,7 @@ function App() {
     location.pathname.startsWith("/sessions") ||
     location.pathname.startsWith("/favorites");
 
+  const [hasError, setHasError] = useState(false);
   const handleNextStep = (email: string, password: string) => {
     setEmail(email);
     setPassword(password);
@@ -48,10 +38,11 @@ function App() {
   };
 
   return (
-    <>
+          <ModalContext.Provider value={{ isModalOpen, setIsModalOpen }}>
       {!isModalOpen && (
         <>
-          <TopBar
+          {!hasError && (
+            <TopBar
             onOpenFilter={() => setIsModalOpen(true)}
             setIsModalOpenRegistration={() => setIsModalOpenRegistration(true)}
             isModalOpenRegistration={isModalOpenRegistration}
@@ -62,16 +53,16 @@ function App() {
             isHomePage={isHomePage}
             isAbout={isAbout}
           />
+          )}
+          
         </>
       )}
 
-      {isModalOpen && (
-        <div className="filter__modal">
-          <ModalWindow
-            onClose={() => setIsModalOpen(false)}
-          />
-        </div>
-      )}
+        {isModalOpen && (
+          <div className="filter__modal">
+            <ModalWindow onClose={() => setIsModalOpen(false)} />
+          </div>
+        )}
 
       {isModalOpenRegistration && currentStep === 1 && !isModalOpen && (
         <div
@@ -131,6 +122,7 @@ function App() {
           isModalOpenRegistration,
           isModalLogIn,
           isCongratulationsOpen,
+          setHasError,
         }}
       />
 
@@ -139,7 +131,7 @@ function App() {
           <Footer />
         </div>
       )}
-    </>
+    </ModalContext.Provider>
   );
 }
 

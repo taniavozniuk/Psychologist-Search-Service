@@ -19,7 +19,7 @@ export const PriceSlider: React.FC<PriceSliderProps> = ({
       <Slider
         value={priceRange}
         onChange={handleChangePrice}
-        valueLabelDisplay="on" // <-- це тултіп над кнопками
+        valueLabelDisplay="on" //  це тултіп над кнопками
         valueLabelFormat={(value: number) => `$${value.toFixed(2)}`}
         min={100}
         max={900}

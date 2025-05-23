@@ -220,7 +220,7 @@
   margin: 32px 0 16px 0;
 }
 
-.reviewWrapperDateSesion{
+.reviewWrapperDateSesion {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -231,15 +231,24 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #615B52;
+  color: #615b52;
   margin: 0;
 }
 
-.reviewStarts{
+.reviewStarts {
   margin-bottom: 32px;
 }
 
-.reviewStarIcon{
+.reviewStarIcon {
   width: 20px;
   height: 19px;
+}
+
+.noReviews {
+  font-family: "Aileron", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #0c0b09;
+  margin: 0;
 }

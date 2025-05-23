@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import ModalCloce from "../../../image/modalClose.svg";
 import "./Review.scss";
 import { PsychologId } from "../../../types/psychologId";
-import { Booking } from "../../../types/bookingsCalendar";
+import { BookingCalendar } from "../../../types/bookingsCalendar";
 import { addPayment } from "../../../api/api";
 import { Payment } from "../../../types/Payment";
 import { useOutsideClick } from "../../../hooks";
@@ -15,8 +15,8 @@ interface ReviewProps {
   firtsName: string;
   lastName: string;
   email: string;
-  booking: Booking;
-  setBooking: React.Dispatch<React.SetStateAction<Booking | null>>;
+  booking: BookingCalendar;
+  setBooking: React.Dispatch<React.SetStateAction<BookingCalendar | null>>;
   // handleReview: (email: string, firtsName: string, lastName: string) => void;
 }
 export const Review: React.FC<ReviewProps> = ({

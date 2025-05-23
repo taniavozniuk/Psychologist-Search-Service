@@ -2,12 +2,43 @@ import { useFavourites } from "../../hooks/FavouritesContext";
 import "./Favorites.scss";
 import liked from "../../image/liked.svg";
 import spec from "../../image/AboutPsychologist/people.svg";
-import favoriteYet from '../../image/Profile/favoriteYet.svg'
-import { NavLink } from "react-router-dom";
+import favoriteYet from "../../image/Profile/favoriteYet.svg";
+import { NavLink, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getLikedPsychologist } from "../../api/api";
+import nextBt from "../../image/nextBt.svg";
+import prevBt from "../../image/prevBt.svg";
 
 export const Favorites = () => {
-  const { favorites, toggleFavorite } = useFavourites();
+  const { favorites, toggleFavorite, setFavorites } = useFavourites();
   console.log("FAVORITES:", favorites);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemPrePage = 3;
+  const [searchParams, setSearchParams] = useSearchParams(); // url сторінки
+  const pageFromParams = Number(searchParams.get("page")) || 1; // стосується url сторінки
+  const [currentPage, setCurrentPage] = useState(pageFromParams);
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        searchParams.set("page", currentPage.toString());
+        searchParams.set("size", itemPrePage.toString());
+        const data = await getLikedPsychologist(searchParams);
+        setFavorites(data);
+        setTotalPages(data.totalPages);
+      } catch (error) {
+        console.log("Failed to load liked psychologists:", error);
+      }
+    };
+
+    fetchFavorites();
+  }, [searchParams, currentPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    searchParams.set("page", page.toString());
+    setSearchParams(searchParams);
+  };
 
   return (
     <div className="UserPage">
@@ -29,8 +60,9 @@ export const Favorites = () => {
             <>
               <h1 className="profileTitle">Your Saved Specialists</h1>
               <p className="favoritesDes">
-                Your personal list of trusted professionals — carefully saved so you
-                can come back to them anytime you're ready to continue your journey.
+                Your personal list of trusted professionals — carefully saved so
+                you can come back to them anytime you're ready to continue your
+                journey.
               </p>
 
               <div className="favourites__card">
@@ -86,6 +118,42 @@ export const Favorites = () => {
             </>
           )}
         </div>
+      </div>
+
+      <div className="prev__buttons">
+        <button
+          className={`prev__buttonsbuttonPrev ${
+            currentPage === 1 ? "disabled" : ""
+          }`}
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          <img src={prevBt} alt="prev" className="prev" />
+        </button>
+        <div className="WrapperPagination">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
+            <button
+              key={number}
+              className={`pagination ${
+                currentPage === number ? "active" : "notActive"
+              }`}
+              onClick={() => handlePageChange(number)}
+              disabled={currentPage === number}
+            >
+              {number}
+            </button>
+          ))}
+        </div>
+
+        <button
+          className={`prev__buttonsbuttonNext ${
+            currentPage === totalPages ? "disabled" : ""
+          }`}
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          <img src={nextBt} alt="next" className="next" />
+        </button>
       </div>
     </div>
   );

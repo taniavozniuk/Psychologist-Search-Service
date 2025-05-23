@@ -20,14 +20,13 @@ import { useAuth } from "./hooks/AuthContext";
 import { MySesions } from "./components/MySesions/MySesions";
 import { Favorites } from "./components/Favorites/Favorites";
 import { FavoritesProvider } from "./hooks/FavouritesContext";
+import { PageNotFound } from "./components/PageNotFound";
 // import { PrivateRoute } from "./PrivateRoot";
 // import { LogIn } from "./components/Ragistration/LogIn/LogIn";
 // import { Registration } from "./components/Registration/Registration";
 
 export const Root = () => {
-  const [, setPsychologists] = useState<allFilterPsychologist[]>(
-    []
-  );
+  const [, setPsychologists] = useState<allFilterPsychologist[]>([]);
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {
@@ -72,6 +71,7 @@ export const Root = () => {
               element={isLoggedIn ? <Favorites /> : <Navigate to="/" />}
             />
           </Route>
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
     </FavoritesProvider>

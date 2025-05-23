@@ -15,11 +15,13 @@ import Calendar from "./Calendar/Calendar";
 import { Loader } from "../Loader/Loader";
 import { GetReviews } from "../../types/GetReviews";
 import { FadeInSection } from "../../utils/useInViewAnimation";
+import { handleError } from "../../utils/Error";
 
 export const PsychologistProfile = () => {
   const [psycholog, setPsycholog] = useState<PsychologId | null>(null);
   const [review, setReview] = useState<GetReviews[]>([]);
   const { id } = useParams();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,8 +29,10 @@ export const PsychologistProfile = () => {
       try {
         const data = await getPsychologistId(id);
         setPsycholog(data);
-      } catch (error) {
+        setError(null);
+      } catch (error: unknown) {
         console.error("Failed to fetch psychologist by ID:", error);
+        setError(handleError(error));
       }
     };
     fetchData();
@@ -42,12 +46,22 @@ export const PsychologistProfile = () => {
         const data = await getReview(psychologistId);
         setReview(data);
         console.log({ data });
+        setError(null);
       } catch (error) {
         console.error("fetchData getReview:", error);
+        setError(handleError(error));
       }
     };
     fetchData();
   }, [id]);
+
+  if (error) {
+    return (
+      <div className="error__container">
+        <p className="error-message">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="profile">
@@ -183,11 +197,11 @@ export const PsychologistProfile = () => {
 
           {/* ВІДГУКИ */}
           <FadeInSection>
-            <div className="lastReviews">
-              <h2 className="titleReviews">Last Reviews</h2>
-              <div className="reviewsCard">
-                {review.length > 0 ? (
-                  review.map((item) => (
+            {review.length > 0 ? (
+              <div className="lastReviews">
+                <h2 className="titleReviews">Last Reviews</h2>
+                <div className="reviewsCard">
+                  {review.map((item) => (
                     <div className="reviewItem" key={item.id}>
                       <div className="reviewUser">
                         <h2 className="reviewNameAgeUser">
@@ -226,12 +240,15 @@ export const PsychologistProfile = () => {
                         </p>
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <p className="noReviews">This psychologist has no reviews.</p>
-                )}
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : (
+              <p className="noReviews">
+                {/* This user has no comments. If you liked meeting him, you can
+                leave a review using this button, thanks. */}
+              </p>
+            )}
           </FadeInSection>
         </>
       ) : (

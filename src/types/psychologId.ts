@@ -16,6 +16,8 @@ export interface PsychologId {
   languages: string;
   education: string;
   imageUrl: string;
+  meetingUrl: string;
+  isLiked: boolean;
   concerns: [
     {
       id: number;

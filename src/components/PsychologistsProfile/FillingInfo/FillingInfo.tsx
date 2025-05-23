@@ -9,6 +9,7 @@ import { useOutsideClick } from "../../../hooks";
 import { BookingCalendar } from "../../../types/bookingsCalendar";
 import { addBookingUnauth } from "../../../api/api";
 import { BookingUnauth } from "../../../types/BookingUnauth";
+import ErrorIcon from "../../../image/Error.svg";
 
 interface FillingInfoProps {
   onClose: () => void;
@@ -266,6 +267,13 @@ export const FillingInfo: React.FC<FillingInfoProps> = ({
                         value={email}
                         onChange={handleEmailChange}
                       />
+                      {hasEmailError && (
+                        <img
+                          src={ErrorIcon}
+                          alt="error"
+                          className="error__icon"
+                        />
+                      )}
                     </div>
                     {hasEmailError && (
                       <p className="help is-danger">{errorEmail}</p>

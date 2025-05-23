@@ -8,6 +8,8 @@ import { Loader } from "../Loader/Loader";
 import { useState } from "react";
 import { deleteUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import ErrorIcon from "../../image/Error.svg";
+
 // import { FeetbackForm } from "../FeedbackForm/FeedbackForm";
 // import { Booking } from "../../types/Booking";
 
@@ -42,45 +44,11 @@ export const UserPage = () => {
     errorYear,
     handleYearChange,
     handleSave,
+    error,
   } = useUserPageHook();
   const navigate = useNavigate();
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  // const [bookink, setBooking] = useState<Booking[]>([]);
-  // const [onOpenFeedback, setonOpenFeedback] = useState(false);
-
-  // useEffect(() => {
-  //   const fetchBookings = async () => {
-  //     try {
-  //       const data = await getBookingUser();
-  //       console.log("Bookings received:", data);
-  //       setBooking(data);
-  //     } catch (error) {
-  //       console.error("Failed to fetch bookings:", error);
-  //     }
-  //   };
-
-  //   fetchBookings();
-  // }, []);
-
-  // const showFeatbackForm = useMemo(() => {
-  //   // const now = new Date();
-
-  //   return bookink.find((boog) => {
-  //     // return boog.status === "EXPIRED";
-  //     return boog.endTime;
-
-  //     // const endTime = new Date(boog.status = 'EXPIRED');
-  //     // return endTime < now && !boog.feedbackForm;
-  //   });
-  // }, [bookink]);
-
-  // useEffect(() => {
-  //   console.log({ showFeatbackForm });
-  //   if (showFeatbackForm) {
-  //     setonOpenFeedback(true);
-  //   }
-  // }, [showFeatbackForm]);
 
   const handleDeleteButton = async () => {
     try {
@@ -100,6 +68,13 @@ export const UserPage = () => {
       </div>
     );
 
+  if (error) {
+    return (
+      <div className="error__container">
+        <p className="error-message">{error}</p>
+      </div>
+    );
+  }
   return (
     <div className="UserPage">
       <div className="profileConteiner">
@@ -181,6 +156,9 @@ export const UserPage = () => {
                   value={email}
                   onChange={handleEmailChange}
                 />
+                {hasEmailError && (
+                  <img src={ErrorIcon} alt="error" className="error__icon" />
+                )}
               </div>
               {hasEmailError && <p className="help is-danger">{errorEmail}</p>}
             </div>

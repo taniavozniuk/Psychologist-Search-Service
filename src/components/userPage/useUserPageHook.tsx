@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/AuthContext";
+import { handleError } from "../../utils/Error";
 
 export const useUserPageHook = () => {
   const { user, logout } = useAuth();
@@ -33,6 +34,8 @@ export const useUserPageHook = () => {
   const [year, setYear] = useState("");
   const [hasYearError, setHasYearError] = useState(false);
   const [errorYear, setErrorYear] = useState("");
+
+  const [error, setError] = useState<string | null>(null);
 
   // ✅ Ключ для зберігання даних користувача (по email)
   const userKey = user?.email ? `userData-${user.email}` : null;
@@ -149,8 +152,10 @@ export const useUserPageHook = () => {
           setDay(parsed.day || "");
           setMonth(parsed.month || "");
           setYear(parsed.year || "");
+          setError(null);
         } catch (e) {
           console.error("Помилка при завантаженні userData", e);
+          setError(handleError(error));
         }
       }
     }
@@ -216,5 +221,6 @@ export const useUserPageHook = () => {
     errorYear,
     handleYearChange,
     handleSave,
+    error,
   };
 };

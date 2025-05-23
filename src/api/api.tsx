@@ -304,3 +304,43 @@ export const getReview = async (psychologistId: number) => {
     throw error;
   }
 };
+
+export const patchLikedPsychologist = async (id: number) => {
+  try {
+    const response = await apiClient.patch(`/psychologists/like/${id}`);
+    return response.data;
+  } catch (error) {
+    console.log("patchLikedPsychologist error", error);
+    throw error;
+  }
+};
+
+export const getLikedPsychologist = async (
+  searchParams?: URLSearchParams | string
+) => {
+  await delay();
+  try {
+    const params =
+      typeof searchParams === "string"
+        ? new URLSearchParams(searchParams)
+        : searchParams || new URLSearchParams();
+    const page = Number(params.get("page")) - 1;
+    const size = params.get("size");
+    const like = params.get('like');
+
+    const queryParams = new URLSearchParams();
+    if (!isNaN(page) && page >= 0) queryParams.append("page", page.toString());
+    if (size) queryParams.append("size", size);
+    if (like) queryParams.append('like', like)
+
+        const url = queryParams.toString()
+      ? `/psychologists/like?${queryParams.toString()}`
+      : "/psychologists/like";
+
+    const response = await apiClient.get(url);
+    return response.data;
+  } catch (error) {
+    console.log("getLikedPsychologist error", error);
+    throw error;
+  }
+};

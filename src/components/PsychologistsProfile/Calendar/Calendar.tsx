@@ -9,6 +9,7 @@ import { PsychologId } from "../../../types/psychologId";
 import { BookingCalendar } from "../../../types/bookingsCalendar";
 import { useAuth } from "../../../hooks/AuthContext";
 import { Review } from "../Review/Review";
+import { handleError } from "../../../utils/Error";
 
 interface CalendarProps {
   psycholog: PsychologId;
@@ -29,6 +30,8 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
   const [onOpenFillingInfo, setOnOpenFillingInfo] = useState(false);
   const [onOpneReview, setOnOpneReview] = useState(false);
 
+  const [error, setError] = useState<string | null>(null);
+
   const today = new Date();
   //фетчу дні які недоступні в календарі
   useEffect(() => {
@@ -41,8 +44,10 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
         const formattedMonth = `${year}-${month.toString().padStart(2, "0")}`;
         const data = await getLokedDates(id, formattedMonth);
         setLockedDates(data);
+        setError(null);
       } catch (error) {
         console.log("error fetch locked dates", error);
+        setError(handleError(error));
       }
     };
 
@@ -57,8 +62,10 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
         const data = await getDateBokkingId(id, selectedDateString);
 
         setSelectHour(data);
+        setError(null);
       } catch (error) {
         console.log("error BokkingId", error);
+        setError(handleError(error));
       }
     };
     fetchData();
@@ -205,6 +212,14 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
   const firstName = user?.firstName || "";
   const lastName = user?.lastName || "";
   const email = user?.email || "";
+
+  if (error) {
+    return (
+      <div className="error__container">
+        <p className="error-message">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="wrapperCalendar">
