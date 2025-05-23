@@ -6,6 +6,7 @@ interface AuthContextType {
   login: (token: string) => void;
   logout: () => void;
   user: User | null;
+  fetchUser: () => Promise<void>;
 }
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -20,11 +21,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const fetchedUser = await getUser();
       setUser(fetchedUser);
-    } catch (err){
-      console.log('failed to fetch user', err)
-      logout() // якщо помилка токен не валідний(виходим з логінації)
+    } catch (err) {
+      console.log("failed to fetch user", err);
+      logout(); // якщо помилка токен не валідний(виходим з логінації)
     }
-  }
+  };
 
   const login = async (token: string) => {
     localStorage.setItem("accessToken", token);
@@ -40,10 +41,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   //завантажую користувача при першому запуску якщо токен є
   useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      fetchUser()
+    if (localStorage.getItem("accessToken")) {
+      fetchUser();
     }
-  }, [])
+  }, []);
 
   // це якщо потрібна синхронизація між табами браузера (нагадаю, слухач storage не працює у тій самій вкладці браузера, де відбулась подія!
   useEffect(() => {
@@ -54,7 +55,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, user }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, login, logout, user, fetchUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

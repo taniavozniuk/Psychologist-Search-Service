@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/AuthContext";
 import { handleError } from "../../utils/Error";
+import { UpdateUsers } from "../../types/UpdateUsers";
+import { UpdateUser } from "../../api/api";
 
 export const useUserPageHook = () => {
   const { user, logout } = useAuth();
@@ -37,28 +39,11 @@ export const useUserPageHook = () => {
 
   const [error, setError] = useState<string | null>(null);
 
-  // ✅ Ключ для зберігання даних користувача (по email)
-  const userKey = user?.email ? `userData-${user.email}` : null;
-  const photoKey = user?.email ? `profilePhoto-${user.email}` : null;
-
-  // ✅ Збереження всіх полів в localStorage
-  const saveUserData = () => {
-    if (!userKey) return;
-    const data = {
-      day,
-      month,
-      year,
-    };
-    localStorage.setItem(userKey, JSON.stringify(data));
-  };
-
-  // 🔁 Оновлені handle-функції з викликом saveUserData
   const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setFirstName(value);
     setHasFirstNameError(false);
     setErrorFirstName("");
-    setTimeout(saveUserData, 0);
   };
 
   const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +51,6 @@ export const useUserPageHook = () => {
     setLastName(value);
     setHasLastNameError(false);
     setErrorLastName("");
-    setTimeout(saveUserData, 0);
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +58,6 @@ export const useUserPageHook = () => {
     setEmail(value);
     setHasEmailError(false);
     setErrorEmail("");
-    setTimeout(saveUserData, 0);
   };
 
   const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +65,6 @@ export const useUserPageHook = () => {
     setDay(value);
     setHasDayError(false);
     setErrorDay("");
-    setTimeout(saveUserData, 0);
   };
 
   const handleMonthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,7 +72,6 @@ export const useUserPageHook = () => {
     setMonth(value);
     setHasMonthError(false);
     setErrorMonth("");
-    setTimeout(saveUserData, 0);
   };
 
   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,7 +79,6 @@ export const useUserPageHook = () => {
     setYear(value);
     setHasYearError(false);
     setErrorYear("");
-    setTimeout(saveUserData, 0);
   };
 
   const validateDate = () => {
@@ -131,42 +111,31 @@ export const useUserPageHook = () => {
     return valid;
   };
 
-  // 🔁 handleSave тепер також зберігає дані користувача
-  const handleSave = () => {
-    if (validateDate()) {
-      saveUserData();
-      console.log("Дані збережено успішно");
+  const handleSave = async () => {
+    if (!validateDate()) {
+      return;
+    }
+
+    const updateUser: UpdateUsers = {
+      email,
+      firstName,
+      lastName,
+      fatherName: "",
+      imageUrl: profilePhoto || "",
+      birthDate: `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`,
+    };
+
+    try {
+      await UpdateUser(updateUser);
+      // await fetchUser();// передаю фетчинг
+      console.log("User updated successfully");
+    } catch (e) {
+      console.error("Update error", e);
+      setError(handleError(e));
     }
   };
 
-  // ✅ Завантаження збережених даних користувача
-  useEffect(() => {
-    if (userKey) {
-      const stored = localStorage.getItem(userKey);
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          setFirstName(parsed.firstName || "");
-          setLastName(parsed.lastName || "");
-          setEmail(parsed.email || "");
-          setDay(parsed.day || "");
-          setMonth(parsed.month || "");
-          setYear(parsed.year || "");
-          setError(null);
-        } catch (e) {
-          console.error("Помилка при завантаженні userData", e);
-          setError(handleError(error));
-        }
-      }
-    }
-
-    if (photoKey) {
-      const savedPhoto = localStorage.getItem(photoKey);
-      setProfilePhoto(savedPhoto);
-    }
-  }, [userKey, photoKey]);
-
-  // Фото профілю
+   // Фото профілю
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -174,20 +143,25 @@ export const useUserPageHook = () => {
       reader.onloadend = () => {
         const base64 = reader.result as string;
         setProfilePhoto(base64);
-        // if (photoKey) {
-        //   localStorage.setItem(photoKey, base64);
-        // }
       };
       reader.readAsDataURL(file);
     }
   };
 
-  // Після логіну підставляємо дані з юзера, якщо вони ще не були збережені
   useEffect(() => {
     if (user) {
-      setFirstName((prev) => prev || user.firstName || "");
-      setLastName((prev) => prev || user.lastName || "");
-      setEmail((prev) => prev || user.email || "");
+      setFirstName(user.firstName || "");
+      setLastName( user.lastName || "");
+      setEmail( user.email || "");
+      
+      if (user.birthDate) {
+        const [year, month, day] = user.birthDate.split('-');
+        setDay(day || '');
+        setMonth(month || '')
+        setYear(year || '');
+      }
+
+      setProfilePhoto(user.imageUrl || null)
     }
   }, [user]);
 

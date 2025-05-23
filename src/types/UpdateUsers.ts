@@ -1,10 +1,8 @@
-export interface User {
-  id: number;
+export interface UpdateUsers {
   email: string;
   firstName: string;
   lastName: string;
   fatherName: string;
-  role: string;
-  birthDate: string;
   imageUrl: string;
+  birthDate: string;
 }

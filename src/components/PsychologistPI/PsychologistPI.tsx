@@ -60,6 +60,7 @@ export const PsychologistPageAll = () => {
               const handleToogleFavorite = (e: React.MouseEvent) => {
                 e.stopPropagation();
                 toggleFavorite(psych);
+                console.log("Toggling favorite for:", psych.id);
                 console.log("favorite click");
               };
               return (

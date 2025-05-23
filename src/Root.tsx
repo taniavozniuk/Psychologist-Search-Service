@@ -43,8 +43,8 @@ export const Root = () => {
     fetchData();
   }, []);
   return (
-    <FavoritesProvider>
-      <Router>
+    <Router>
+      <FavoritesProvider>
         <Routes>
           <Route path="/" element={<App />}>
             <Route index element={<HomePage />} />
@@ -73,7 +73,7 @@ export const Root = () => {
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
-      </Router>
-    </FavoritesProvider>
+      </FavoritesProvider>
+    </Router>
   );
 };

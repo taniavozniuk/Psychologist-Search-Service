@@ -11,13 +11,13 @@ interface FavouritesProps {
   toggleFavorite: (product: allFilterPsychologist) => void;
   setFavorites: React.Dispatch<React.SetStateAction<allFilterPsychologist[]>>;
   totalPages: number;
-setSearchParams: (
-  nextInit: URLSearchParams | string,
-  navigateOptions?: NavigateOptions
-) => void;
+  setSearchParams: (
+    nextInit: URLSearchParams | string,
+    navigateOptions?: NavigateOptions
+  ) => void;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-   searchParams: URLSearchParams;
+  searchParams: URLSearchParams;
 }
 
 const FavoritesContext = createContext<FavouritesProps | undefined>(undefined);
@@ -28,8 +28,8 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({
   const [favorites, setFavorites] = useState<allFilterPsychologist[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const itemPrePage = 3;
-  const [searchParams, setSearchParams] = useSearchParams(); // url сторінки
-  const pageFromParams = Number(searchParams.get("page")) || 1; // стосується url сторінки
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageFromParams = Number(searchParams.get("page")) || 1;
   const [currentPage, setCurrentPage] = useState(pageFromParams);
 
   useEffect(() => {
@@ -51,6 +51,7 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({
   const toggleFavorite = async (product: allFilterPsychologist) => {
     try {
       await patchLikedPsychologist(product.id);
+      console.log("Sending PATCH request to like psychologist:", product.id);
 
       setFavorites((prev) => {
         const Favotire = prev.some((p) => p.id === product.id);

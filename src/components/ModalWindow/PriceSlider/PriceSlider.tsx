@@ -20,10 +20,10 @@ export const PriceSlider: React.FC<PriceSliderProps> = ({
         value={priceRange}
         onChange={handleChangePrice}
         valueLabelDisplay="on" //  це тултіп над кнопками
-        valueLabelFormat={(value: number) => `$${value.toFixed(2)}`}
+        valueLabelFormat={(value: number) => `$${Math.round(value)}`}
         min={100}
         max={900}
-        step={0.01}
+        step={1}
         sx={{
 
           // Стилізація треку

@@ -1,11 +1,12 @@
 import axios from "axios";
-import { postPsychologist } from "../types/post";
+// import { postPsychologist } from "../types/post";
 import { SingUp } from "../types/singUp";
 import { LogInType } from "../types/LogIn";
 import { BookingCalendar } from "../types/bookingsCalendar";
 import { Payment } from "../types/Payment";
 import { Review } from "../types/Postreview";
 import { BookingUnauth } from "../types/BookingUnauth";
+import { UpdateUsers } from "../types/UpdateUsers";
 
 //затримка
 const delay = () => new Promise((resolve) => setTimeout(resolve, 500));
@@ -234,6 +235,7 @@ export const getUser = async () => {
   }
 };
 
+//видалити user
 export const deleteUser = async () => {
   try {
     const response = await apiClient.delete("/users/remove-user");
@@ -244,16 +246,27 @@ export const deleteUser = async () => {
   }
 };
 
-//дадаю додаткового психолога до бази якщо треба
-export const addPsychologist = async (newPsychologist: postPsychologist) => {
+//оноивити дані user
+export const UpdateUser = async (userData: UpdateUsers) => {
   try {
-    const response = await apiClient.post("/psychologists", newPsychologist);
+    const response = await apiClient.put('/users/update-user', userData);
     return response.data;
   } catch (error) {
-    console.log("Post Error: ", error);
+    console.log("UpdateUser Error: ", error);
     throw error;
   }
-};
+}
+
+//дадаю додаткового психолога до бази якщо треба
+// export const addPsychologist = async (newPsychologist: postPsychologist) => {
+//   try {
+//     const response = await apiClient.post("/psychologists", newPsychologist);
+//     return response.data;
+//   } catch (error) {
+//     console.log("Post Error: ", error);
+//     throw error;
+//   }
+// };
 
 //реєстрацію(sing Up)
 export const singUp = async (formData: SingUp) => {
