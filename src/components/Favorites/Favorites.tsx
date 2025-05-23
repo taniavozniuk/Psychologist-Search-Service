@@ -3,44 +3,49 @@ import "./Favorites.scss";
 import liked from "../../image/liked.svg";
 import spec from "../../image/AboutPsychologist/people.svg";
 import favoriteYet from "../../image/Profile/favoriteYet.svg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 // import { useEffect, useState } from "react";
 // import { getLikedPsychologist } from "../../api/api";
 import nextBt from "../../image/nextBt.svg";
 import prevBt from "../../image/prevBt.svg";
+import { useCallback, useEffect, useState } from "react";
+import { getLikedPsychologist } from "../../api/api";
+import { allFilterPsychologist } from "../../types/allFilterPsychologist";
 
 export const Favorites = () => {
   const {
-    favorites,
+    // favorites,
     toggleFavorite,
-    totalPages,
-    setSearchParams,
-    setCurrentPage,
-    currentPage,
-    searchParams,
+    // totalPages,
+    // setSearchParams,
+    // setCurrentPage,
+    // currentPage,
+    // searchParams,
   } = useFavourites();
-  console.log("FAVORITES:", favorites);
-  // const [totalPages, setTotalPages] = useState(1);
-  // const itemPrePage = 3;
-  // const [searchParams, setSearchParams] = useSearchParams(); // url сторінки
-  // const pageFromParams = Number(searchParams.get("page")) || 1; // стосується url сторінки
-  // const [currentPage, setCurrentPage] = useState(pageFromParams);
+  // console.log("FAVORITES:", favorites);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemPrePage = 3;
+  const [searchParams, setSearchParams] = useSearchParams(); // url сторінки
+  const pageFromParams = Number(searchParams.get("page")) || 1; // стосується url сторінки
+  const [currentPage, setCurrentPage] = useState(pageFromParams);
+  const [favorites, setFavorites] = useState<allFilterPsychologist[]>([]);
+  console.log({ favorites }); 
+  
+  const fetchFavorites = useCallback(async () => {
+    try {
+      searchParams.set("page", currentPage.toString());
+      searchParams.set("size", itemPrePage.toString());
+      const data = await getLikedPsychologist(searchParams);
+      setFavorites(data.psychologists);
+      setTotalPages(data.totalPages);
+    } catch (error) {
+      console.log("Failed to load liked psychologists:", error);
+    }
+  }, [searchParams, currentPage]);
 
-  // useEffect(() => {
-  //   const fetchFavorites = async () => {
-  //     try {
-  //       searchParams.set("page", currentPage.toString());
-  //       searchParams.set("size", itemPrePage.toString());
-  //       const data = await getLikedPsychologist(searchParams);
-  //       setFavorites(data);
-  //       setTotalPages(data.totalPages);
-  //     } catch (error) {
-  //       console.log("Failed to load liked psychologists:", error);
-  //     }
-  //   };
-
-  //   fetchFavorites();
-  // }, [searchParams, currentPage]);
+  useEffect(() => {
+    fetchFavorites();
+  }, [fetchFavorites]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -84,7 +89,9 @@ export const Favorites = () => {
                       />
                       <button
                         className="psychologistFolow"
-                        onClick={() => toggleFavorite(psychologist)}
+                        onClick={() =>
+                          toggleFavorite(psychologist, fetchFavorites)
+                        }
                       >
                         <img src={liked} alt="like" className="like" />
                       </button>

@@ -1,6 +1,6 @@
 import { useLocation, useSearchParams } from "react-router-dom";
 // import { useModalLogicHook } from "../ModalWindow/useHookModal";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { allFilterPsychologist } from "../../types/allFilterPsychologist";
 import { getFilterPsychologist } from "../../api/api";
 import { useModalContext } from "../../utils/ModalContext";
@@ -31,33 +31,34 @@ export const usePsychologPIHook = () => {
   const { isModalOpen } = useModalContext();
   const [error, setError] = useState<string | null>(null);
 
+  const fetchData = useCallback(async () => {
+    try {
+      searchParams.set("page", currentPage.toString());
+      searchParams.set("size", itemPrePage.toString());
+
+      const data: ApiResponse = await getFilterPsychologist(
+        searchParams.toString()
+      );
+      console.log("searchParams", searchParams.toString());
+      console.log("Fetched data:", data);
+      setPsychologists(data.psychologists);
+      setTotalPages(data.totalPages);
+      setError(null);
+    } catch (error) {
+      console.log("error", error);
+      setError(handleError(error));
+    } finally {
+      setLoading(false);
+      console.log("Loading finished");
+    }
+  }, [searchParams, currentPage]);
+
   useEffect(() => {
     setLoading(true);
     if (isModalOpen) return;
-    const fetchData = async () => {
-      try {
-        searchParams.set("page", currentPage.toString());
-        searchParams.set("size", itemPrePage.toString());
-
-        const data: ApiResponse = await getFilterPsychologist(
-          searchParams.toString()
-        );
-        console.log("searchParams", searchParams.toString());
-        console.log("Fetched data:", data);
-        setPsychologists(data.psychologists);
-        setTotalPages(data.totalPages);
-        setError(null);
-      } catch (error) {
-        console.log("error", error);
-        setError(handleError(error));
-      } finally {
-        setLoading(false);
-        console.log("Loading finished");
-      }
-    };
 
     fetchData();
-  }, [searchParams, currentPage, isModalOpen]);
+  }, [isModalOpen, fetchData]);
 
   //url сторінки
   const handlePageChange = (page: number) => {
@@ -65,8 +66,6 @@ export const usePsychologPIHook = () => {
     searchParams.set("page", page.toString());
     setSearchParams(searchParams);
   };
-
-
 
   return {
     totalPages,
@@ -76,5 +75,6 @@ export const usePsychologPIHook = () => {
     currentPage,
     loading,
     error,
+    fetchData,
   };
 };

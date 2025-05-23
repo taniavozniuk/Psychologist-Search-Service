@@ -7,9 +7,9 @@ import { useSearchParams } from "react-router-dom";
 import { NavigateOptions } from "react-router-dom";
 
 interface FavouritesProps {
-  favorites: allFilterPsychologist[];
-  toggleFavorite: (product: allFilterPsychologist) => void;
-  setFavorites: React.Dispatch<React.SetStateAction<allFilterPsychologist[]>>;
+  // favorites: allFilterPsychologist[];
+  toggleFavorite: (product: allFilterPsychologist, refetch: () => Promise<void>) => void;
+  // setFavorites: React.Dispatch<React.SetStateAction<allFilterPsychologist[]>>;
   totalPages: number;
   setSearchParams: (
     nextInit: URLSearchParams | string,
@@ -25,7 +25,7 @@ const FavoritesContext = createContext<FavouritesProps | undefined>(undefined);
 export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [favorites, setFavorites] = useState<allFilterPsychologist[]>([]);
+  // const [favorites, setFavorites] = useState<allFilterPsychologist[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const itemPrePage = 3;
   const [searchParams, setSearchParams] = useSearchParams();
@@ -38,7 +38,7 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({
         searchParams.set("page", currentPage.toString());
         searchParams.set("size", itemPrePage.toString());
         const data = await getLikedPsychologist(searchParams);
-        setFavorites(data.psychologists); //!!!!!!
+        // setFavorites(data.psychologists); //!!!!!!
         setTotalPages(data.totalPages);
       } catch (error) {
         console.log("Failed to load liked psychologists:", error);
@@ -48,19 +48,21 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({
     fetchFavorites();
   }, [searchParams, currentPage]);
 
-  const toggleFavorite = async (product: allFilterPsychologist) => {
+  const toggleFavorite = async (product: allFilterPsychologist, refetch: () => Promise<void>) => {
     try {
-      await patchLikedPsychologist(product.id);
+      const response = await patchLikedPsychologist(product.id);
+      await refetch();
+      console.log('toggleFavorite response', response)
       console.log("Sending PATCH request to like psychologist:", product.id);
 
-      setFavorites((prev) => {
-        const Favotire = prev.some((p) => p.id === product.id);
-        if (Favotire) {
-          return prev.filter((p) => p.id !== product.id);
-        } else {
-          return [...prev, product];
-        }
-      });
+      // setFavorites((prev) => {
+      //   const Favotire = prev.some((p) => p.id === product.id);
+      //   if (Favotire) {
+      //     return prev.filter((p) => p.id !== product.id);
+      //   } else {
+      //     return [...prev, product];
+      //   }
+      // });
     } catch (error) {
       console.error("Failed to toggle favorite:", error);
     }
@@ -70,9 +72,9 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({
     <FavoritesContext.Provider
       value={{
         searchParams,
-        favorites,
+        // favorites,
         toggleFavorite,
-        setFavorites,
+        // setFavorites,
         totalPages,
         setSearchParams,
         setCurrentPage,

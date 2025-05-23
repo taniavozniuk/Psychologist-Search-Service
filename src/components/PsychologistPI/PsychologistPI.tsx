@@ -21,8 +21,9 @@ export const PsychologistPageAll = () => {
     currentPage,
     loading,
     error,
+    fetchData,
   } = usePsychologPIHook();
-  const { favorites, toggleFavorite } = useFavourites();
+  const { toggleFavorite } = useFavourites();
 
   if (error) {
     return (
@@ -52,14 +53,15 @@ export const PsychologistPageAll = () => {
         <>
           <div className="page__psychologists">
             {currentPsychologists.map((psych) => {
-              const isFavotire = Array.isArray(favorites)
-                ? favorites.some((fav) => fav.id === psych.id)
-                : false;
+              // const isFavotire = Array.isArray(favorites)
+              //   ? favorites.some((fav) => fav.id === psych.id)
+              //   : false;
               // const Favotire = favorites.some((p) => p.id === psych.id);
 
               const handleToogleFavorite = (e: React.MouseEvent) => {
                 e.stopPropagation();
-                toggleFavorite(psych);
+                toggleFavorite(psych, fetchData);
+                
                 console.log("Toggling favorite for:", psych.id);
                 console.log("favorite click");
               };
@@ -77,7 +79,7 @@ export const PsychologistPageAll = () => {
                       </div>
                       <button className="folow" onClick={handleToogleFavorite}>
                         <img
-                          src={isFavotire ? liked : like}
+                          src={psych.isLiked ? liked : like}
                           alt="like"
                           className="like"
                         />
