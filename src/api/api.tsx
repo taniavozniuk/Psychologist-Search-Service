@@ -326,16 +326,16 @@ export const getLikedPsychologist = async (
         : searchParams || new URLSearchParams();
     const page = Number(params.get("page")) - 1;
     const size = params.get("size");
-    const like = params.get('like');
+    // const like = params.get('liked');
 
     const queryParams = new URLSearchParams();
     if (!isNaN(page) && page >= 0) queryParams.append("page", page.toString());
     if (size) queryParams.append("size", size);
-    if (like) queryParams.append('like', like)
+    // if (like) queryParams.append('liked', like)
 
         const url = queryParams.toString()
-      ? `/psychologists/like?${queryParams.toString()}`
-      : "/psychologists/like";
+      ? `/psychologists/liked?${queryParams.toString()}`
+      : "/psychologists/liked";
 
     const response = await apiClient.get(url);
     return response.data;
