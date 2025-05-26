@@ -7,5 +7,5 @@ export interface User {
   fatherName: string;
   role: string;
   birthDate: string;
-  imageUrl: string;
+  // imageUrl: string;
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/AuthContext";
 import { handleError } from "../../utils/Error";
 import { UpdateUsers } from "../../types/UpdateUsers";
-import { UpdateUser, UpdateUserPhoto } from "../../api/api";
+import { getUser, UpdateUser, UpdateUserPhoto } from "../../api/api";
 
 export const useUserPageHook = () => {
   const { user, logout } = useAuth();
@@ -83,6 +83,15 @@ export const useUserPageHook = () => {
     setErrorYear("");
   };
 
+  const refetchUser = async () => {
+    try {
+      const updatedUser = await getUser();
+      setProfilePhotoUrl(updatedUser.imageUrl || null);
+    } catch (e) {
+      console.error("Failed to refetch user", e);
+    }
+  };
+
   const validateDate = () => {
     let valid = true;
 
@@ -128,7 +137,7 @@ export const useUserPageHook = () => {
     console.log("Sending user update", updateUser);
     try {
       await UpdateUser(updateUser);
-      await handleUpadatePhoto(); 
+      await handleUpadatePhoto(); // викликаю оновлення фото
       console.log("User updated successfully");
     } catch (e) {
       console.error("Update error", e);
@@ -152,11 +161,11 @@ export const useUserPageHook = () => {
     if (file) {
       setProfilePhotoFile(file); // зберігаємо файл для FormData
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfilePhotoUrl(reader.result as string); // попередній перегляд
-      };
-      reader.readAsDataURL(file);
+      // const reader = new FileReader();
+      // reader.onloadend = () => {
+      //   setProfilePhotoUrl(reader.result as string); // попередній перегляд
+      // };
+      // reader.readAsDataURL(file);
     }
   };
 
@@ -165,6 +174,7 @@ export const useUserPageHook = () => {
 
     try {
       await UpdateUserPhoto(profilePhotoFile);
+      await refetchUser();
       console.log("Photo updated successfully");
     } catch (e) {
       console.error("Photo update error", e);
@@ -185,7 +195,7 @@ export const useUserPageHook = () => {
         setYear(year || "");
       }
 
-      setProfilePhotoUrl(user.imageUrl || null);
+      setProfilePhotoUrl(user.profileImage || null);
       console.log({ setProfilePhotoUrl });
       //    setLoading(false);
       // } else {
