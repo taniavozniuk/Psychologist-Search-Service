@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/AuthContext";
 import { handleError } from "../../utils/Error";
 import { UpdateUsers } from "../../types/UpdateUsers";
@@ -39,7 +39,7 @@ export const useUserPageHook = () => {
   const [errorYear, setErrorYear] = useState("");
 
   const [error, setError] = useState<string | null>(null);
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -83,14 +83,14 @@ export const useUserPageHook = () => {
     setErrorYear("");
   };
 
-  const refetchUser = async () => {
+  const refetchUser = useCallback(async () => {
     try {
       const updatedUser = await getUser();
       setProfilePhotoUrl(updatedUser.imageUrl || null);
     } catch (e) {
       console.error("Failed to refetch user", e);
     }
-  };
+  }, []);
 
   const validateDate = () => {
     let valid = true;
@@ -136,36 +136,31 @@ export const useUserPageHook = () => {
     };
     console.log("Sending user update", updateUser);
     try {
+      setLoading(true);
       await UpdateUser(updateUser);
       await handleUpadatePhoto(); // викликаю оновлення фото
       console.log("User updated successfully");
     } catch (e) {
       console.error("Update error", e);
       setError(handleError(e));
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
 
+  const createPreviewUrl = (file: File) => URL.createObjectURL(file);
+
   // Фото профілю
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const file = e.target.files?.[0];
-    // if (file) {
-    //   const reader = new FileReader();
-    //   reader.onloadend = () => {
-    //     const base64 = reader.result as string;
-    //     setProfilePhotoUrl(base64);
-    //   };
-    //   reader.readAsDataURL(file);
-    // }
     const file = e.target.files?.[0];
 
     if (file) {
-      setProfilePhotoFile(file); // зберігаємо файл для FormData
+      setProfilePhotoFile(file);
 
-      // const reader = new FileReader();
-      // reader.onloadend = () => {
-      //   setProfilePhotoUrl(reader.result as string); // попередній перегляд
-      // };
-      // reader.readAsDataURL(file);
+      // Створюємо прев'ю перед відправкою на сервер
+      const previewUrl = createPreviewUrl(file);
+      setProfilePhotoUrl(previewUrl); // Відразу показуємо нове фото
     }
   };
 
@@ -174,12 +169,24 @@ export const useUserPageHook = () => {
 
     try {
       await UpdateUserPhoto(profilePhotoFile);
-      await refetchUser();
+      // await refetchUser();
       console.log("Photo updated successfully");
+
+      if (profilePhotoUrl && profilePhotoUrl.startsWith("blob:")) {
+        URL.revokeObjectURL(profilePhotoUrl);
+      }
     } catch (e) {
       console.error("Photo update error", e);
       setError(handleError(e));
+
+      if (user?.profileImage) {
+        setProfilePhotoUrl(user.profileImage); // Повертаємо старе фото
+      }
     }
+  };
+
+  const converBase64ToImageUrl = (base64String: string) => {
+    return `data:image/jpeg;base64,${base64String}`;
   };
 
   useEffect(() => {
@@ -195,11 +202,26 @@ export const useUserPageHook = () => {
         setYear(year || "");
       }
 
-      setProfilePhotoUrl(user.profileImage || null);
-      console.log({ setProfilePhotoUrl });
-      //    setLoading(false);
-      // } else {
-      //   setLoading(false);
+      // Оновлена частина для обробки Base64 зображення
+      if (user.profileImage) {
+        console.log("Image from backend:", user.profileImage);
+        // Якщо це вже URL (наприклад, з AWS S3)
+        if (user.profileImage.startsWith("http")) {
+          setProfilePhotoUrl(user.profileImage);
+        }
+        // Якщо це Base64 без префіксу (наприклад, "/9j/...")
+        else if (user.profileImage.startsWith("/9j/")) {
+          const imageUrl = converBase64ToImageUrl(user.profileImage);
+          setProfilePhotoUrl(imageUrl);
+        }
+        // Інші варіанти
+        else {
+          setProfilePhotoUrl(null);
+          console.warn("Невідомий формат зображення профілю");
+        }
+      } else {
+        setProfilePhotoUrl(null);
+      }
     }
   }, [user]);
   console.log("User on load:", user);

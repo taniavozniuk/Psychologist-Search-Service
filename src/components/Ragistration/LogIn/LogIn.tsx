@@ -5,8 +5,8 @@ import "./LogIn.scss";
 import CloseEye from "../../../image/Resitration/closeEye.svg";
 import OpneEye from "../../../image/Resitration/openEye.svg";
 import { logInUser } from "../../../api/api";
-import Google from "../../../image/Resitration/google.svg";
-import Apple from "../../../image/Resitration/iphone.svg";
+// import Google from "../../../image/Resitration/google.svg";
+// import Apple from "../../../image/Resitration/iphone.svg";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/AuthContext";
 import { handleError } from "../../../utils/Error";
@@ -210,14 +210,14 @@ export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
 
           {/* <span className="registration__lineDown"></span> */}
 
-          <div className="registrationWrapperButton">
+          {/* <div className="registrationWrapperButton">
             <button className="registrationBt">
               <img src={Google} />
             </button>
             <button className="registrationBt">
               <img src={Apple} />
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

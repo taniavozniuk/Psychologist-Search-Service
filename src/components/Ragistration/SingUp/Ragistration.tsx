@@ -4,8 +4,8 @@ import { useRef, useState } from "react";
 import { useOutsideClick } from "../../../hooks";
 import CloseEye from "../../../image/Resitration/closeEye.svg";
 import OpneEye from "../../../image/Resitration/openEye.svg";
-import Google from "../../../image/Resitration/google.svg";
-import Apple from "../../../image/Resitration/iphone.svg";
+// import Google from "../../../image/Resitration/google.svg";
+// import Apple from "../../../image/Resitration/iphone.svg";
 import ErrorIcon from '../../../image/Error.svg'
 
 interface RegistrationProps {
@@ -179,14 +179,14 @@ export const Registration: React.FC<RegistrationProps> = ({
 
             {/* <span className="registration__lineDown"></span> */}
 
-            <div className="registrationWrapperButton">
+            {/* <div className="registrationWrapperButton">
               <button className="registrationBt">
                 <img src={Google} />
               </button>
               <button className="registrationBt">
                 <img src={Apple} />
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
