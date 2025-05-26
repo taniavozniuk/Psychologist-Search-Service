@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/AuthContext";
 import { handleError } from "../../utils/Error";
 import { UpdateUsers } from "../../types/UpdateUsers";
-import { UpdateUser } from "../../api/api";
+import { UpdateUser, UpdateUserPhoto } from "../../api/api";
 
 export const useUserPageHook = () => {
   const { user, logout } = useAuth();
 
-  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null);
+  const [profilePhotoFile, setProfilePhotoFile] = useState<File | null>(null);
 
   // Ім’я
   const [firstName, setFirstName] = useState("");
@@ -38,6 +39,7 @@ export const useUserPageHook = () => {
   const [errorYear, setErrorYear] = useState("");
 
   const [error, setError] = useState<string | null>(null);
+  // const [loading, setLoading] = useState(true);
 
   const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -121,13 +123,12 @@ export const useUserPageHook = () => {
       firstName,
       lastName,
       fatherName: "",
-      imageUrl: profilePhoto || "",
       birthDate: `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`,
     };
-
+    console.log("Sending user update", updateUser);
     try {
       await UpdateUser(updateUser);
-      // await fetchUser();// передаю фетчинг
+      await handleUpadatePhoto(); 
       console.log("User updated successfully");
     } catch (e) {
       console.error("Update error", e);
@@ -135,40 +136,67 @@ export const useUserPageHook = () => {
     }
   };
 
-   // Фото профілю
+  // Фото профілю
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // const file = e.target.files?.[0];
+    // if (file) {
+    //   const reader = new FileReader();
+    //   reader.onloadend = () => {
+    //     const base64 = reader.result as string;
+    //     setProfilePhotoUrl(base64);
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
     const file = e.target.files?.[0];
+
     if (file) {
+      setProfilePhotoFile(file); // зберігаємо файл для FormData
+
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64 = reader.result as string;
-        setProfilePhoto(base64);
+        setProfilePhotoUrl(reader.result as string); // попередній перегляд
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleUpadatePhoto = async () => {
+    if (!profilePhotoFile) return;
+
+    try {
+      await UpdateUserPhoto(profilePhotoFile);
+      console.log("Photo updated successfully");
+    } catch (e) {
+      console.error("Photo update error", e);
+      setError(handleError(e));
     }
   };
 
   useEffect(() => {
     if (user) {
       setFirstName(user.firstName || "");
-      setLastName( user.lastName || "");
-      setEmail( user.email || "");
-      
+      setLastName(user.lastName || "");
+      setEmail(user.email || "");
+
       if (user.birthDate) {
-        const [year, month, day] = user.birthDate.split('-');
-        setDay(day || '');
-        setMonth(month || '')
-        setYear(year || '');
+        const [year, month, day] = user.birthDate.split("-");
+        setDay(day || "");
+        setMonth(month || "");
+        setYear(year || "");
       }
 
-      setProfilePhoto(user.imageUrl || null)
+      setProfilePhotoUrl(user.imageUrl || null);
+      console.log({ setProfilePhotoUrl });
+      //    setLoading(false);
+      // } else {
+      //   setLoading(false);
     }
   }, [user]);
-
+  console.log("User on load:", user);
   return {
     user,
     logout,
-    profilePhoto,
+    profilePhoto: profilePhotoUrl,
     firstName,
     hasFirstNameError,
     errorFirstName,
@@ -178,6 +206,7 @@ export const useUserPageHook = () => {
     handleFirstNameChange,
     handleLastNameChange,
     handlePhotoUpload,
+    handleUpadatePhoto,
     email,
     hasEmailError,
     handleEmailChange,
@@ -196,5 +225,6 @@ export const useUserPageHook = () => {
     handleYearChange,
     handleSave,
     error,
+    // loading
   };
 };

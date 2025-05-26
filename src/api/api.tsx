@@ -53,20 +53,6 @@ export const getPsychologist = async () => {
   }
 };
 
-// export const getFilterPsychologist = async (searchParams?: string) => {
-//   await delay();
-//   try {
-//     const URL = searchParams
-//       ? `psychologists/filter?${searchParams.toString()}`
-//       : `psychologists/filter`;
-//     const response = await apiClient.get(URL);
-//     return response.data;
-//   } catch (error) {
-//     console.log("GetFilter Error ", error);
-//     throw error;
-//   }
-// };
-
 //отримую психологів з філтрами розпарений
 export const getFilterPsychologist = async (
   searchParams?: URLSearchParams | string
@@ -249,13 +235,30 @@ export const deleteUser = async () => {
 //оноивити дані user
 export const UpdateUser = async (userData: UpdateUsers) => {
   try {
-    const response = await apiClient.put('/users/update-user', userData);
+    const response = await apiClient.put("/users/update-user", userData);
     return response.data;
   } catch (error) {
     console.log("UpdateUser Error: ", error);
     throw error;
   }
-}
+};
+
+//оноивити дані user фото
+export const UpdateUserPhoto = async (file: File) => {
+  const formData = new FormData();
+  formData.append("profileImage", file);
+  try {
+    const response = await apiClient.patch("/users/update-image", formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.log("UpdateUserPhoto Error: ", error);
+    throw error;
+  }
+};
 
 //дадаю додаткового психолога до бази якщо треба
 // export const addPsychologist = async (newPsychologist: postPsychologist) => {
@@ -346,7 +349,7 @@ export const getLikedPsychologist = async (
     if (size) queryParams.append("size", size);
     // if (like) queryParams.append('liked', like)
 
-        const url = queryParams.toString()
+    const url = queryParams.toString()
       ? `/psychologists/liked?${queryParams.toString()}`
       : "/psychologists/liked";
 

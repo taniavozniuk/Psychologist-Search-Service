@@ -12,7 +12,6 @@ import { usePsychologPIHook } from "./usePsychologPIHook";
 import { Loader } from "../Loader/Loader";
 import { useFavourites } from "../../hooks/FavouritesContext";
 import React from "react";
-// import { FindTherapist } from "../FindTherapist/FindTherapist";
 export const PsychologistPageAll = () => {
   const {
     totalPages,
@@ -34,15 +33,7 @@ export const PsychologistPageAll = () => {
   }
 
   return (
-    <div className="Page">
-      <div className="wrapper">
-        <h2 className="psychologists__title">Psychologists just for you</h2>
-        <p className="psychologists__description">
-          Here are the psychologists that match your criteria. Browse their
-          profiles and choose the one that suits you best.
-        </p>
-      </div>
-
+    <main className="Page">
       {loading && (
         <div className="loader-container">
           <Loader />
@@ -51,17 +42,19 @@ export const PsychologistPageAll = () => {
 
       {!loading && (
         <>
+          <div className="wrapper">
+            <h2 className="psychologists__title">Psychologists just for you</h2>
+            <p className="psychologists__description">
+              Here are the psychologists that match your criteria. Browse their
+              profiles and choose the one that suits you best.
+            </p>
+          </div>
           <div className="page__psychologists">
             {currentPsychologists.map((psych) => {
-              // const isFavotire = Array.isArray(favorites)
-              //   ? favorites.some((fav) => fav.id === psych.id)
-              //   : false;
-              // const Favotire = favorites.some((p) => p.id === psych.id);
-
               const handleToogleFavorite = (e: React.MouseEvent) => {
                 e.stopPropagation();
                 toggleFavorite(psych, fetchData);
-                
+
                 console.log("Toggling favorite for:", psych.id);
                 console.log("favorite click");
               };
@@ -201,6 +194,6 @@ export const PsychologistPageAll = () => {
       )}
 
       {/* <FindTherapist psychologists={psychologists} /> */}
-    </div>
+    </main>
   );
 };

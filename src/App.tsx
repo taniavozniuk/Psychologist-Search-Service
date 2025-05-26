@@ -38,31 +38,32 @@ function App() {
   };
 
   return (
-          <ModalContext.Provider value={{ isModalOpen, setIsModalOpen }}>
+    <ModalContext.Provider value={{ isModalOpen, setIsModalOpen }}>
       {!isModalOpen && (
         <>
           {!hasError && (
             <TopBar
-            onOpenFilter={() => setIsModalOpen(true)}
-            setIsModalOpenRegistration={() => setIsModalOpenRegistration(true)}
-            isModalOpenRegistration={isModalOpenRegistration}
-            isCongratulationsOpen={isCongratulationsOpen}
-            setIsModalLogIn={() => setIsModalLogIn(true)}
-            isModalLogIn={isModalLogIn}
-            setCurrentStep={setCurrentStep}
-            isHomePage={isHomePage}
-            isAbout={isAbout}
-          />
+              onOpenFilter={() => setIsModalOpen(true)}
+              setIsModalOpenRegistration={() =>
+                setIsModalOpenRegistration(true)
+              }
+              isModalOpenRegistration={isModalOpenRegistration}
+              isCongratulationsOpen={isCongratulationsOpen}
+              setIsModalLogIn={() => setIsModalLogIn(true)}
+              isModalLogIn={isModalLogIn}
+              setCurrentStep={setCurrentStep}
+              isHomePage={isHomePage}
+              isAbout={isAbout}
+            />
           )}
-          
         </>
       )}
 
-        {isModalOpen && (
-          <div className="filter__modal">
-            <ModalWindow onClose={() => setIsModalOpen(false)} />
-          </div>
-        )}
+      {isModalOpen && (
+        <div className="filter__modal">
+          <ModalWindow onClose={() => setIsModalOpen(false)} />
+        </div>
+      )}
 
       {isModalOpenRegistration && currentStep === 1 && !isModalOpen && (
         <div
@@ -116,15 +117,17 @@ function App() {
 
       <div className="wrappeSideBar">{isUserPage && <SideBar />}</div>
 
-      <Outlet
-        context={{
-          isModalOpen,
-          isModalOpenRegistration,
-          isModalLogIn,
-          isCongratulationsOpen,
-          setHasError,
-        }}
-      />
+      <div className="main__conteiner">
+        <Outlet
+          context={{
+            isModalOpen,
+            isModalOpenRegistration,
+            isModalLogIn,
+            isCongratulationsOpen,
+            setHasError,
+          }}
+        />
+      </div>
 
       {!isModalOpen && !isModalOpenRegistration && !isModalLogIn && (
         <div className="footer__container">
