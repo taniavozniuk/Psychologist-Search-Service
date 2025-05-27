@@ -22,29 +22,29 @@
   }
 }
 
-// .loader-container {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 33vh;
-//   width: 100vw;
-//   max-width: 1200px;
-//   margin: 0 auto;
-//   padding: 0 40px;
-// }
 .loader-container {
-  position: fixed; /* або absolute, якщо не хочеш фіксовано */
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 9999; /* вище за інші елементи */
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #F9F0E2; /* або прозорий фон, якщо потрібно */
-  overflow: hidden;
+  // height: 33vh;
+  // width: 100vw;
+  // max-width: 1200px;
+  // margin: 0 auto;
+  // padding: 0 40px;
 }
+// .loader-container {
+//   position: fixed; /* або absolute, якщо не хочеш фіксовано */
+//   top: 0;
+//   left: 0;
+//   width: 100vw;
+//   height: 100vh;
+//   z-index: 9999; /* вище за інші елементи */
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   background-color: #F9F0E2; /* або прозорий фон, якщо потрібно */
+//   overflow: hidden;
+// }
 
 .smallloader {
   width: 24px;

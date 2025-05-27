@@ -5,7 +5,7 @@ import Defolt from "../../image/Profile/defalt.jpg";
 import edit from "../../image/Profile/edit.svg";
 import { useUserPageHook } from "./useUserPageHook";
 import { Loader } from "../Loader/Loader";
-import {  useState } from "react";
+import { useState } from "react";
 import { deleteUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import ErrorIcon from "../../image/Error.svg";
@@ -46,12 +46,11 @@ export const UserPage = () => {
     handleYearChange,
     handleSave,
     error,
-    // loading
+    loading,
   } = useUserPageHook();
   const navigate = useNavigate();
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
 
   const handleDeleteButton = async () => {
     try {
@@ -64,12 +63,13 @@ export const UserPage = () => {
     }
   };
 
-  if (!user)
+if (loading) {
     return (
       <div className="loader-container">
         <Loader />
       </div>
     );
+  }
 
   if (error) {
     return (
@@ -78,16 +78,26 @@ export const UserPage = () => {
       </div>
     );
   }
+
+  if (!user) {
+    return (
+      <div className="error__container">
+        <p className="error-message">
+          Користувача не знайдено. Увійдіть знову.
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="UserPage">
-      {/* {loading && ( */}
+      {loading && (
         <div className="profileConteiner">
           <h1 className="profileTitle">Profile information</h1>
 
           <div className="profilePage">
             <div className="profilePhoto">
               {profilePhoto ? (
-              <img
+                <img
                   src={profilePhoto}
                   alt="photo"
                   className="profilePreview"
@@ -267,7 +277,7 @@ export const UserPage = () => {
             </div>
           </div>
         </div>
-      {/* )} */}
+      )}
 
       {openDeleteModal && (
         <div className="modal-backdropDelete">

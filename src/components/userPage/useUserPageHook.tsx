@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/AuthContext";
 import { handleError } from "../../utils/Error";
 import { UpdateUsers } from "../../types/UpdateUsers";
-import { getUser, UpdateUser, UpdateUserPhoto } from "../../api/api";
+import { UpdateUser, UpdateUserPhoto } from "../../api/api";
 
 export const useUserPageHook = () => {
   const { user, logout } = useAuth();
@@ -83,14 +83,14 @@ export const useUserPageHook = () => {
     setErrorYear("");
   };
 
-  const refetchUser = useCallback(async () => {
-    try {
-      const updatedUser = await getUser();
-      setProfilePhotoUrl(updatedUser.imageUrl || null);
-    } catch (e) {
-      console.error("Failed to refetch user", e);
-    }
-  }, []);
+  // const refetchUser = useCallback(async () => {
+  //   try {
+  //     const updatedUser = await getUser();
+  //     setProfilePhotoUrl(updatedUser.imageUrl || null);
+  //   } catch (e) {
+  //     console.error("Failed to refetch user", e);
+  //   }
+  // }, []);
 
   const validateDate = () => {
     let valid = true;
@@ -168,6 +168,8 @@ export const useUserPageHook = () => {
     if (!profilePhotoFile) return;
 
     try {
+      setLoading(true);
+
       await UpdateUserPhoto(profilePhotoFile);
       // await refetchUser();
       console.log("Photo updated successfully");
@@ -178,10 +180,13 @@ export const useUserPageHook = () => {
     } catch (e) {
       console.error("Photo update error", e);
       setError(handleError(e));
+      setLoading(false);
 
       if (user?.profileImage) {
         setProfilePhotoUrl(user.profileImage); // Повертаємо старе фото
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -222,6 +227,8 @@ export const useUserPageHook = () => {
       } else {
         setProfilePhotoUrl(null);
       }
+
+      // setLoading(false);
     }
   }, [user]);
   console.log("User on load:", user);
@@ -257,6 +264,6 @@ export const useUserPageHook = () => {
     handleYearChange,
     handleSave,
     error,
-    // loading
+    loading
   };
 };

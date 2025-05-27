@@ -1,5 +1,17 @@
 @use "../src/utils/mixins.scss" as *;
 
+.root{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main__conteiner{
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .section__title {
   margin: 0;
   text-align: center;
