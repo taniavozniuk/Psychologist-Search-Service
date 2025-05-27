@@ -87,13 +87,16 @@ export const useUserPageHook = () => {
     try {
       const updatedUser = await getUser();
       setProfilePhotoUrl(updatedUser.imageUrl || null);
+      return updatedUser;
     } catch (e) {
       console.error("Failed to refetch user", e);
     }
   }, []);
+
   useEffect(() => {
     refetchUser();
   }, [refetchUser]);
+
   const validateDate = () => {
     let valid = true;
 
@@ -128,7 +131,6 @@ export const useUserPageHook = () => {
     if (!validateDate()) {
       return;
     }
-    refetchUser();
     const updateUser: UpdateUsers = {
       email,
       firstName,
@@ -141,6 +143,7 @@ export const useUserPageHook = () => {
       setLoading(true);
       await UpdateUser(updateUser);
       await handleUpadatePhoto(); // викликаю оновлення фото
+      await refetchUser();
       console.log("User updated successfully");
     } catch (e) {
       console.error("Update error", e);
@@ -173,7 +176,7 @@ export const useUserPageHook = () => {
       setLoading(true);
 
       await UpdateUserPhoto(profilePhotoFile);
-      await refetchUser();
+      // await refetchUser();
       console.log("Photo updated successfully");
 
       if (profilePhotoUrl && profilePhotoUrl.startsWith("blob:")) {
