@@ -12,14 +12,14 @@
   justify-content: center;
   gap: 31px;
   grid-template-columns: repeat(3, 1fr);
-  margin-bottom: 64px;
+  // margin-bottom: 64px;
 }
 
 .favoritesConteiner {
-  max-width: 900px;
-  padding-left: 240px;
-  margin: 0 auto;
   max-width: 1250px;
+  padding-left: 240px;
+  // margin: 0 auto;
+  // max-width: 1250px;
 }
 
 .favoritesDes {

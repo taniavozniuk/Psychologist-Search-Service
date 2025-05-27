@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/AuthContext";
 import { handleError } from "../../utils/Error";
 import { UpdateUsers } from "../../types/UpdateUsers";
-import { UpdateUser, UpdateUserPhoto } from "../../api/api";
+import { getUser, UpdateUser, UpdateUserPhoto } from "../../api/api";
 
 export const useUserPageHook = () => {
   const { user, logout } = useAuth();
@@ -83,15 +83,17 @@ export const useUserPageHook = () => {
     setErrorYear("");
   };
 
-  // const refetchUser = useCallback(async () => {
-  //   try {
-  //     const updatedUser = await getUser();
-  //     setProfilePhotoUrl(updatedUser.imageUrl || null);
-  //   } catch (e) {
-  //     console.error("Failed to refetch user", e);
-  //   }
-  // }, []);
-
+  const refetchUser = useCallback(async () => {
+    try {
+      const updatedUser = await getUser();
+      setProfilePhotoUrl(updatedUser.imageUrl || null);
+    } catch (e) {
+      console.error("Failed to refetch user", e);
+    }
+  }, []);
+  useEffect(() => {
+    refetchUser();
+  }, [refetchUser]);
   const validateDate = () => {
     let valid = true;
 
@@ -126,7 +128,7 @@ export const useUserPageHook = () => {
     if (!validateDate()) {
       return;
     }
-
+    refetchUser();
     const updateUser: UpdateUsers = {
       email,
       firstName,
@@ -171,7 +173,7 @@ export const useUserPageHook = () => {
       setLoading(true);
 
       await UpdateUserPhoto(profilePhotoFile);
-      // await refetchUser();
+      await refetchUser();
       console.log("Photo updated successfully");
 
       if (profilePhotoUrl && profilePhotoUrl.startsWith("blob:")) {
@@ -206,10 +208,18 @@ export const useUserPageHook = () => {
         setMonth(month || "");
         setYear(year || "");
       }
-
+      refetchUser();
       // Оновлена частина для обробки Base64 зображення
       if (user.profileImage) {
         console.log("Image from backend:", user.profileImage);
+
+        if (
+          user.profileImage.startsWith(
+            "https://mindbloomapi.s3.eu-north-1.amazonaws.com/avatars/"
+          )
+        ) {
+          setProfilePhotoUrl(`${user.profileImage}?${Date.now()}`);
+        }
         // Якщо це вже URL (наприклад, з AWS S3)
         if (user.profileImage.startsWith("http")) {
           setProfilePhotoUrl(user.profileImage);
@@ -230,7 +240,7 @@ export const useUserPageHook = () => {
 
       // setLoading(false);
     }
-  }, [user]);
+  }, [refetchUser, user]);
   console.log("User on load:", user);
   return {
     user,
@@ -264,6 +274,7 @@ export const useUserPageHook = () => {
     handleYearChange,
     handleSave,
     error,
-    loading
+    loading,
+    profilePhotoUrl,
   };
 };

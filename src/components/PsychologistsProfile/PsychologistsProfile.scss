@@ -161,6 +161,7 @@
 }
 
 .reviewsCard {
+  margin-top: 40px;
   display: grid;
   grid-template-columns: repeat(3, 2fr);
   gap: 32px;
@@ -185,9 +186,11 @@
 }
 
 .reviewItem {
+  width: 358px;
   border: 1px solid #d6cdc0;
   border-radius: 16px;
   padding: 40px;
+  box-sizing: border-box;
 }
 
 .reviewUser {
@@ -205,6 +208,12 @@
   margin: 0 0 16px 0;
 }
 
+.WrapperTextReview{
+  max-width: 278px; // або інше обмеження ширини
+  word-wrap: break-word;
+  white-space: normal;
+}
+
 .reviewText {
   font-family: "Aileron", sans-serif;
   font-weight: 400;
@@ -212,6 +221,8 @@
   line-height: 30px;
   color: #0c0b09;
   margin: 0;
+    word-break: break-word;
+  white-space: pre-wrap;
 }
 
 .reviewLine {
@@ -224,6 +235,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.wrapperLineDate{
+  // position: absolute;
+  // bottom: 40px;
 }
 
 .reviewDateSesions {

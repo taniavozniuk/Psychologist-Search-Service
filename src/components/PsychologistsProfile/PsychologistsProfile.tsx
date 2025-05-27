@@ -221,23 +221,27 @@ export const PsychologistProfile = () => {
                           />
                         ))}
                       </div>
-                      <p className="reviewText">{item.reviewText}</p>
+                      <div className="WrapperTextReview">
+                        <p className="reviewText">{item.reviewText}</p>
+                      </div>
 
-                      <span className="reviewLine"></span>
-                      <div className="reviewWrapperDateSesion">
-                        <p className="reviewDateSesions">
-                          {item.sessionsCount} sessions
-                        </p>
-                        <p className="reviewDateSesions">
-                          {new Date(item.reviewDate).toLocaleDateString(
-                            "uk-UA",
-                            {
-                              day: "2-digit",
-                              month: "2-digit",
-                              year: "numeric",
-                            }
-                          )}
-                        </p>
+                      <div className="wrapperLineDate">
+                        <span className="reviewLine"></span>
+                        <div className="reviewWrapperDateSesion">
+                          <p className="reviewDateSesions">
+                            {item.sessionsCount} sessions
+                          </p>
+                          <p className="reviewDateSesions">
+                            {new Date(item.reviewDate).toLocaleDateString(
+                              "uk-UA",
+                              {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                              }
+                            )}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   ))}

@@ -169,10 +169,16 @@
   cursor: pointer;
 }
 
-.selected{
-    background-color: #e0f7fa;
-}
+// .selected{
+//     background-color: #9b6a002c;
+//     border: #9b6a002c;
+// }
 
 .iconPsy{
   margin-right: 8px;
+}
+
+.dimmed{
+      opacity: 0.5;
+    filter: grayscale(100%);
 }

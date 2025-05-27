@@ -129,9 +129,12 @@ export const FeetbackForm: React.FC<FeetbackFormProps> = ({
               {uniquePsychologists.map((psychologist) => (
                 <li
                   className={`feedItem psyWrapper ${
-                    selectedPsychologistId === psychologist.psychologistDto.id
+                    selectedPsychologistId === null
+                      ? ""
+                      : selectedPsychologistId ===
+                        psychologist.psychologistDto.id
                       ? "selected"
-                      : ""
+                      : "dimmed"
                   }`}
                   onClick={() =>
                     handlePsychologistSelect(psychologist.psychologistDto.id)

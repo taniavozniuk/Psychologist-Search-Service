@@ -48,7 +48,7 @@ export const MySesions = () => {
   }
 
   return (
-    <div className="UserPage">
+    <main className="UserPage">
       <div className="profilePage">
         <div className="bookConteiner">
           {isFeedbackOpen && showFeatbackForm().length > 0 &&(
@@ -332,6 +332,6 @@ export const MySesions = () => {
           </div>
         </div>
       )}
-    </div>
+    </main>
   );
 };

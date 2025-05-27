@@ -9,7 +9,7 @@ import { BookingUnauth } from "../types/BookingUnauth";
 import { UpdateUsers } from "../types/UpdateUsers";
 
 //затримка
-const delay = () => new Promise((resolve) => setTimeout(resolve, 5000000));
+const delay = () => new Promise((resolve) => setTimeout(resolve, 500));
 
 const BASE_URL = "http://localhost:8080/api";
 

@@ -11,6 +11,7 @@ import prevBt from "../../image/prevBt.svg";
 import { useCallback, useEffect, useState } from "react";
 import { getLikedPsychologist } from "../../api/api";
 import { allFilterPsychologist } from "../../types/allFilterPsychologist";
+import { Loader } from "../Loader/Loader";
 
 export const Favorites = () => {
   const {
@@ -29,19 +30,29 @@ export const Favorites = () => {
   const pageFromParams = Number(searchParams.get("page")) || 1; // стосується url сторінки
   const [currentPage, setCurrentPage] = useState(pageFromParams);
   const [favorites, setFavorites] = useState<allFilterPsychologist[]>([]);
-  console.log({ favorites }); 
-  
+  const [isLoading, setIsLoading] = useState(false);
+  console.log({ favorites });
+
   const fetchFavorites = useCallback(async () => {
+    setIsLoading(true);
     try {
       searchParams.set("page", currentPage.toString());
       searchParams.set("size", itemPrePage.toString());
       const data = await getLikedPsychologist(searchParams);
       setFavorites(data.psychologists);
       setTotalPages(data.totalPages);
+      // Якщо поточна сторінка більша за загальну кількість сторінок, перейти на останню
+      if (currentPage > data.totalPages) {
+        setCurrentPage(data.totalPages || 1);
+        searchParams.set("page", (data.totalPages || 1).toString());
+        setSearchParams(searchParams);
+      }
     } catch (error) {
       console.log("Failed to load liked psychologists:", error);
+    } finally {
+      setIsLoading(false);
     }
-  }, [searchParams, currentPage]);
+  }, [searchParams, currentPage, setSearchParams]);
 
   useEffect(() => {
     fetchFavorites();
@@ -54,15 +65,22 @@ export const Favorites = () => {
   };
 
   return (
-    <div className="UserPage">
+    <main className="UserPage">
       <div className="profilePage">
         <div className="favoritesConteiner">
-          {favorites.length === 0 ? (
+          {isLoading ? (
+            <div className="loader-container">
+              <Loader />
+            </div>
+          ) : favorites.length === 0 ? (
             <div className="nothing">
-              <h1 className="profileTitleNotYet">No favorites yet</h1>
-              <p className="favoritesDesNotYet">
-                Save specialists you trust to easily find them later.
-              </p>
+              <div className="wraperUserTitle">
+                <h1 className="profileTitleNotYet">No favorites yet</h1>
+                <p className="favoritesDesNotYet">
+                  Save specialists you trust to easily find them later.
+                </p>
+              </div>
+
               <img
                 src={favoriteYet}
                 alt="No favorites"
@@ -71,12 +89,14 @@ export const Favorites = () => {
             </div>
           ) : (
             <>
-              <h1 className="profileTitle">Your Saved Specialists</h1>
-              <p className="favoritesDes">
-                Your personal list of trusted professionals — carefully saved so
-                you can come back to them anytime you're ready to continue your
-                journey.
-              </p>
+              <div className="wraperUserTitle">
+                <h1 className="profileTitle">Your Saved Specialists</h1>
+                <p className="favoritesDes">
+                  Your personal list of trusted professionals — carefully saved
+                  so you can come back to them anytime you're ready to continue
+                  your journey.
+                </p>
+              </div>
 
               <div className="favourites__card">
                 {favorites.map((psychologist) => (
@@ -130,46 +150,51 @@ export const Favorites = () => {
                   </div>
                 ))}
               </div>
+
+              {totalPages > 1 && (
+                <div className="prev__buttons">
+                  <button
+                    className={`prev__buttonsbuttonPrev ${
+                      currentPage === 1 ? "disabled" : ""
+                    }`}
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                  >
+                    <img src={prevBt} alt="prev" className="prev" />
+                  </button>
+
+                  <div className="WrapperPagination">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                      (number) => (
+                        <button
+                          key={number}
+                          className={`pagination ${
+                            currentPage === number ? "active" : "notActive"
+                          }`}
+                          onClick={() => handlePageChange(number)}
+                          disabled={currentPage === number}
+                        >
+                          {number}
+                        </button>
+                      )
+                    )}
+                  </div>
+
+                  <button
+                    className={`prev__buttonsbuttonNext ${
+                      currentPage === totalPages ? "disabled" : ""
+                    }`}
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                  >
+                    <img src={nextBt} alt="next" className="next" />
+                  </button>
+                </div>
+              )}
             </>
           )}
-        </div>
+        </div>{" "}
       </div>
-
-      <div className="prev__buttons">
-        <button
-          className={`prev__buttonsbuttonPrev ${
-            currentPage === 1 ? "disabled" : ""
-          }`}
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          <img src={prevBt} alt="prev" className="prev" />
-        </button>
-        <div className="WrapperPagination">
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-            <button
-              key={number}
-              className={`pagination ${
-                currentPage === number ? "active" : "notActive"
-              }`}
-              onClick={() => handlePageChange(number)}
-              disabled={currentPage === number}
-            >
-              {number}
-            </button>
-          ))}
-        </div>
-
-        <button
-          className={`prev__buttonsbuttonNext ${
-            currentPage === totalPages ? "disabled" : ""
-          }`}
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          <img src={nextBt} alt="next" className="next" />
-        </button>
-      </div>
-    </div>
+    </main>
   );
 };

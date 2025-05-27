@@ -4,7 +4,6 @@ import Defolt from "../../image/Profile/defalt.jpg";
 
 import edit from "../../image/Profile/edit.svg";
 import { useUserPageHook } from "./useUserPageHook";
-import { Loader } from "../Loader/Loader";
 import { useState } from "react";
 import { deleteUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
@@ -47,6 +46,7 @@ export const UserPage = () => {
     handleSave,
     error,
     loading,
+    // profilePhotoUrl,
   } = useUserPageHook();
   const navigate = useNavigate();
 
@@ -63,13 +63,13 @@ export const UserPage = () => {
     }
   };
 
-if (loading) {
-    return (
-      <div className="loader-container">
-        <Loader />
-      </div>
-    );
-  }
+  // if (loading) {
+  //     return (
+  //       <div className="loader-container">
+  //         <Loader />
+  //       </div>
+  //     );
+  //   }
 
   if (error) {
     return (
@@ -89,10 +89,12 @@ if (loading) {
     );
   }
   return (
-    <div className="UserPage">
+    <main className="UserPage">
       {loading && (
         <div className="profileConteiner">
-          <h1 className="profileTitle">Profile information</h1>
+          <div className="wraperUserTitle">
+            <h1 className="profileTitle">Profile information</h1>
+          </div>
 
           <div className="profilePage">
             <div className="profilePhoto">
@@ -309,6 +311,6 @@ if (loading) {
           psychologistId={showFeatbackForm.psychologistDto.id}
         />
       )} */}
-    </div>
+    </main>
   );
 };
