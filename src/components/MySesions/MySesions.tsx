@@ -6,6 +6,7 @@ import { FeetbackForm } from "../FeedbackForm/FeedbackForm";
 import feedback from "../../image/Profile/feedback.svg";
 import modalCloce from "../../image/modalClose.svg";
 import { useEffect, useState } from "react";
+import { Loader } from "../Loader/Loader";
 
 export const MySesions = () => {
   const [isFeedbackOpen, setonOpenFeedback] = useState(false);
@@ -18,6 +19,7 @@ export const MySesions = () => {
     viewExpiredModal,
     selectBookink,
     error,
+    isLoading,
     handleViewDetails,
     handleViewConfirmedDetails,
     handleViewExpired,
@@ -37,12 +39,20 @@ export const MySesions = () => {
 
   useEffect(() => {
     setonOpenFeedback(true);
-  }, [])
-  
-    if (error) {
+  }, []);
+
+  if (error) {
     return (
       <div className="error__container">
         <p className="error-message">{error}</p>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="loader-container">
+        <Loader />
       </div>
     );
   }
@@ -51,7 +61,7 @@ export const MySesions = () => {
     <main className="UserPage">
       <div className="profilePage">
         <div className="bookConteiner">
-          {isFeedbackOpen && showFeatbackForm().length > 0 &&(
+          {isFeedbackOpen && showFeatbackForm().length > 0 && (
             <div className="feetbackConteiner">
               <FeetbackForm showFeatbackForm={showFeatbackForm} />
               <div className="wrapperClose">

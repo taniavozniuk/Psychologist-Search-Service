@@ -10,15 +10,15 @@ export const useScrollAnimation = () => {
   return { ref, inView };
 };
 
-  export const fadeUp = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
+export const fadeUp = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
 };
-  
+
 export const FadeInSection = ({ children }: { children: ReactNode }) => (
   <motion.div
     className="conteiner__section"
@@ -30,3 +30,21 @@ export const FadeInSection = ({ children }: { children: ReactNode }) => (
     {children}
   </motion.div>
 );
+
+export const FaseList = ({ children }: { children: ReactNode }) => {
+  return (
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: { staggerChildren: 0.1 },
+        },
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+};

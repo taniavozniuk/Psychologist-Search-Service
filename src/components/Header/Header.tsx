@@ -35,15 +35,15 @@ export const Header: React.FC<HeaderProps> = ({
                   specialist who suits your needs perfectly.
                 </h2>
 
-                <div className="button__testWrapper">
+                {/* <div className="button__testWrapper">
                   {/* to="/test" */}
-                  <button
+                  {/* <button
                     className="button__test"
                     title="This function will be in the future"
                   >
                     Start the Test
                   </button>
-                </div>
+                </div> */} 
               </div>
             </div>
           </div>

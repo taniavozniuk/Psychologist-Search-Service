@@ -4,7 +4,7 @@ export interface UpdateUsers {
   lastName: string;
   fatherName: string;
   // imageUrl: string;
-  birthDate: string;
+  birthDate: string | null;
 }
 
 // export interface UpUser {

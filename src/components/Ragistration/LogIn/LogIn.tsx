@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import ModalCloce from "../../../image/modalClose.svg";
 import { useOutsideClick } from "../../../hooks";
+import { toast } from "react-toastify";
 import "./LogIn.scss";
 import CloseEye from "../../../image/Resitration/closeEye.svg";
 import OpneEye from "../../../image/Resitration/openEye.svg";
@@ -11,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/AuthContext";
 import { handleError } from "../../../utils/Error";
 import ErrorIcon from "../../../image/Error.svg";
+import { ToastContainer } from "react-toastify";
 
 interface LogInProps {
   onClose: () => void;
@@ -38,6 +40,11 @@ export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
 
   const { login: onSuccessLogin } = useAuth();
 
+  useEffect(() => {
+    if (errorEmail) toast.error(errorEmail);
+    if (errorPassword) toast.error(errorPassword);
+  }, [errorPassword, errorEmail]);
+
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setEmail(value);
@@ -63,13 +70,13 @@ export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
 
     if (!password) {
       setHasPasswordError(true);
-      setErrorPassword("Password is required");
+      setErrorPassword("Please enter your email password");
       return;
     }
 
     if (!isValidEmail(email)) {
       setHasEmailError(true);
-      setErrorEmail("Please enter a valid email address example@gmail.com");
+      setErrorEmail("Please enter your email");
       return;
     }
 
@@ -169,7 +176,7 @@ export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
                 <img src={ErrorIcon} alt="error" className="error__icon" />
               )}
             </div>
-            {hasEmailError && <p className="help is-danger">{errorEmail}</p>}
+            {/* {hasEmailError && <p className="help is-danger">{errorEmail}</p>} */}
           </div>
 
           <div className="field__Password">
@@ -185,9 +192,9 @@ export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
                 value={password}
                 onChange={handlePasswordChange}
               />
-              {hasPasswordError && (
+              {/* {hasPasswordError && (
                 <p className="help is-danger">{errorPassword}</p>
-              )}
+              )} */}
               <button
                 type="button"
                 className="showPassword"
@@ -220,6 +227,12 @@ export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
           </div> */}
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        theme="light"
+        toastClassName="custom-toast"
+      />
     </div>
   );
 };

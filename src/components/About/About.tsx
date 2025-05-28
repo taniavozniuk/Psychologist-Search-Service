@@ -56,7 +56,7 @@ export const About = () => {
 
         <div className="AboutCard">
           <div className="cardAbout">
-            <img src={focused} alt="focused" />
+            <img src={focused} alt="focused" className="focusedIMG"/>
 
             <div className="TextWpar">
               <h3 className="cardTitle">Focused on You</h3>
@@ -83,11 +83,11 @@ export const About = () => {
                 Trust starts even before the first session.
               </p>
             </div>
-            <img src={clarity} alt="focused" />
+            <img src={clarity} alt="focused" className="focusedIMG"/>
           </div>
 
           <div className="cardAbout">
-            <img src={you} alt="focused" />
+            <img src={you} alt="focused" className="focusedIMG"/>
 
             <div className="TextWpar">
               <h3 className="cardTitle">We’re Here for You</h3>

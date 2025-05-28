@@ -38,7 +38,7 @@ export const FeelHeard = () => {
           </NavLink>
         </div>
         <div className="feel__Img">
-          <img src={selectedImage} alt="feel" />
+          <img src={selectedImage} alt="feel" className="feelIMG"/>
         </div>
       </div>
     </div>

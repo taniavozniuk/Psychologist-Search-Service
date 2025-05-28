@@ -1,10 +1,12 @@
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useOutsideClick } from "../../hooks";
 import "./nextstep.scss";
 import ModalCloce from "../../image/modalClose.svg";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { singUp } from "../../api/api";
 import backBt from "../../image/Resitration/backBt.svg";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 // import { useAuth } from "../../hooks/AuthContext";
 
 interface nextStepProps {
@@ -39,10 +41,16 @@ export const NextStep: React.FC<nextStepProps> = ({
   const [errorSecondName, setErrorSecondName] = useState("");
 
   const [isAgreed, setIsAgreed] = useState(false);
-  const [hasCheckboxError, setHasCheckboxError] = useState(false);
+  const [, setHasCheckboxError] = useState(false);
   const [errorCheckbox, setErrorCheckbox] = useState("");
 
   const [, setError] = useState("");
+
+  useEffect(() => {
+    if (errorFirstName) toast.error(errorFirstName);
+    if (errorSecondName) toast.error(errorSecondName);
+    if (errorCheckbox) toast.error(errorCheckbox);
+  }, [errorFirstName, errorSecondName, errorCheckbox]);
 
   const handleFirstNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -100,18 +108,39 @@ export const NextStep: React.FC<nextStepProps> = ({
         role: "CUSTOMER",
       });
 
-      //       const { accessToken } = response.data; // або response.token — залежить від API
-
-      // if (accessToken) {
-      //   await login(accessToken); // <- із useAuth()
-      // }
-
       console.log("User registered successfully", response);
       setIsCongratulationsOpen(true);
       onClose(); // or navigate to login
-    } catch (err) {
-      setError("Registration failed. Try again later.");
-      console.error(err);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      // console.error(err);
+
+      if (err.response?.data?.errors) {
+        const errors = err.response.data.errors;
+
+        if (errors.firstName) {
+          setHasFirstNameError(true);
+          setErrorFirstName(errors.firstName);
+        }
+        if (errors.lastName) {
+          setHasSecondNameError(true);
+          setErrorSecondName(errors.lastName);
+        }
+        if (errors.password) {
+          toast.error(errors.password);
+          toast.error(errors.password);
+        }
+        if (errors.confirmPassword) {
+          toast.error(errors.confirmPassword);
+        }
+        if (errors.general) {
+          toast.error(errors.general);
+        }
+      } else {
+        // Помилка не у форматі expected
+        setError("Registration failed. Try again later.");
+        toast.error("Registration failed. Try again later.");
+      }
     }
   };
 
@@ -171,9 +200,9 @@ export const NextStep: React.FC<nextStepProps> = ({
                   value={firstName}
                   onChange={handleFirstNameChange}
                 />
-                {hasFirstNameError && (
+                {/* {hasFirstNameError && (
                   <p className="help is-danger">{errorFirstName}</p>
-                )}
+                )} */}
               </div>
             </div>
 
@@ -193,9 +222,9 @@ export const NextStep: React.FC<nextStepProps> = ({
                   value={secondName}
                   onChange={handleSecondNameChange}
                 />
-                {hasSecondNameError && (
+                {/* {hasSecondNameError && (
                   <p className="help is-danger">{errorSecondName}</p>
-                )}
+                )} */}
               </div>
             </div>
           </div>
@@ -242,13 +271,19 @@ export const NextStep: React.FC<nextStepProps> = ({
               >
                 Terms of Service
               </a>
-              {hasCheckboxError && (
+              {/* {hasCheckboxError && (
                 <p className="help is-danger">{errorCheckbox}</p>
-              )}
+              )} */}
             </span>
           }
         />
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        theme="light"
+        toastClassName="custom-toast"
+      />
     </div>
   );
 };

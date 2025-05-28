@@ -71,6 +71,13 @@
 .stars {
   display: flex;
   justify-content: space-between;
+  animation: float 3s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+.star:hover {
+  animation-play-state: paused;
+  transform: scale(1.2) rotate(10deg);
 }
 
 .starDes {
@@ -174,11 +181,11 @@
 //     border: #9b6a002c;
 // }
 
-.iconPsy{
+.iconPsy {
   margin-right: 8px;
 }
 
-.dimmed{
-      opacity: 0.5;
-    filter: grayscale(100%);
+.dimmed {
+  opacity: 0.5;
+  filter: grayscale(100%);
 }

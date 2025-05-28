@@ -36,16 +36,20 @@ export const SideBar = () => {
           </NavLink>
         </div>
 
-        <NavLink to="/profile/favorites" className="sidebarIl">
-          <img src={likeProfile} alt="like" className="sidebarIcon" />
-          <span className="sidebarText">Favorites</span>
-        </NavLink>
+        <div className="wrapperIl">
+          <NavLink to="/profile/favorites" className="sidebarIl">
+            <img src={likeProfile} alt="like" className="sidebarIcon" />
+            <span className="sidebarText">Favorites</span>
+          </NavLink>
+        </div>
 
         <span className="sidebarLine"></span>
 
-        <div className="sidebarIl" onClick={() => setModalLogOut(true)}>
-          <img src={logOut} alt="like" className="sidebarIcon" />
-          <span className="sidebarText">Log Out</span>
+        <div className="wrapperIl">
+          <div className="sidebarIl" onClick={() => setModalLogOut(true)}>
+            <img src={logOut} alt="like" className="sidebarIcon" />
+            <span className="sidebarText">Log Out</span>
+          </div>
         </div>
       </ul>
 

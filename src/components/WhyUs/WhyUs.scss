@@ -33,6 +33,10 @@
   border-radius: 8px;
   box-sizing: border-box;
 
+    &:hover {
+    box-shadow: 1px 0 0.4em #393126;
+  }
+
   @include onTablet {
     flex: 0 0 70%;
     max-width: 70%;

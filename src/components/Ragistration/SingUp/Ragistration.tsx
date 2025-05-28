@@ -1,12 +1,14 @@
 import "./Ragistration.scss";
 import ModalCloce from "../../../image/modalClose.svg";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useOutsideClick } from "../../../hooks";
 import CloseEye from "../../../image/Resitration/closeEye.svg";
 import OpneEye from "../../../image/Resitration/openEye.svg";
 // import Google from "../../../image/Resitration/google.svg";
 // import Apple from "../../../image/Resitration/iphone.svg";
-import ErrorIcon from '../../../image/Error.svg'
+import ErrorIcon from "../../../image/Error.svg";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 interface RegistrationProps {
   onClose: () => void;
@@ -50,6 +52,11 @@ export const Registration: React.FC<RegistrationProps> = ({
     setErrorPassword("");
   };
 
+  useEffect(() => {
+    if (errorEmail) toast.error(errorEmail);
+    if (errorPassword) toast.error(errorPassword);
+  }, [errorPassword, errorEmail]);
+
   const handleContinue = () => {
     if (!email) {
       setHasEmailError(true);
@@ -58,22 +65,20 @@ export const Registration: React.FC<RegistrationProps> = ({
       return;
     }
 
-    if (!password) {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+
+    if (!passwordRegex.test(password)) {
       setHasPasswordError(true);
-      setErrorPassword("Password is required");
+      setErrorPassword("Password must be at least 8 characters, contain an uppercase letter and a special character.");
 
       return;
     }
-
+    
     if (!isValidEmail(email)) {
       setHasEmailError(true);
       setErrorEmail("Please enter a valid email address example@gmail.com");
       return;
     }
-
-    // localStorage.removeItem("registrationEmail");
-    // localStorage.removeItem("registrationPassword");
-    // localStorage.removeItem("accessToken");
 
     setHasEmailError(false);
     setHasPasswordError(false);
@@ -81,7 +86,9 @@ export const Registration: React.FC<RegistrationProps> = ({
   };
 
   const isValidEmail = (email: string) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    return /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu.test(
+      email
+    );
   };
 
   return (
@@ -139,7 +146,7 @@ export const Registration: React.FC<RegistrationProps> = ({
                 <img src={ErrorIcon} alt="error" className="error__icon" />
               )}
             </div>
-            {hasEmailError && <p className="help is-danger">{errorEmail}</p>}
+            {/* {hasEmailError && <p className="help is-danger">{errorEmail}</p>} */}
           </div>
 
           <div className="field__Password">
@@ -155,9 +162,9 @@ export const Registration: React.FC<RegistrationProps> = ({
                 value={password}
                 onChange={handlePasswordChange}
               />
-              {hasPasswordError && (
+              {/* {hasPasswordError && (
                 <p className="help is-danger">{errorPassword}</p>
-              )}
+              )} */}
               <button
                 type="button"
                 className="showPassword"
@@ -190,6 +197,12 @@ export const Registration: React.FC<RegistrationProps> = ({
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        theme="light"
+        toastClassName="custom-toast"
+      />
     </div>
   );
 };

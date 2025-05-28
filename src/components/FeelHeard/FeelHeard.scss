@@ -56,6 +56,15 @@
 
 .feel__Img {
   padding: 0 0 0 32px;
+
+
+}
+
+.feelIMG{
+  &:hover {
+    box-shadow: 1px 0 0.4em #393126;
+    border-radius: 8px;
+  }
 }
 
 .feel__findButton {

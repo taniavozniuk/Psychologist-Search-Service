@@ -1,12 +1,12 @@
 @use "../src/utils/mixins.scss" as *;
 
-.root{
+.root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-.main__conteiner{
+.main__conteiner {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -120,4 +120,15 @@
   font-size: 30px;
   line-height: 30px;
   color: #0c0b09;
+}
+
+/* Прогрес-бар */
+.Toastify__progress-bar {
+  background: #9b6a00 !important; /* Tailwind: emerald-400 */
+  height: 4px;
+  border-radius: 2px;
+}
+
+.Toastify__toast-container--top-right {
+  margin-top: 80px;
 }

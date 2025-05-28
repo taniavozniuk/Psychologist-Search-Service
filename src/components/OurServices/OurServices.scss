@@ -39,6 +39,10 @@
 .services__image {
   width: 100%;
 
+  &:hover {
+    box-shadow: 1px 0 0.4em #393126;
+    border-radius: 8px;
+  }
   @include onTablet {
     width: 288px;
   }
@@ -70,7 +74,7 @@
   color: #4b463e;
   margin: 0;
 
-  @include onTablet{
+  @include onTablet {
     font-size: 14px;
     line-height: 21px;
   }

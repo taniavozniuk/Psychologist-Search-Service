@@ -208,7 +208,7 @@
   margin: 0 0 16px 0;
 }
 
-.WrapperTextReview{
+.WrapperTextReview {
   max-width: 278px; // або інше обмеження ширини
   word-wrap: break-word;
   white-space: normal;
@@ -221,8 +221,12 @@
   line-height: 30px;
   color: #0c0b09;
   margin: 0;
-    word-break: break-word;
-  white-space: pre-wrap;
+  min-height: 100px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* кількість рядків */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .reviewLine {
@@ -237,7 +241,7 @@
   justify-content: space-between;
 }
 
-.wrapperLineDate{
+.wrapperLineDate {
   // position: absolute;
   // bottom: 40px;
 }

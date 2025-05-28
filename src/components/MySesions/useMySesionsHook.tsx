@@ -17,9 +17,15 @@ export const useMySesionHook = () => {
     null
   );
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+    console.log({isLoading}, 'єотрмнання лоадера');
+  }, [isLoading]);
 
   useEffect(() => {
     const fetchBooking = async () => {
+      setIsLoading(true);
       try {
         const data = await getBookingUser();
         console.log("Отримані бронювання:", data);
@@ -28,6 +34,9 @@ export const useMySesionHook = () => {
       } catch (error) {
         console.error("Failed to fetch bookings:", error);
         setError(handleError(error));
+        setIsLoading(false);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -95,6 +104,7 @@ export const useMySesionHook = () => {
     viewExpiredModal,
     selectBookink,
     error,
+    isLoading,
     handleViewDetails,
     handleViewConfirmedDetails,
     handleViewExpired,

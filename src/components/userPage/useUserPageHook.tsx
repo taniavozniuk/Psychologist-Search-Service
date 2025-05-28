@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../hooks/AuthContext";
 import { handleError } from "../../utils/Error";
 import { UpdateUsers } from "../../types/UpdateUsers";
@@ -39,7 +41,7 @@ export const useUserPageHook = () => {
   const [errorYear, setErrorYear] = useState("");
 
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -83,6 +85,22 @@ export const useUserPageHook = () => {
     setErrorYear("");
   };
 
+  useEffect(() => {
+    if (errorDay) toast.error(errorDay);
+    if (errorMonth) toast.error(errorMonth);
+    if (errorYear) toast.error(errorYear);
+    if (errorFirstName) toast.error(errorFirstName);
+    if (errorLastName) toast.error(errorLastName);
+    if (errorEmail) toast.error(errorEmail);
+  }, [
+    errorDay,
+    errorMonth,
+    errorYear,
+    errorFirstName,
+    errorLastName,
+    errorEmail,
+  ]);
+
   const refetchUser = useCallback(async () => {
     try {
       const updatedUser = await getUser();
@@ -98,6 +116,13 @@ export const useUserPageHook = () => {
   }, [refetchUser]);
 
   const validateDate = () => {
+    // const isAnyFieldFilled = day || month || year;
+
+    // if (!isAnyFieldFilled) {
+    //   // Немає дати — ок
+    //   return true;
+    // }
+
     let valid = true;
 
     if (!day || isNaN(Number(day)) || Number(day) < 1 || Number(day) > 31) {
@@ -127,6 +152,11 @@ export const useUserPageHook = () => {
     return valid;
   };
 
+  const isDateFilled = day && month && year;
+  const formattedBirthDate = isDateFilled
+    ? `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`
+    : null;
+
   const handleSave = async () => {
     if (!validateDate()) {
       return;
@@ -136,7 +166,7 @@ export const useUserPageHook = () => {
       firstName,
       lastName,
       fatherName: "",
-      birthDate: `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`,
+      birthDate: formattedBirthDate,
     };
     console.log("Sending user update", updateUser);
     try {
@@ -251,10 +281,8 @@ export const useUserPageHook = () => {
     profilePhoto: profilePhotoUrl,
     firstName,
     hasFirstNameError,
-    errorFirstName,
     lastName,
     hasLastNameError,
-    errorLastName,
     handleFirstNameChange,
     handleLastNameChange,
     handlePhotoUpload,
@@ -262,18 +290,14 @@ export const useUserPageHook = () => {
     email,
     hasEmailError,
     handleEmailChange,
-    errorEmail,
     day,
     hasDayError,
-    errorDay,
     handleDayChange,
     month,
     hasMonthError,
-    errorMonth,
     handleMonthChange,
     year,
     hasYearError,
-    errorYear,
     handleYearChange,
     handleSave,
     error,

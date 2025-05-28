@@ -8,6 +8,7 @@ import "./FeedbackForm.scss";
 import { MyBokking } from "../../types/MyBooking";
 import { postReview } from "../../api/api";
 import { Review } from "../../types/Postreview";
+import { FaseList } from "../../utils/useInViewAnimation";
 
 interface FeetbackFormProps {
   showFeatbackForm: () => MyBokking[];
@@ -125,27 +126,29 @@ export const FeetbackForm: React.FC<FeetbackFormProps> = ({
         </div>
         {isOpen && (
           <div className="itemFeed">
-            <ul className="ulFeed">
-              {uniquePsychologists.map((psychologist) => (
-                <li
-                  className={`feedItem psyWrapper ${
-                    selectedPsychologistId === null
-                      ? ""
-                      : selectedPsychologistId ===
-                        psychologist.psychologistDto.id
-                      ? "selected"
-                      : "dimmed"
-                  }`}
-                  onClick={() =>
-                    handlePsychologistSelect(psychologist.psychologistDto.id)
-                  }
-                >
-                  <img src={user} alt="iconPsy" className="iconPsy" />
-                  Dr. {psychologist.psychologistDto.firstName}{" "}
-                  {psychologist.psychologistDto.lastName}
-                </li>
-              ))}
-            </ul>
+            <FaseList>
+              <ul className="ulFeed">
+                {uniquePsychologists.map((psychologist) => (
+                  <li
+                    className={`feedItem psyWrapper ${
+                      selectedPsychologistId === null
+                        ? ""
+                        : selectedPsychologistId ===
+                          psychologist.psychologistDto.id
+                        ? "selected"
+                        : "dimmed"
+                    }`}
+                    onClick={() =>
+                      handlePsychologistSelect(psychologist.psychologistDto.id)
+                    }
+                  >
+                    <img src={user} alt="iconPsy" className="iconPsy" />
+                    Dr. {psychologist.psychologistDto.firstName}{" "}
+                    {psychologist.psychologistDto.lastName}
+                  </li>
+                ))}
+              </ul>
+            </FaseList>
           </div>
         )}
       </div>
