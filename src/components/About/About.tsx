@@ -1,11 +1,23 @@
-import { NavLink } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import "./About.scss";
 import logo from "../../image/MindBloomBlack.svg";
 import clarity from "../../image/About/clarity.svg";
 import focused from "../../image/About/focused.svg";
 import you from "../../image/About/you.svg";
 
+interface OutletProps {
+  setIsModalOpenRegistration: () => void;
+  setCurrentStep: (step: number) => void;
+}
+
 export const About = () => {
+  const { setIsModalOpenRegistration, setCurrentStep } =
+    useOutletContext<OutletProps>();
+  const handleCreateAccountClick = (e: React.MouseEvent) => {
+    e.preventDefault(); 
+    setIsModalOpenRegistration();
+    setCurrentStep(1); 
+  };
   return (
     <>
       <div className="HeaderaboutWrapper">
@@ -27,9 +39,9 @@ export const About = () => {
                 preferences, and availability.
               </p>
 
-              <NavLink className="createAccount" to="/createAccount">
+              <div className="createAccount" onClick={handleCreateAccountClick}>
                 Create an Account
-              </NavLink>
+              </div>
             </div>
           </div>
         </div>
@@ -56,7 +68,7 @@ export const About = () => {
 
         <div className="AboutCard">
           <div className="cardAbout">
-            <img src={focused} alt="focused" className="focusedIMG"/>
+            <img src={focused} alt="focused" className="focusedIMG" />
 
             <div className="TextWpar">
               <h3 className="cardTitle">Focused on You</h3>
@@ -83,11 +95,11 @@ export const About = () => {
                 Trust starts even before the first session.
               </p>
             </div>
-            <img src={clarity} alt="focused" className="focusedIMG"/>
+            <img src={clarity} alt="focused" className="focusedIMG" />
           </div>
 
           <div className="cardAbout">
-            <img src={you} alt="focused" className="focusedIMG"/>
+            <img src={you} alt="focused" className="focusedIMG" />
 
             <div className="TextWpar">
               <h3 className="cardTitle">We’re Here for You</h3>

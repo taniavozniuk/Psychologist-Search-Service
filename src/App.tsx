@@ -125,6 +125,8 @@ function App() {
             isModalLogIn,
             isCongratulationsOpen,
             setHasError,
+            setIsModalOpenRegistration, // Додаємо цю функцію
+            setCurrentStep,
           }}
         />
       </div>

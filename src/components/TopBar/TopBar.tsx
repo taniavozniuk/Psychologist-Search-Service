@@ -50,7 +50,6 @@ export const TopBar: React.FC<TopBarProps> = ({
     return `${baseClass} ${activeClass} ${colorClass}`;
   };
 
-  
   return (
     <div
       className={`top_bar ${
@@ -86,7 +85,10 @@ export const TopBar: React.FC<TopBarProps> = ({
 
         <div className="navigation">
           <div className="menu">
-            <NavLink className={getLinkClass} to="/about">
+            <NavLink
+              className={getLinkClass}
+              to="/about"
+            >
               About
             </NavLink>
 
