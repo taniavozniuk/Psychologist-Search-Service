@@ -52,7 +52,7 @@ export const Review: React.FC<ReviewProps> = ({
       setPay(paymentResponse);
 
       if (paymentResponse.sessionUrl) {
-        window.open(paymentResponse.sessionUrl, "_blank"); // відкриває в новій вкладці
+        window.location.href = paymentResponse.sessionUrl; // відкриває у цьому ж вікні
         onClose();
       }
 

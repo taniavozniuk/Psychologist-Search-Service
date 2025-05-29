@@ -80,9 +80,12 @@ export const PsychologistPageAll = () => {
                     </div>
                     <div className="warapperNamePrice">
                       <div className="psychologistInfo__NamePrice">
-                        <h3 className="psychologistInfo__name">
+                        <NavLink
+                          className="psychologistInfo__name"
+                          to={`/psychologist/${psych.id}`}
+                        >
                           {psych.firstName} {psych.lastName}
-                        </h3>
+                        </NavLink>
                         <p className="psychologistInfo__price">
                           <span className="priceLabel">Price:</span>
                           <span className="priceAmount">

@@ -137,6 +137,7 @@
 }
 
 .button__SpecName {
+  cursor: pointer;
   width: 221px;
   height: 48px;
   text-align: center;
@@ -243,6 +244,7 @@
 }
 
 .Bt__Reset {
+  cursor: pointer;
   width: 221px;
   height: 51px;
   background-color: #f9f0e2;
@@ -260,9 +262,16 @@
   @include onDesktop {
     font-size: 18px;
   }
+
+  &:hover {
+    background-color: #9b6a00;
+    border: 1px #9b6a00 solid;
+    color: #f9f0e2;
+  }
 }
 
 .Bt__Apply {
+  cursor: pointer;
   width: 221px;
   height: 51px;
   background-color: #393126;
@@ -273,6 +282,10 @@
   font-weight: 700;
   font-size: 18px;
 
+  &:hover {
+    background-color: #9b6a00;
+    border: 1px #9b6a00 solid;
+  }
   @include onTablet {
     font-size: 16px;
   }

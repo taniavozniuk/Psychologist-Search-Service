@@ -117,9 +117,12 @@ export const Favorites = () => {
                       </button>
                     </div>
                     <div className="psychologistWrapperInfo">
-                      <h3 className="psychologistName">
+                      <NavLink
+                        to={`/psychologist/${psychologist.id}`}
+                        className="psychologistName"
+                      >
                         {psychologist.firstName} {psychologist.lastName}
-                      </h3>
+                      </NavLink>
                       <p className="psychologistLikePrice">
                         <span className="priceLabel">Price:</span>
                         <span className="priceAmount">

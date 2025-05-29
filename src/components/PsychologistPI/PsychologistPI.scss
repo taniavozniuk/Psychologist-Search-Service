@@ -87,6 +87,8 @@
 }
 
 .experience-badge {
+  cursor: default;
+
   position: absolute;
   // height: 40px;
   bottom: 16px;
@@ -105,6 +107,7 @@
 }
 
 .folow {
+  cursor: pointer;
   position: absolute;
   bottom: 16px;
   right: 16px;
@@ -127,6 +130,7 @@
 }
 
 .psychologistInfo__name {
+  text-decoration: none;
   font-family: "Aileron", sans-serif;
   font-weight: 700;
   font-size: 32px;
@@ -136,6 +140,8 @@
 }
 
 .psychologistInfo__price {
+  cursor: default;
+
   font-family: "Aileron", sans-serif;
   font-weight: 400;
   font-size: 18px;
@@ -158,6 +164,8 @@
 }
 
 .psychologistAbout__title {
+  cursor: default;
+
   font-family: "Aileron", sans-serif;
   font-weight: 400;
   font-size: 28px;
@@ -167,6 +175,8 @@
 }
 
 .InfoWrraper {
+  cursor: default;
+
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -175,6 +185,8 @@
 }
 
 .InfoWrraperAppro {
+  cursor: default;
+
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -191,6 +203,7 @@
 }
 
 .specName {
+  cursor: default;
   font-family: "Aileron", sans-serif;
   font-weight: 400;
   font-size: 18px;
@@ -200,6 +213,8 @@
 }
 
 .InfoDescription {
+  cursor: default;
+
   height: 60px;
   font-family: "Aileron", sans-serif;
   font-weight: 400;
@@ -243,6 +258,8 @@
 }
 
 .prev__buttonsbuttonPrev {
+  cursor: pointer;
+
   color: #4b463e;
   // background-color: transparent;
   background-color: rgba(46, 40, 31, 0.3019607843);
@@ -255,6 +272,7 @@
 }
 
 .prev__buttonsbuttonNext {
+  cursor: pointer;
   color: #4b463e;
   // background-color: transparent;
   background-color: rgba(46, 40, 31, 0.3019607843);
@@ -273,6 +291,7 @@
 }
 
 .pagination {
+  cursor: pointer;
   width: 48px;
   height: 48px;
   border-radius: 100%;

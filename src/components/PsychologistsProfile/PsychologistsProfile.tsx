@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PsychologId } from "../../types/psychologId";
 import { getPsychologistId, getReview } from "../../api/api";
@@ -9,6 +9,7 @@ import Languages from "../../image/Profile/Languages.svg";
 import education from "../../image/Profile/education-filled.svg";
 import activeStarts from "../../image/Profile/StartsActive.svg";
 import Starts from "../../image/Profile/StartsGray.svg";
+import modalCloce from "../../image/modalClose.svg";
 
 import { USE, WORKWITH } from "./workWith";
 import Calendar from "./Calendar/Calendar";
@@ -16,12 +17,31 @@ import { Loader } from "../Loader/Loader";
 import { GetReviews } from "../../types/GetReviews";
 import { FadeInSection } from "../../utils/useInViewAnimation";
 import { handleError } from "../../utils/Error";
+import { useOutsideClick } from "../../hooks";
 
 export const PsychologistProfile = () => {
   const [psycholog, setPsycholog] = useState<PsychologId | null>(null);
   const [review, setReview] = useState<GetReviews[]>([]);
   const { id } = useParams();
   const [error, setError] = useState<string | null>(null);
+  const [selectedReview, setSelectedReview] = useState<GetReviews | null>(null);
+  const [isReadMoreModal, setIsReadMoreModal] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  useOutsideClick(modalRef, setIsReadMoreModal);
+
+  useEffect(() => {
+    if (isReadMoreModal && selectedReview) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isReadMoreModal, selectedReview]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +74,23 @@ export const PsychologistProfile = () => {
     };
     fetchData();
   }, [id]);
+
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "...";
+  };
+
+  const openReviewModal = (revie: GetReviews) => {
+    setSelectedReview(revie);
+    setIsReadMoreModal(true);
+  };
+
+  const closeReviewModal = () => {
+    setSelectedReview(null);
+    setIsReadMoreModal(false);
+
+    document.body.style.overflow = "auto";
+  };
 
   if (error) {
     return (
@@ -222,7 +259,17 @@ export const PsychologistProfile = () => {
                         ))}
                       </div>
                       <div className="WrapperTextReview">
-                        <p className="reviewText">{item.reviewText}</p>
+                        <p className="reviewText">
+                          {truncateText(item.reviewText, 200)}
+                        </p>
+                        <div className="wrapperReadMore">
+                          <button
+                            className="readMore"
+                            onClick={() => openReviewModal(item)}
+                          >
+                            Read more
+                          </button>
+                        </div>
                       </div>
 
                       <div className="wrapperLineDate">
@@ -252,6 +299,69 @@ export const PsychologistProfile = () => {
                 {/* This user has no comments. If you liked meeting him, you can
                 leave a review using this button, thanks. */}
               </p>
+            )}
+            {isReadMoreModal && selectedReview && (
+              <div className="reviewModal">
+                <div className="reviewModalContent" ref={modalRef}>
+                  <div className="wrapperButtonName">
+                    <div className="wrapperNameAgeStarts">
+                      <div className="NameStart">
+                        <h2 className="reviewNameAgeUser">
+                          {selectedReview.reviewerName}{" "}
+                          {selectedReview.reviewerAge}
+                        </h2>
+                      </div>
+                      <div className="reviewStarts">
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <img
+                            key={i}
+                            src={
+                              i < selectedReview.rate ? activeStarts : Starts
+                            }
+                            alt={
+                              i < selectedReview.rate
+                                ? "active star"
+                                : "inactive star"
+                            }
+                            className="reviewStarIcon"
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    <button
+                      className="closeButton"
+                      onClick={() => closeReviewModal()}
+                    >
+                      <img src={modalCloce} alt="close" />
+                    </button>
+                  </div>
+                  <div className="WrapperTextReview">
+                    <h2 className="reviewModalReviewText">
+                      {selectedReview.reviewText}
+                    </h2>
+                  </div>
+
+                  <div className="wrapperLineDate">
+                    <span className="reviewLine"></span>
+                    <div className="reviewWrapperDateSesion">
+                      <p className="reviewDateSesions">
+                        {selectedReview.sessionsCount} sessions
+                      </p>
+                      <p className="reviewDateSesions">
+                        {new Date(selectedReview.reviewDate).toLocaleDateString(
+                          "uk-UA",
+                          {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          }
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             )}
           </FadeInSection>
         </>

@@ -5,11 +5,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import edit from "../../image/Profile/edit.svg";
 import { useUserPageHook } from "./useUserPageHook";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { deleteUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import ErrorIcon from "../../image/Error.svg";
 import { Loader } from "../Loader/Loader";
+import { useOutsideClick } from "../../hooks";
 // import { Loader } from "../Loader/Loader";
 
 // import { FeetbackForm } from "../FeedbackForm/FeedbackForm";
@@ -49,11 +50,27 @@ export const UserPage = () => {
     handleSave,
     error,
     loading,
+    isLoading,
     // profilePhotoUrl,
   } = useUserPageHook();
   const navigate = useNavigate();
-
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  useOutsideClick(modalRef, setOpenDeleteModal);
+
+  useEffect(() => {
+    if (openDeleteModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [openDeleteModal]);
 
   const handleDeleteButton = async () => {
     try {
@@ -66,7 +83,7 @@ export const UserPage = () => {
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="loader-container">
         <Loader />
@@ -85,9 +102,7 @@ export const UserPage = () => {
   if (!user) {
     return (
       <div className="error__container">
-        <p className="error-message">
-          Користувача не знайдено. Увійдіть знову.
-        </p>
+        <p className="error-message">User not found. Please log in again.</p>
       </div>
     );
   }
@@ -239,7 +254,11 @@ export const UserPage = () => {
                   </div>
                   {/* {errorYear && <p className="help is-danger">{errorYear}</p>} */}
                 </div>
-                <button className="saveBirth" onClick={handleSave}>
+                <button
+                  className="saveBirth"
+                  onClick={handleSave}
+                  disabled={loading}
+                >
                   Save
                 </button>
               </div>
@@ -270,10 +289,9 @@ export const UserPage = () => {
         </div>
       </div>
 
-
       {openDeleteModal && (
         <div className="modal-backdropDelete">
-          <div className="modalDelete">
+          <div className="modalDelete" ref={modalRef}>
             <p className="deleteDes">
               Are you sure you want to delete your profile? This action is
               permanent.

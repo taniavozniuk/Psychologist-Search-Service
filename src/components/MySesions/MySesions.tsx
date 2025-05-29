@@ -5,8 +5,9 @@ import { useMySesionHook } from "./useMySesionsHook";
 import { FeetbackForm } from "../FeedbackForm/FeedbackForm";
 import feedback from "../../image/Profile/feedback.svg";
 import modalCloce from "../../image/modalClose.svg";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Loader } from "../Loader/Loader";
+import { useOutsideClick } from "../../hooks";
 
 export const MySesions = () => {
   const [isFeedbackOpen, setonOpenFeedback] = useState(false);
@@ -30,6 +31,10 @@ export const MySesions = () => {
     setViewDeteilsConfirmedModal,
     setviewExpiredModal,
   } = useMySesionHook();
+  const modalRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  useOutsideClick(modalRef, setViewDeteilsConfirmedModal);
 
   const showFeatbackForm = () => {
     return booking.filter((book) => {
@@ -189,7 +194,7 @@ export const MySesions = () => {
 
       {cancelModalOpen && selectBookink && (
         <div className="modal-backdrop">
-          <div className="modal">
+          <div className="modal" ref={modalRef}>
             <h2 className="modalTitleDeteils">Cancellation Confirmation</h2>
             <p className="modalDesDeteils">
               Are you sure you want to cancel your session with Dr.{" "}
@@ -214,7 +219,7 @@ export const MySesions = () => {
 
       {viewDeteilsCancelModalOpen && selectBookink && (
         <div className="modal-backdrop">
-          <div className="modal">
+          <div className="modal" ref={modalRef}>
             <h2 className="modalTitleDeteils">Session Details</h2>
             <p className="modalDesDeteils">
               This session with Dr. {selectBookink.psychologistDto.firstName}
@@ -253,7 +258,7 @@ export const MySesions = () => {
 
       {viewDeteilsConfirmedModal && selectBookink && (
         <div className="modal-backdrop">
-          <div className="modal">
+          <div className="modal" ref={modalRef}>
             <h2 className="modalTitleDeteils">Session Details</h2>
             <p className="modalDesDeteils">
               This session with Dr. {selectBookink.psychologistDto.firstName}
@@ -299,7 +304,7 @@ export const MySesions = () => {
 
       {viewExpiredModal && selectBookink && (
         <div className="modal-backdrop">
-          <div className="modal">
+          <div className="modal" ref={modalRef}>
             <h2 className="modalTitleDeteils">Session Details</h2>
             <p className="modalDesDeteils">
               This session with Dr. {selectBookink.psychologistDto.firstName}

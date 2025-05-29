@@ -18,10 +18,29 @@ export const useMySesionHook = () => {
   );
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  
+  useEffect(() => {
+    const isAnyModalOpen =
+      cancelModalOpen ||
+      viewDeteilsCancelModalOpen ||
+      viewDeteilsConfirmedModal ||
+      viewExpiredModal;
 
-    useEffect(() => {
-    console.log({isLoading}, 'єотрмнання лоадера');
-  }, [isLoading]);
+    document.body.style.overflow = isAnyModalOpen ? "hidden" : "auto";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [
+    cancelModalOpen,
+    viewDeteilsCancelModalOpen,
+    viewDeteilsConfirmedModal,
+    viewExpiredModal,
+  ]);
+
+  //   useEffect(() => {
+  //   console.log({isLoading}, 'єотрмнання лоадера');
+  // }, [isLoading]);
 
   useEffect(() => {
     const fetchBooking = async () => {

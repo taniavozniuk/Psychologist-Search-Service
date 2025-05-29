@@ -19,11 +19,11 @@ export const Footer = () => {
                 About Us
               </NavLink>
             </li>
-            <li className="footer__item">
+            {/* <li className="footer__item">
               <NavLink to="/blog" className="footer__link">
                 Blog
               </NavLink>
-            </li>
+            </li> */}
             <li className="footer__item">
               <a className="footer__link" href="#">
                 Contact

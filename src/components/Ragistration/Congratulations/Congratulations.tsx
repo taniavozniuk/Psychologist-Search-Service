@@ -25,7 +25,7 @@ export const Congratulations: React.FC<CongratulationsProps> = ({
         </p>
       </div>
 
-      <NavLink to="/find" className="CongratulationsBT" onClick={onClose}>
+      <NavLink to="/psychologist" className="CongratulationsBT" onClick={onClose}>
         Find a Therapist
       </NavLink>
     </div>

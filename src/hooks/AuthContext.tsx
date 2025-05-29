@@ -7,6 +7,7 @@ interface AuthContextType {
   logout: () => void;
   user: User | null;
   fetchUser: () => Promise<void>;
+  isLoading: boolean
 }
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -16,14 +17,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     () => !!localStorage.getItem("accessToken")
   );
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchUser = async () => {
     try {
+      setIsLoading(true);
       const fetchedUser = await getUser();
       setUser(fetchedUser);
     } catch (err) {
       console.log("failed to fetch user", err);
       logout(); // якщо помилка токен не валідний(виходим з логінації)
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -56,7 +62,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, login, logout, user, fetchUser }}
+      value={{ isLoggedIn, login, logout, user, fetchUser, isLoading }}
     >
       {children}
     </AuthContext.Provider>

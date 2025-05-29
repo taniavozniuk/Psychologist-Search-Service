@@ -82,6 +82,12 @@ export const FeetbackForm: React.FC<FeetbackFormProps> = ({
     try {
       const response = await postReview(newReviews, selectedPsychologistId!);
       console.log("Review response:", response);
+      // Очищую форму після успішної відправки
+      setSelectedPsychologistId(null);
+      setText("");
+      setRating(0);
+      setHasTextError(false);
+      setErrorText("");
     } catch (error) {
       console.error("Error submitting review:", error);
     }

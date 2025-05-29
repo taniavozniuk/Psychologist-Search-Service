@@ -5,12 +5,28 @@ import user from "../../../image/user.svg";
 import { useAuth } from "../../../hooks/AuthContext";
 import likeProfile from "../../../image/profileLike.svg";
 import logOut from "../../../image/logOut.svg";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useOutsideClick } from "../../../hooks";
 
 export const SideBar = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const [modalLogOut, setModalLogOut] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  useOutsideClick(modalRef, setModalLogOut);
+  useEffect(() => {
+    if (modalLogOut) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [modalLogOut]);
 
   const handleLogOut = () => {
     console.log("Token removed:", localStorage.getItem("accessToken"));
@@ -55,7 +71,7 @@ export const SideBar = () => {
 
       {modalLogOut && (
         <div className="modal-backdrop">
-          <div className="modal">
+          <div className="modal" ref={modalRef}>
             <h2 className="modalTitleDeteils">Log out of your account?</h2>
             <p className="modalDesDeteils">
               You’ll need to sign in again to access your account.

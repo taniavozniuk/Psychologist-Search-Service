@@ -6,7 +6,7 @@ import focused from "../../image/About/focused.svg";
 import you from "../../image/About/you.svg";
 
 interface OutletProps {
-  setIsModalOpenRegistration: () => void;
+  setIsModalOpenRegistration: (isOpen: boolean) => void;
   setCurrentStep: (step: number) => void;
 }
 
@@ -15,7 +15,7 @@ export const About = () => {
     useOutletContext<OutletProps>();
   const handleCreateAccountClick = (e: React.MouseEvent) => {
     e.preventDefault(); 
-    setIsModalOpenRegistration();
+    setIsModalOpenRegistration(true);
     setCurrentStep(1); 
   };
   return (

@@ -52,9 +52,15 @@
   height: 393px;
   object-fit: cover;
   border-radius: 8px;
+
+    &:hover {
+    box-shadow: 1px 0 0.4em #393126;
+    border-radius: 8px;
+  }
 }
 
 .uploadButton {
+  cursor: pointer;
   position: absolute;
   width: 48px;
   height: 48px;
@@ -171,6 +177,7 @@
 }
 
 .saveBirth {
+  cursor: pointer;
   margin: 38px 0 0 95px;
   text-decoration: none;
   width: 200px;
@@ -242,6 +249,7 @@
 }
 
 .BtDelete {
+  cursor: pointer;
   width: 252px;
   height: 51px;
   border-radius: 8px;

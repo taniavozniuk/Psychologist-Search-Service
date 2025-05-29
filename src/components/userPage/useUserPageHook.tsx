@@ -7,7 +7,7 @@ import { UpdateUsers } from "../../types/UpdateUsers";
 import { getUser, UpdateUser, UpdateUserPhoto } from "../../api/api";
 
 export const useUserPageHook = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, isLoading } = useAuth();
 
   const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null);
   const [profilePhotoFile, setProfilePhotoFile] = useState<File | null>(null);
@@ -116,12 +116,12 @@ export const useUserPageHook = () => {
   }, [refetchUser]);
 
   const validateDate = () => {
-    // const isAnyFieldFilled = day || month || year;
+    const isAnyFieldFilled = day || month || year;
 
-    // if (!isAnyFieldFilled) {
-    //   // Немає дати — ок
-    //   return true;
-    // }
+    if (!isAnyFieldFilled) {
+      // Немає дати — ок
+      return true;
+    }
 
     let valid = true;
 
@@ -302,6 +302,7 @@ export const useUserPageHook = () => {
     handleSave,
     error,
     loading,
+    isLoading,
     profilePhotoUrl,
   };
 };

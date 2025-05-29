@@ -131,6 +131,7 @@
 }
 
 .feetbackSub {
+  cursor: pointer;
   width: 100%;
   height: 51px;
   background-color: #393126;
@@ -174,12 +175,14 @@
   font-size: 18px;
   color: #615b52;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
-// .selected{
-//     background-color: #9b6a002c;
-//     border: #9b6a002c;
-// }
+.selected {
+  // background-color: #9b6a002c;
+  border: 1px solid #0c0b09;
+  color: #0c0b09;
+}
 
 .iconPsy {
   margin-right: 8px;

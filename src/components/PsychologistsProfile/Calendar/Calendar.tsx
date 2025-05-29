@@ -278,7 +278,7 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
               selectedDate?.getDate() === day &&
               selectedDate?.getMonth() === currentDate.getMonth() &&
               selectedDate?.getFullYear() === currentDate.getFullYear()
-                ? "selected"
+                ? "selectedDAY"
                 : ""
             }
 
