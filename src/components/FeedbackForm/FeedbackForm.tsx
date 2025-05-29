@@ -141,7 +141,7 @@ export const FeetbackForm: React.FC<FeetbackFormProps> = ({
                         ? ""
                         : selectedPsychologistId ===
                           psychologist.psychologistDto.id
-                        ? "selected"
+                        ? "selectedDoctor"
                         : "dimmed"
                     }`}
                     onClick={() =>

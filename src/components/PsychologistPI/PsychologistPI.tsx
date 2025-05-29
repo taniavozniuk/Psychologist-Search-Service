@@ -12,6 +12,7 @@ import { usePsychologPIHook } from "./usePsychologPIHook";
 import { Loader } from "../Loader/Loader";
 import { useFavourites } from "../../hooks/FavouritesContext";
 import React from "react";
+import { useAuth } from "../../hooks/AuthContext";
 export const PsychologistPageAll = () => {
   const {
     totalPages,
@@ -23,6 +24,7 @@ export const PsychologistPageAll = () => {
     fetchData,
   } = usePsychologPIHook();
   const { toggleFavorite } = useFavourites();
+  const { isLoggedIn } = useAuth();
 
   if (error) {
     return (
@@ -70,13 +72,18 @@ export const PsychologistPageAll = () => {
                       <div className="experience-badge">
                         {psych.experience} years' experience
                       </div>
-                      <button className="folow" onClick={handleToogleFavorite}>
-                        <img
-                          src={psych.isLiked ? liked : like}
-                          alt="like"
-                          className="like"
-                        />
-                      </button>
+                      {isLoggedIn && (
+                        <button
+                          className="folow"
+                          onClick={handleToogleFavorite}
+                        >
+                          <img
+                            src={psych.isLiked ? liked : like}
+                            alt="like"
+                            className="like"
+                          />
+                        </button>
+                      )}
                     </div>
                     <div className="warapperNamePrice">
                       <div className="psychologistInfo__NamePrice">
