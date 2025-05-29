@@ -65,7 +65,7 @@ export const Registration: React.FC<RegistrationProps> = ({
       return;
     }
 
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*_-])(?=.{8,})/;
 
     if (!passwordRegex.test(password)) {
       setHasPasswordError(true);
