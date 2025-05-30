@@ -10,6 +10,8 @@ import { BookingCalendar } from "../../../types/bookingsCalendar";
 import { useAuth } from "../../../hooks/AuthContext";
 import { Review } from "../Review/Review";
 import { handleError } from "../../../utils/Error";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 interface CalendarProps {
   psycholog: PsychologId;
@@ -160,8 +162,10 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
         const response = await addBooking(newBooking);
         setBooking(response);
         setOnOpneReview(true);
-      } catch (error) {
-        console.error("Booking creation failed:", error);
+      } catch (error: unknown) {
+        const errorMessage = error.response?.error || handleError(error);
+        console.error("Booking creation failed:", errorMessage);
+        toast.error(errorMessage);
       }
     } else {
       setOnOpenFillingInfo(true);
@@ -315,6 +319,13 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
                 Book a Session{" "}
               </button>
             )}
+
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              theme="light"
+              toastClassName="custom-toast"
+            />
           </div>
         </>
       )}

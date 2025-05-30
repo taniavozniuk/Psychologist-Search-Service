@@ -30,10 +30,10 @@
     bottom: 0;
     inset-inline: 40px;
     background-color: #d6cdc0;
+  }
 
-    &:last-child::before {
-      background-color: transparent;
-    }
+  &:last-child::before {
+    background-color: transparent;
   }
 }
 

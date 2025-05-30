@@ -7,6 +7,8 @@ export const handleError = (error: unknown): string => {
         return "Network error. The server might be unavailable.";
       case "Internal Server Error":
         return "Something went wrong on the server.";
+      // case "Internal Server Error":
+      //   return "You already have booked meeting for this date and time.";
       default:
         return "Server is not responding. Please try again later.";
     }

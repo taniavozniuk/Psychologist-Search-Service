@@ -12,7 +12,8 @@ import { UpdateUsers } from "../types/UpdateUsers";
 const delay = () => new Promise((resolve) => setTimeout(resolve, 500));
 
 // const BASE_URL = "http://localhost:8080/api";
-const BASE_URL = "http://ec2-51-20-71-177.eu-north-1.compute.amazonaws.com/api";
+// const BASE_URL = "http://ec2-51-20-71-177.eu-north-1.compute.amazonaws.com/api";
+const BASE_URL = "https://www.mindbloom-api.store/api";
 
 const apiClient = axios.create({
   baseURL: BASE_URL,

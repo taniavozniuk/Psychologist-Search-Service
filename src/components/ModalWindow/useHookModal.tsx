@@ -2,7 +2,7 @@
 export const sexOptions = ["Male", "Female", "Other"];
 export const specOptions = [
   { id: "1", label: "Individual" },
-  { id: "2", label: "Non-binary" },
+  { id: "2", label: "Couple therapy" },
 ];
 
 export const CONCERNS_LIST1 = [
