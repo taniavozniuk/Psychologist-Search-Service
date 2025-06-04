@@ -13,6 +13,7 @@ import { useAuth } from "../../../hooks/AuthContext";
 import { handleError } from "../../../utils/Error";
 import ErrorIcon from "../../../image/Error.svg";
 import { ToastContainer } from "react-toastify";
+import axios from "axios";
 
 interface LogInProps {
   onClose: () => void;
@@ -27,12 +28,12 @@ export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
 
   const [email, setEmail] = useState("");
   const [hasEmailError, setHasEmailError] = useState(false);
-  const [errorEmail, setErrorEmail] = useState("");
+  const [, setErrorEmail] = useState("");
 
   const [password, setPassword] = useState("");
   const [hasPasswordError, setHasPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [errorPassword, setErrorPassword] = useState("");
+  const [, setErrorPassword] = useState("");
 
   const [error, setError] = useState<string | null>(null);
 
@@ -40,10 +41,10 @@ export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
 
   const { login: onSuccessLogin } = useAuth();
 
-  useEffect(() => {
-    if (errorEmail) toast.error(errorEmail);
-    if (errorPassword) toast.error(errorPassword);
-  }, [errorPassword, errorEmail]);
+  // useEffect(() => {
+  //   if (errorEmail) toast.error(errorEmail);
+  //   if (errorPassword) toast.error(errorPassword);
+  // }, [errorPassword, errorEmail]);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -94,10 +95,12 @@ export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
 
       onClose(); // закрити модалку
       setError(null);
-    } catch (err) {
-      console.error("Login failed", err);
-      setError(handleError(error));
-      // setError("Login failed. Please check your credentials and try again.");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data.error || error.response?.data.password || handleError(error);
+        console.error("login failed:", errorMessage);
+        toast.error(errorMessage);
+      }
     }
 
     navigate("/profile");
@@ -208,7 +211,7 @@ export const LogIn: React.FC<LogInProps> = ({ onClose, openRegistration }) => {
               </button>
             </div>
           </div>
-          <h2 className="ForgotPassword">Forgot Password?</h2>
+          {/* <h2 className="ForgotPassword">Forgot Password?</h2> */}
         </div>
         <div className="WrapperBt">
           <button className="registrationContinue" onClick={handleSingIn}>

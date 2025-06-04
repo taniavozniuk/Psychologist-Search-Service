@@ -1,5 +1,6 @@
 import "./Header.scss";
 import React from "react";
+import { TypeAnimation } from "react-type-animation";
 
 type HeaderProps = {
   isModalOpenRegistration: boolean;
@@ -19,7 +20,15 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="header__bottom">
           <div className="header__wrapper">
             <div className="header__titleWrapper">
-              <h3 className="header__title">Your Mental Health Matters</h3>
+              <h3 className="header__title">
+                <TypeAnimation
+                  sequence={["Your Mental Health Matters", 1000]}
+                  speed={50}
+                  repeat={Infinity}
+                  className="header__title CURSOR_CLASS_NAME"
+                  cursor={false}
+                />
+              </h3>
             </div>
 
             <div className="header__descriptionWrapper">
@@ -37,13 +46,13 @@ export const Header: React.FC<HeaderProps> = ({
 
                 {/* <div className="button__testWrapper">
                   {/* to="/test" */}
-                  {/* <button
+                {/* <button
                     className="button__test"
                     title="This function will be in the future"
                   >
                     Start the Test
                   </button>
-                </div> */} 
+                </div> */}
               </div>
             </div>
           </div>

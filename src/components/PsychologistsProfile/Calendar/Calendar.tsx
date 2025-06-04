@@ -12,6 +12,8 @@ import { Review } from "../Review/Review";
 import { handleError } from "../../../utils/Error";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
+import axios from "axios";
+// import type { AxiosError } from "axios";
 
 interface CalendarProps {
   psycholog: PsychologId;
@@ -162,10 +164,19 @@ const Calendar: React.FC<CalendarProps> = ({ psycholog }) => {
         const response = await addBooking(newBooking);
         setBooking(response);
         setOnOpneReview(true);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // } catch (error: any) {
+        //   const errorMessage = error.response?.data.error || handleError(error);
+        //   console.error("Booking creation failed:", errorMessage);
+        //   toast.error(errorMessage);
+        //   console.log("error", error);
+        // }
       } catch (error: unknown) {
-        const errorMessage = error.response?.error || handleError(error);
-        console.error("Booking creation failed:", errorMessage);
-        toast.error(errorMessage);
+        if (axios.isAxiosError(error)) {
+          const errorMessage = error.response?.data.error || handleError(error);
+          console.error("Booking creation failed:", errorMessage);
+          toast.error(errorMessage);
+        }
       }
     } else {
       setOnOpenFillingInfo(true);

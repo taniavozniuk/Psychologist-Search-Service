@@ -1,9 +1,10 @@
 import { useOutletContext } from "react-router-dom";
 import "./About.scss";
 import logo from "../../image/MindBloomBlack.svg";
-import clarity from "../../image/About/clarity.svg";
-import focused from "../../image/About/focused.svg";
-import you from "../../image/About/you.svg";
+import clarity from "../../image/About/clarity.png";
+import focused from "../../image/About/focused.png";
+import you from "../../image/About/you.png";
+import { TypeAnimation } from "react-type-animation";
 
 interface OutletProps {
   setIsModalOpenRegistration: (isOpen: boolean) => void;
@@ -20,11 +21,19 @@ export const About = () => {
   };
   return (
     <>
-      <div className="HeaderaboutWrapper">
+      <div className="header">
         <div className="wrapperAbout">
           <div className="titleWrapper">
             <h3 className="aboutSmallTitle">About Us</h3>
-            <h2 className="aboutTitle">Find Your Inner Balance</h2>
+            <h2 className="aboutTitle">
+              <TypeAnimation
+                  sequence={["Find Your Inner Balance", 1000]}
+                  speed={50}
+                  repeat={Infinity}
+                  className="aboutTitle CURSOR_CLASS_NAME"
+                  cursor={false}
+                />
+              </h2>
           </div>
           <div className="decriptionWrapper">
             <p className="firstDescription">

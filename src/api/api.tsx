@@ -116,7 +116,7 @@ export const getPsychologistId = async (id: string) => {
 //отримую всі доступні дати для психолога за ідентифікатором на вказану дату
 export const getDateBokkingId = async (id: string, selectedDate: string) => {
   try {
-    const response = await apiClient.get(`/bookings/free_spots/${id}`, {
+    const response = await apiClient.get<string[]>(`/bookings/free_spots/${id}`, {
       params: { selectedDate },
     });
     return response.data;
@@ -129,7 +129,7 @@ export const getDateBokkingId = async (id: string, selectedDate: string) => {
 //отримую недоступні дні
 export const getLokedDates = async (id: string, selectedDate: string) => {
   try {
-    const response = await apiClient.get(`/bookings/lockedDates/${id}`, {
+    const response = await apiClient.get<string[]>(`/bookings/lockedDates/${id}`, {
       params: { selectedDate },
     });
     return response.data;
@@ -142,7 +142,7 @@ export const getLokedDates = async (id: string, selectedDate: string) => {
 //booking
 export const addBooking = async (book: BookingCalendar) => {
   try {
-    const response = await apiClient.post("/bookings", book);
+    const response = await apiClient.post<BookingCalendar | null>("/bookings", book);
     return response.data;
   } catch (error) {
     console.log("Bookings Error: ", error);

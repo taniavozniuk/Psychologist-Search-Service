@@ -262,7 +262,8 @@ export const PsychologistProfile = () => {
                         <p className="reviewText">
                           {truncateText(item.reviewText, 200)}
                         </p>
-                        <div className="wrapperReadMore">
+                        {item.reviewText.length > 200 && (
+                          <div className="wrapperReadMore">
                           <button
                             className="readMore"
                             onClick={() => openReviewModal(item)}
@@ -270,6 +271,8 @@ export const PsychologistProfile = () => {
                             Read more
                           </button>
                         </div>
+                        )}
+                        
                       </div>
 
                       <div className="wrapperLineDate">

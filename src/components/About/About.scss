@@ -1,5 +1,5 @@
 .HeaderaboutWrapper {
-  background-image: url(/Psychologist-Search-Service/src/image/header.svg);
+  background-image: url(/Psychologist-Search-Service/src/image/header.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -43,7 +43,7 @@
   display: flex;
   // align-items: center;
   justify-content: space-between;
-  margin: 129px 0 0 0;
+  margin: 80px 0 0 0;
 }
 
 .firstDescription {
@@ -84,6 +84,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+    &:hover {
+    background-color: #9b6a00;
+    border: 1px solid #9b6a00;
+  }
 }
 
 .aboutInformation {
@@ -168,7 +173,7 @@
 
 .focusedIMG {
   &:hover {
-    box-shadow: 1px 0 0.4em #393126;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
     border-radius: 16px;
   }
 }

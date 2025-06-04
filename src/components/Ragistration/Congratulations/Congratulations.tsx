@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "./Congratulations.scss";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useOutsideClick } from "../../../hooks";
 
 interface CongratulationsProps {
@@ -15,6 +15,13 @@ export const Congratulations: React.FC<CongratulationsProps> = ({
   // @ts-expect-error
   useOutsideClick(modalRef, onClose);
 
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   return (
     <div className="Congratulations__wrapper" ref={modalRef}>
       <div className="Congratulations__modal">
@@ -25,7 +32,11 @@ export const Congratulations: React.FC<CongratulationsProps> = ({
         </p>
       </div>
 
-      <NavLink to="/psychologist" className="CongratulationsBT" onClick={onClose}>
+      <NavLink
+        to="/psychologist"
+        className="CongratulationsBT"
+        onClick={onClose}
+      >
         Find a Therapist
       </NavLink>
     </div>

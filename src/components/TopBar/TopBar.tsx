@@ -128,7 +128,7 @@ export const TopBar: React.FC<TopBarProps> = ({
                     setCurrentStep(1);
                   }}
                 >
-                  Sing Up
+                  Sign Up
                 </h2>
                 <h2
                   className="choose__login"

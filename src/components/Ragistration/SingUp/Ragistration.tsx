@@ -69,11 +69,13 @@ export const Registration: React.FC<RegistrationProps> = ({
 
     if (!passwordRegex.test(password)) {
       setHasPasswordError(true);
-      setErrorPassword("Password must be at least 8 characters, contain an uppercase letter and a special character.");
+      setErrorPassword(
+        "Password must be at least 8 characters, contain an uppercase letter and a special character."
+      );
 
       return;
     }
-    
+
     if (!isValidEmail(email)) {
       setHasEmailError(true);
       setErrorEmail("Please enter a valid email address example@gmail.com");
@@ -90,6 +92,8 @@ export const Registration: React.FC<RegistrationProps> = ({
       email
     );
   };
+
+  // const enterRef = useRef<HTMLInputElement>(null);
 
   return (
     <div

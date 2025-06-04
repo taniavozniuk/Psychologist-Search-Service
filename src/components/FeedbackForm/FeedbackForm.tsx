@@ -9,6 +9,8 @@ import { MyBokking } from "../../types/MyBooking";
 import { postReview } from "../../api/api";
 import { Review } from "../../types/Postreview";
 import { FaseList } from "../../utils/useInViewAnimation";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 interface FeetbackFormProps {
   showFeatbackForm: () => MyBokking[];
@@ -25,7 +27,7 @@ export const FeetbackForm: React.FC<FeetbackFormProps> = ({
   const [hasTextError, setHasTextError] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  const [errorText, setErrorText] = useState("");
+  const [, setErrorText] = useState("");
   const [rating, setRating] = useState(0);
 
   const handleConcernsList = () => {
@@ -56,18 +58,18 @@ export const FeetbackForm: React.FC<FeetbackFormProps> = ({
     let hasError = false;
 
     if (!selectedPsychologistId) {
-      alert("Please select a specialist");
+      toast("Please select a specialist");
       hasError = true;
     }
 
     if (!text.trim()) {
       setHasTextError(true);
-      setErrorText("Please enter text");
+      toast("Please enter text");
       hasError = true;
     }
 
     if (rating === 0) {
-      alert("Please select a rating");
+      toast("Please select a rating");
       hasError = true;
     }
 
@@ -194,7 +196,7 @@ export const FeetbackForm: React.FC<FeetbackFormProps> = ({
                 placeholder="Share your thoughts, suggestions, or anything you think we should know"
                 required
               />
-              {hasTextError && <p className="help is-danger">{errorText}</p>}
+              {/* {hasTextError && <p className="help is-danger">{errorText}</p>} */}
             </div>
           </div>
         </form>
@@ -203,6 +205,12 @@ export const FeetbackForm: React.FC<FeetbackFormProps> = ({
           Submit
         </button>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        theme="light"
+        toastClassName="custom-toast"
+      />
     </div>
   );
 };

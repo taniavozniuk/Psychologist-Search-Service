@@ -15,6 +15,7 @@
 }
 
 .Month {
+  cursor: default;
   font-family: "Aileron", sans-serif;
   font-weight: 400;
   font-size: 28px;
@@ -47,13 +48,13 @@
 }
 
 .calendarWeekday {
+  cursor: default;
   width: 48px;
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  cursor: pointer;
   font-family: "Aileron", sans-serif;
   font-weight: 700;
   font-size: 18px;
@@ -62,14 +63,13 @@
 }
 
 .nextMonth {
-  cursor: pointer;
+  cursor: default;
   width: 48px;
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  cursor: pointer;
   border: 1px solid #b8aea0;
   border-radius: 100%;
 
@@ -133,6 +133,7 @@
 }
 
 .wrapperHour {
+  cursor: pointer;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px 32px;
@@ -184,6 +185,7 @@
 }
 
 .Book {
+  cursor: pointer;
   margin-top: 40px;
   width: 100%;
   height: 51px;

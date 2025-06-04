@@ -16,6 +16,10 @@ export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
   const [isLoading, setIsLoading] = useState(false);
   // const [showSuggestion, setShowSuggestion] = useState(false);
   const navigate = useNavigate();
+  // const modalRef = useRef<HTMLDivElement>(null);
+  // // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // // @ts-expect-error
+  // useOutsideClick(modalRef, onClose);
 
   const isTransparentTopBar = isHomePage || isAbout;
 
@@ -23,7 +27,6 @@ export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-
         const data = await getPsychologist();
         const filtered = data.filter(
           (psych: Psychologist) =>
@@ -56,54 +59,10 @@ export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
     navigate(`/psychologist/${psychologistId}`);
   };
 
-  // useEffect(() => {
-  //   if (searchText.trim() !== "" && psychologists.length === 0) {
-  //     setShowSuggestion(true);
-
-  //     const timer = setTimeout(() => {
-  //       setShowSuggestion(false);
-  //     }, 2000);
-
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [searchText, psychologists.length]);
-
-  // const filtereredPsychologist = psychologists.filter((psych: Psychologist) =>
-  //   psych.firstName.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
-  // );
-
-  // const handleSuggestionClick = () => {
-  //   navigate("/find"); // Перехід на сторінку з усіма психологами
-  // };
-
-  // const handleAddPsychologist = async () => {
-  //   const newPsychologist: postPsychologist = {
-  //     firstName: "Ben",
-  //     lastName: "Penter",
-  //     fatherName: "Jo",
-  //     phoneNumber: "41245566",
-  //     email: "ben.sge@gmail.com",
-  //     sessionPrice: "150.00",
-  //     introduction: "Some intro data",
-  //     specialityId: 1,
-  //     gender: "MALE",
-  //   };
-
-  //   try {
-  //     const result = await addPsychologist(newPsychologist);
-  //     console.log("Психолог успішно доданий:", result);
-  //   } catch (error) {
-  //     console.error("Помилка при додаванні психолога:", error);
-  //   }
-  // };
+  const shouldShowDropdown = searchText.trim().length > 0;
 
   return (
     <>
-      {/* {isLoading && (
-        <div className="loader-container">
-          <SmallLoader />
-        </div>
-      )} */}
       <div className="conteiner__input">
         <input
           name="name"
@@ -116,7 +75,7 @@ export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
           onChange={(e) => setSearchText(e.target.value)}
         />
       </div>
-      {psychologists.length > 0 && (
+      {shouldShowDropdown && psychologists.length > 0 && (
         <ul className="search__result">
           {psychologists.map((phych: Psychologist) => (
             <li
@@ -132,24 +91,20 @@ export const Input: React.FC<InputProps> = ({ isHomePage, isAbout }) => {
           ))}
         </ul>
       )}
-      {searchText && psychologists.length === 0 && !isLoading && (
-        <ul className="search__result">
-          <li className="search__item">No results found</li>
-        </ul>
-      )}
+      {shouldShowDropdown &&
+        searchText &&
+        psychologists.length === 0 &&
+        !isLoading && (
+          <ul className="search__result">
+            <li className="search__item">No results found</li>
+          </ul>
+        )}
 
-      {isLoading && (
+      {shouldShowDropdown && isLoading && (
         <ul className="search__result">
           <li className="search__item">Loading...</li>
         </ul>
       )}
-      {/* 
-      {showSuggestion && (
-        <div className="suggestion-box" onClick={handleSuggestionClick}>
-          <p>Go to the psychologists page</p>
-        </div>
-      )} */}
-      {/* <button onClick={handleAddPsychologist}>Add New Psychologist</button> */}
     </>
   );
 };

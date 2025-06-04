@@ -145,8 +145,11 @@
   font-size: 18px;
   line-height: 30px;
   color: #615b52;
-}
 
+  &:active {
+    border: 1px solid #0c0b09;
+  }
+}
 
 .label__SecondName {
   font-family: "Aileron", sans-serif;
@@ -173,6 +176,10 @@
   font-size: 18px;
   line-height: 30px;
   color: #615b52;
+
+  &:active {
+    border: 1px solid #0c0b09;
+  }
 }
 
 .checkBoxAggre {

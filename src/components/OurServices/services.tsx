@@ -1,6 +1,6 @@
-import img1 from "../../image/OurServices/Img1.svg";
-import img2 from "../../image/OurServices/Img2.svg";
-import img3 from "../../image/OurServices/Img3.svg";
+import img1 from "../../image/OurServices/Img.png";
+import img2 from "../../image/OurServices/Img2.png";
+import img3 from "../../image/OurServices/Img3.png";
 
 export const services = [
   {

@@ -155,7 +155,7 @@ export const Favorites = () => {
               </div>
 
               {totalPages > 1 && (
-                <div className="prev__buttons">
+                <div className="prev__buttonsLike">
                   <button
                     className={`prev__buttonsbuttonPrev ${
                       currentPage === 1 ? "disabled" : ""

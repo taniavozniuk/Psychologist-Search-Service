@@ -11,6 +11,7 @@
 .Information {
   width: 652px;
   padding-left: 32px;
+  cursor: default;
 }
 
 .profileImg {
@@ -72,6 +73,7 @@
 }
 
 .profileAbout {
+  cursor: default;
   margin-top: 96px;
 }
 
@@ -100,6 +102,7 @@
 }
 
 .workWithTitle {
+  cursor: default;
   font-family: "Aileron", sans-serif;
   font-weight: 700;
   font-size: 20px;
@@ -109,6 +112,7 @@
 }
 
 .workWithList {
+  cursor: default;
   margin: 24px 0 0 0;
   padding: 0 0 0 20px;
 }
@@ -141,8 +145,8 @@
   border: 1px solid #d6cdc0;
   border-radius: 16px;
 
-    &:hover {
-    box-shadow: 1px 0 0.4em #393126;
+  &:hover {
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -151,6 +155,7 @@
 }
 
 .planAppointment {
+  cursor: default;
   padding: 40px 40px 0 40px;
   font-family: "Aileron", sans-serif;
   font-weight: 700;
@@ -190,14 +195,17 @@
 }
 
 .reviewItem {
+  display: flex;
+  flex-direction: column;
   width: 358px;
   border: 1px solid #d6cdc0;
   border-radius: 16px;
   padding: 40px;
   box-sizing: border-box;
+  cursor: default;
 
   &:hover {
-    box-shadow: 1px 0 0.4em #393126;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -217,6 +225,7 @@
 }
 
 .WrapperTextReview {
+  height: 208px;
   // max-width: 278px; // або інше обмеження ширини
   word-wrap: break-word;
   white-space: normal;
@@ -229,11 +238,11 @@
   line-height: 30px;
   color: #0c0b09;
   margin: 0;
-  min-height: 156px;
+  // min-height: 156px;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* кількість рядків */
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
-  // overflow: hidden;
+  overflow: hidden;
   // text-overflow: ellipsis;
 }
 
@@ -250,6 +259,7 @@
 }
 
 .wrapperLineDate {
+  flex-grow: 1;
   // position: absolute;
   // bottom: 40px;
 }
@@ -313,7 +323,7 @@
 }
 
 .reviewModalContent {
-  background: #fff;
+  background: #F9F0E2;
   padding: 40px;
   border-radius: 12px;
   background-color: #f9f0e2;

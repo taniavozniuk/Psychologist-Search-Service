@@ -36,39 +36,38 @@ export const SideBar = () => {
   };
 
   return (
-    <div className="sidebar">
-      <ul className="sidebarUl">
-        <div className="wrapperIl">
-          <NavLink to="/profile" className="sidebarIl">
-            <img src={user} alt="profile" className="sidebarIcon" />
-            <span className="sidebarText">Personal Info</span>
-          </NavLink>
+    <>
+      <div className="wrappeSideBar">
+        <div className="sidebar">
+          <ul className="sidebarUl">
+            <div className="wrapperIl">
+              <NavLink to="/profile" className="sidebarIl">
+                <img src={user} alt="profile" className="sidebarIcon" />
+                <span className="sidebarText">Personal Info</span>
+              </NavLink>
+            </div>
+            <div className="wrapperIl">
+              <NavLink to="/profile/sessions" className="sidebarIl">
+                <img src={calendar} alt="book" className="sidebarIcon" />
+                <span className="sidebarText">My Sessions</span>
+              </NavLink>
+            </div>
+            <div className="wrapperIl">
+              <NavLink to="/profile/favorites" className="sidebarIl">
+                <img src={likeProfile} alt="like" className="sidebarIcon" />
+                <span className="sidebarText">Favorites</span>
+              </NavLink>
+            </div>
+            <span className="sidebarLine"></span>
+            <div className="wrapperIl">
+              <div className="sidebarIl" onClick={() => setModalLogOut(true)}>
+                <img src={logOut} alt="like" className="sidebarIcon" />
+                <span className="sidebarText">Log Out</span>
+              </div>
+            </div>
+          </ul>
         </div>
-
-        <div className="wrapperIl">
-          <NavLink to="/profile/sessions" className="sidebarIl">
-            <img src={calendar} alt="book" className="sidebarIcon" />
-            <span className="sidebarText">My Sessions</span>
-          </NavLink>
-        </div>
-
-        <div className="wrapperIl">
-          <NavLink to="/profile/favorites" className="sidebarIl">
-            <img src={likeProfile} alt="like" className="sidebarIcon" />
-            <span className="sidebarText">Favorites</span>
-          </NavLink>
-        </div>
-
-        <span className="sidebarLine"></span>
-
-        <div className="wrapperIl">
-          <div className="sidebarIl" onClick={() => setModalLogOut(true)}>
-            <img src={logOut} alt="like" className="sidebarIcon" />
-            <span className="sidebarText">Log Out</span>
-          </div>
-        </div>
-      </ul>
-
+      </div>
       {modalLogOut && (
         <div className="modal-backdrop">
           <div className="modal" ref={modalRef}>
@@ -76,7 +75,6 @@ export const SideBar = () => {
             <p className="modalDesDeteils">
               You’ll need to sign in again to access your account.
             </p>
-
             <div className="modal-actions">
               <button onClick={handleLogOut} className="cancel-button">
                 Log Out
@@ -91,6 +89,6 @@ export const SideBar = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };

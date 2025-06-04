@@ -115,8 +115,10 @@ function App() {
         </div>
       )}
 
-      <div className="wrappeSideBar">{isUserPage && <SideBar />}</div>
+      <div>{isUserPage && <SideBar />}</div>
 
+      
+      
       <div className="main__conteiner">
         <Outlet
           context={{

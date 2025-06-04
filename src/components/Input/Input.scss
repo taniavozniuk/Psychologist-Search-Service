@@ -17,9 +17,14 @@
   color: #e8e0d2;
   background-color: transparent;
   position: relative;
+  outline: #F1EFE9;
 
   &::placeholder {
     color: #e8e0d2;
+  }
+
+    &:focus::placeholder {
+    color: #9A9185;
   }
 
   :hover {

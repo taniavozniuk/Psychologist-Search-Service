@@ -9,8 +9,10 @@ import { useEffect, useRef, useState } from "react";
 import { Loader } from "../Loader/Loader";
 import { useOutsideClick } from "../../hooks";
 
+
 export const MySesions = () => {
   const [isFeedbackOpen, setonOpenFeedback] = useState(false);
+  const [openForm, setopenForm] = useState(false);
 
   const {
     cancelModalOpen,
@@ -43,7 +45,7 @@ export const MySesions = () => {
   };
 
   useEffect(() => {
-    setonOpenFeedback(true);
+    setopenForm(true);
   }, []);
 
   if (error) {
@@ -66,6 +68,30 @@ export const MySesions = () => {
     <main className="UserPage">
       <div className="profilePage">
         <div className="bookConteiner">
+          {openForm && showFeatbackForm().length > 0 && (
+            <div className="wrraperButtonForm">
+              <div className="wrapperBtText">
+                <p className="formText">
+                  Share how your session went — we’re listening.
+                </p>
+                <button
+                  className="fromBt"
+                  onClick={() => setonOpenFeedback(true)}
+                >
+                  Leave feedback
+                </button>
+              </div>
+              <div className="wrapperCloseBt">
+                <button
+                  className="closeFeetbackBt"
+                  onClick={() => setopenForm(false)}
+                >
+                  <img src={modalCloce} alt="close" />
+                </button>
+              </div>
+            </div>
+          )}
+
           {isFeedbackOpen && showFeatbackForm().length > 0 && (
             <div className="feetbackConteiner">
               <FeetbackForm showFeatbackForm={showFeatbackForm} />

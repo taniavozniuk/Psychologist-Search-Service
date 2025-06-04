@@ -78,7 +78,6 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
   };
 
   const handleResetFilters = () => {
-
     setSearchParams({});
   };
 
@@ -175,7 +174,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                 onClick={handleConcernsList}
               >
                 <img
-                  src={isOpen ? ConcernsBtOpen : ConcernsBtClose}
+                  src={isOpen ? ConcernsBtClose : ConcernsBtOpen}
                   alt="Toggle concerns"
                 />
               </button>
@@ -192,6 +191,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                           paramName="concernIds"
                         >
                           <FormControlLabel
+                            sx={{ color: "#0C0B09" }}
                             control={
                               <Checkbox
                                 className="model__concernsList"
@@ -220,6 +220,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                           paramName="concernIds"
                         >
                           <FormControlLabel
+                            sx={{ color: "#0C0B09" }}
                             control={
                               <Checkbox
                                 className="model__concernsList"
@@ -256,7 +257,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                 onClick={handleApproachesList}
               >
                 <img
-                  src={isOpenApproaches ? ConcernsBtOpen : ConcernsBtClose}
+                  src={isOpenApproaches ? ConcernsBtClose : ConcernsBtOpen}
                   alt="Toggle concerns"
                 />
               </button>
@@ -273,6 +274,7 @@ export const ModalWindow: React.FC<ModalProps> = ({ onClose }) => {
                           paramName="approachIds"
                         >
                           <FormControlLabel
+                            sx={{ color: "#0C0B09" }}
                             control={
                               <Checkbox
                                 className="model__concernsList"

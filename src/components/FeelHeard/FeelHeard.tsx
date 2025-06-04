@@ -2,8 +2,8 @@ import "./FeelHeard.scss";
 
 import { NavLink } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import feelImgDesktop from "../../image/feelImg.svg";
-import feelImgTablet from "../../image/fellImg2.svg";
+import feelImgDesktop from "../../image/feelImg.png";
+import feelImgTablet from "../../image/fellImg2.png";
 
 export const FeelHeard = () => {
   const isTablet = useMediaQuery({ maxWidth: 768 });
